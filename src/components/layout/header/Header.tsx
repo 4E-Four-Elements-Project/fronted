@@ -77,9 +77,41 @@ export default function Header({ link }: HeaderProps) {
             onClick={handleLinks}
           />
         ) : logIn ? (
-          <h1>login</h1>
+          <motion.li
+            initial="initial"
+            whileHover="animate"
+            className="flex flex-col items-center"
+          >
+            <Link to={"/createAccount"}>Create account</Link>
+            <svg width="120" height="5">
+              <motion.path
+                d="M0,2 Q20,5 40,2 T80,3 T119,1 T120"
+                fill="none"
+                stroke="#B8F9AD"
+                stroke-width="2"
+                stroke-linecap="round"
+                variants={onClickLinkCreateUser}
+              />
+            </svg>
+          </motion.li>
         ) : createAccount ? (
-          <h1>Create</h1>
+          <motion.li
+            initial="initial"
+            whileHover="animate"
+            className="flex flex-col items-center"
+          >
+            <Link to={"/login"}>Sign in</Link>
+            <svg width="48" height="5">
+              <motion.path
+                variants={onClickLinkSignIn}
+                d="M0,2 Q10,0 20,2 T32,2 T50,3"
+                fill="none"
+                stroke="#B8F9AD"
+                strokeWidth="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </motion.li>
         ) : (
           <ul className="flex flex-col items-center justify-between h-16 sm:flex-row sm:w-56 text-lg font-Roboto font-regular">
             <motion.li
