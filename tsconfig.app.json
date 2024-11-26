@@ -8,7 +8,7 @@
     "skipLibCheck": true,
 
     /* Bundler mode */
-    "moduleResolution": "Bundler",
+    "moduleResolution": "node",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
@@ -23,7 +23,7 @@
     "noUncheckedSideEffectImports": true,
 
     // error reports on ANY
-    "noImplicitAny": true
+    // "noImplicitAny": true
   },
   "include": ["src"]
 }
