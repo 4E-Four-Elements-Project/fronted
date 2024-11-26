@@ -8,25 +8,33 @@ export default function Header({ link }: HeaderProps) {
   const [menu, setMenu] = useState<boolean>(false);
   const [logIn, setLogIn] = useState<boolean>(false);
   const [createAccount, setCreateAccount] = useState<boolean>(false);
+  // Navigate to
   let navigate = useNavigate();
+  // Get location
   const location = useLocation();
 
-  console.log(location);
-
+  // Update header "buttons" when location changes.
   useEffect((): void => {
     if (location.pathname === "/menu") {
       setMenu(true);
+    } else {
+      setMenu(false);
     }
 
     if (location.pathname === "/logIn") {
       setLogIn(true);
+    } else {
+      setLogIn(false);
     }
 
     if (location.pathname === "/createAccount") {
       setCreateAccount(true);
+    } else {
+      setCreateAccount(false);
     }
   }, [location]);
 
+  // Handle navigation to different links if needed
   const handleLinks = (): void => {
     if (link) {
       navigate(link);
@@ -35,6 +43,9 @@ export default function Header({ link }: HeaderProps) {
     }
   };
 
+  // Animations
+
+  // Create user link
   const onClickLinkCreateUser: Variants = {
     initial: {
       strokeDasharray: 120,
@@ -46,6 +57,7 @@ export default function Header({ link }: HeaderProps) {
     },
   };
 
+  // Sign in user link
   const onClickLinkSignIn: Variants = {
     initial: {
       strokeDasharray: 50,
@@ -53,62 +65,86 @@ export default function Header({ link }: HeaderProps) {
     },
     animate: {
       strokeDashoffset: 0,
-      transition: { duration: 1 },
+      transition: { duration: 0.5 },
     },
   };
 
   return (
-    <header className="w-full flex items-end justify-between px-10 py-2">
+    <header className="w-full flex items-end justify-between px-5 py-2">
       <h1
-        className="font-Londrina text-7xl text-secondary-0 text-shadow-titleBlack font-bold tracking-widest cursor-pointer"
-        onClick={() => {
+        className="font-Londrina text-7xl text-secondary-0 text-shadow-titleBlack font-bold tracking-widest cursor-pointer select-none"
+        onClick={(): void => {
           navigate("/");
         }}
       >
         4E
       </h1>
 
-      <section className="">
+      <section className="font-Roboto">
+        {/* Check what buttons to show */}
         {menu ? (
-          <img
-            src={cartImg}
-            alt="cart"
-            className="w-10 cursor-pointer"
-            onClick={handleLinks}
-          />
-        ) : logIn ? (
+          <ul className="flex items-end justify-between w-32">
+            <motion.li
+              initial="initial"
+              whileHover="animate"
+              className="flex flex-col items-center relative"
+            >
+              <Link to={"/login"} className="">
+                Sign in
+              </Link>
+              <svg width="48" height="5" className="absolute top-6">
+                <motion.path
+                  variants={onClickLinkSignIn}
+                  d="M0,2 Q10,0 20,2 T32,2 T50,3"
+                  fill="none"
+                  stroke="#C8D6AF"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </motion.li>
+            <img
+              src={cartImg}
+              alt="cart"
+              className="w-10 cursor-pointer"
+              onClick={handleLinks}
+            />
+          </ul>
+        ) : // Sign in
+        logIn ? (
           <motion.li
             initial="initial"
             whileHover="animate"
-            className="flex flex-col items-center"
+            className="flex flex-col items-center relative"
           >
             <Link to={"/createAccount"}>Create account</Link>
-            <svg width="120" height="5">
+            <svg width="120" height="5" className="absolute top-6">
               <motion.path
                 d="M0,2 Q20,5 40,2 T80,3 T119,1 T120"
                 fill="none"
-                stroke="#B8F9AD"
+                stroke="#C8D6AF"
                 stroke-width="2"
-                stroke-linecap="round"
+                strokeLinecap="round"
                 variants={onClickLinkCreateUser}
               />
             </svg>
           </motion.li>
-        ) : createAccount ? (
+        ) : // Create account
+        createAccount ? (
           <motion.li
             initial="initial"
             whileHover="animate"
-            className="flex flex-col items-center"
+            className="flex flex-col items-center relative"
           >
             <Link to={"/login"}>Sign in</Link>
-            <svg width="48" height="5">
+            <svg width="48" height="5" className="absolute top-6">
               <motion.path
                 variants={onClickLinkSignIn}
                 d="M0,2 Q10,0 20,2 T32,2 T50,3"
                 fill="none"
-                stroke="#B8F9AD"
+                stroke="#C8D6AF"
                 strokeWidth="2"
-                stroke-linecap="round"
+                strokeLinecap="round"
               />
             </svg>
           </motion.li>
@@ -125,9 +161,9 @@ export default function Header({ link }: HeaderProps) {
                   variants={onClickLinkSignIn}
                   d="M0,2 Q10,0 20,2 T32,2 T50,3"
                   fill="none"
-                  stroke="#B8F9AD"
+                  stroke="#C8D6AF"
                   strokeWidth="2"
-                  stroke-linecap="round"
+                  strokeLinecap="round"
                 />
               </svg>
             </motion.li>
@@ -141,9 +177,9 @@ export default function Header({ link }: HeaderProps) {
                 <motion.path
                   d="M0,2 Q20,5 40,2 T80,3 T119,1 T120"
                   fill="none"
-                  stroke="#B8F9AD"
-                  stroke-width="2"
-                  stroke-linecap="round"
+                  stroke="#C8D6AF"
+                  strokeWidth="2"
+                  strokeLinecap="round"
                   variants={onClickLinkCreateUser}
                 />
               </svg>
