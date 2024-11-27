@@ -4,7 +4,7 @@ import addBtnFront from "../../assets/img/addBtn.svg";
 import addBtnOutline from "../../assets/img/addBtnOutline.svg";
 
 export default function MenuItem({
-  itemName = "Mediterranean Salad",
+  itemName = "Kebab",
   itemDesc = "Mixed salad greens, cherry tomatoes, cucumber, Kalamata olives, feta cheese, and red onion.",
   itemPrice = 219,
 }: MenuItemProps) {
@@ -14,12 +14,12 @@ export default function MenuItem({
   };
 
   return (
-    <section className="w-72 h-44 border border-slate-300 rounded-lg bg-white px-2 pt-2">
+    <section className="w-72 lg:w-full h-44 border border-slate-300 rounded-lg bg-white px-2 pt-2">
       <h3 className="font-Londrina font-semibold text-2xl tracking-widest">
         {itemName}
       </h3>
       <p className="font-Roboto font-sm">{itemDesc}</p>
-      <p className="font-semibold font-Londrina relative top-6 left-0 text-2xl tracking-widest">
+      <p className="font-semibold font-Londrina relative top-6 left-0 text-2xl tracking-widest lg:top-10 lg:left-5 lg:text-3xl">
         {itemPrice} :-
       </p>
 
@@ -28,9 +28,15 @@ export default function MenuItem({
         initial="initial"
         animate="initial"
         whileHover="animate"
-        className="relative -top-3 left-36 cursor-pointer w-24"
+        className="relative -top-3 left-36 cursor-pointer w-24 lg:top-1 lg:left-80"
       >
-        <motion.img src={addBtnFront} variants={addBtnAnimation} alt="" />
+        <motion.img
+          src={addBtnFront}
+          variants={addBtnAnimation}
+          whileTap={{ scale: 0.95 }}
+          className="absolute top-0 left-0 w-auto h-auto z-10"
+          alt=""
+        />
         <motion.img
           src={addBtnOutline}
           alt=""

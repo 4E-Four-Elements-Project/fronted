@@ -8,3 +8,8 @@ export interface MenuItemProps {
   itemPrice?: number;
   // itemButton: () => void;
 }
+
+export interface MenuFilterProps {
+  toggle: boolean;
+  setToggle: React.Dispatch<React.SetStateAction<boolean>>;
+}

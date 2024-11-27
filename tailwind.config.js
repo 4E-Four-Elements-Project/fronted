@@ -20,6 +20,10 @@ export default {
         titleBlack:
           "-1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000",
       },
+      gridTemplateColumns: {
+        md2Cols: "350px, 350px",
+        lg2Cols: "480px,480px",
+      },
     },
   },
   plugins: [
