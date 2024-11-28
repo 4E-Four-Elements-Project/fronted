@@ -68,7 +68,7 @@ const Login = () => {
               />
             </button>
           </div>
-          <MenuButton className="before:bg-pink mt-5">Login</MenuButton>
+          <MenuButton className="before:bg-pink-0 mt-5">Login</MenuButton>
         </form>
       </div>
 

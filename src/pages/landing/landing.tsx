@@ -25,7 +25,7 @@ const HeroSection: React.FC = () => {
             {/* Left Section */}
 
             <div className="max-w-lg space-y-4">
-              <MenuButton>Menu</MenuButton>
+              <MenuButton className="before:bg-secondary-0">Menu</MenuButton>
   
               <div className="flex items-center mt-4">
                 <input
