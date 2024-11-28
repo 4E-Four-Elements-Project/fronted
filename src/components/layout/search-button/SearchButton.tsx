@@ -6,9 +6,9 @@ const SearchButton = () => {
             <div className="relative inline-block">
                 <img 
                     src="./src/assets/img/magnifying.svg"
-                    className="relative z-10 w-10 h-10 p-2 border border-black bg-primary rounded"
+                    className="relative z-10 w-10 h-10 p-2 border border-black bg-primary-0 rounded"
                 />
-                <div className="absolute top-0 left-0 w-full h-full bg-secondary rounded border border-black -z-10 translate-x-[5px] translate-y-[5px] transition-transform duration-300 group-hover:translate-x-0 group-hover:translate-y-0">
+                <div className="absolute top-0 left-0 w-full h-full bg-secondary-0 rounded border border-black -z-10 translate-x-[5px] translate-y-[5px] transition-transform duration-300 group-hover:translate-x-0 group-hover:translate-y-0">
                     
                 </div>
                 </div>
