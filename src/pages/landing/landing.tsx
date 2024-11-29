@@ -29,7 +29,9 @@ const HeroSection: React.FC = () => {
             <Header className="md:w-2/3 md:pr-20 md:pl-20 md:3/5 absolute top-0 z-20 w-screen" />
 
             <div className="max-w-lg space-y-4">
+
               <MenuButton className="before:bg-secondary-0" to="/menu">Menu</MenuButton>
+
   
               <div className="flex items-center mt-4">
                 <input
