@@ -1,5 +1,6 @@
 export interface HeaderProps {
   link?: string;
+  className?: string;
 }
 
 export interface MenuItemProps {
