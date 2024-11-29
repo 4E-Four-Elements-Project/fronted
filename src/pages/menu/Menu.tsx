@@ -1,5 +1,5 @@
 import Header from "../../components/layout/header/Header";
-import MenuItem from "../../components/ui/MenuItem";
+import MenuItem from "../../components/ui/MenuItem/MenuItem";
 import MenuHeader from "./components/MenuHeader";
 import frame from "../../assets/img/frame.svg";
 import meat from "../../assets/img/meat.svg";
