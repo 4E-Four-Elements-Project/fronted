@@ -4,7 +4,7 @@ import { HeaderProps } from "../../../types/interface/interface";
 import { useEffect, useState } from "react";
 import { motion, Variants } from "motion/react";
 
-export default function Header({ link }: HeaderProps) {
+export default function Header({ link, className }: HeaderProps) {
   const [menu, setMenu] = useState<boolean>(false);
   const [logIn, setLogIn] = useState<boolean>(false);
   const [createAccount, setCreateAccount] = useState<boolean>(false);
@@ -70,7 +70,7 @@ export default function Header({ link }: HeaderProps) {
   };
 
   return (
-    <header className="w-full flex items-end justify-between px-5 py-2">
+    <header className={`w-full flex items-end justify-between px-5 py-2 ${className || "w-full"}`}>
       <h1
         className="font-Londrina text-7xl text-secondary-0 text-shadow-titleBlack font-bold tracking-widest cursor-pointer select-none"
         onClick={(): void => {
@@ -80,10 +80,10 @@ export default function Header({ link }: HeaderProps) {
         4E
       </h1>
 
-      <section className="font-Roboto">
+      <section className="font-Roboto ">
         {/* Check what buttons to show */}
         {menu ? (
-          <ul className="flex items-end justify-between w-32">
+          <ul className="flex flex-row items-end justify-between w-56 md:w-screen">
             <motion.li
               initial="initial"
               whileHover="animate"
