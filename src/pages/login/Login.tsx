@@ -1,11 +1,12 @@
 import Contact from "../../components/layout/contact/contact";
+import Header from "../../components/layout/header/Header";
 import MenuButton from "../../components/layout/menu-button/menu-button";
 
 const Login = () => {
   return (
     <div className="min-h-screen relative">
       {/* Video */}
-      <figure className="absolute right-0 h-sm mw-auto hidden md:block">
+      <figure className="absolute right-0 h-sm mw-auto hidden lg:block">
         <video
           src="./src/assets/video/landing-video.mp4"
           className="rounded shadow-lg h-full w-[600px] object-cover"
@@ -18,14 +19,15 @@ const Login = () => {
       {/* Mobilbakgrund för videon */}
       <video
         src="./src/assets/video/landing-video.mp4"
-        className="absolute top-0 left-0 w-full h-full object-cover -z-10 md:hidden"
+        className="absolute top-0 left-0 w-full h-full object-cover -z-10 lg:hidden"
         autoPlay
         muted
         loop
       />
 
       {/* Login-formulär */}
-      <div className="w-full md:w-[50vw] h-screen flex items-center justify-center">
+      <Header className="xl:w-1/2 xl:z-10 w-full z-10 absolute"/>
+      <div className="w-full lg:w-[50vw] h-screen flex items-center justify-center">
         <form
           className="max-w-md p-6 flex flex-col justify-center z-0 md:shadow-none rounded"
           method="POST"
@@ -68,7 +70,7 @@ const Login = () => {
               />
             </button>
           </div>
-          <MenuButton className="before:bg-pink-0 mt-5">Login</MenuButton>
+          <MenuButton className="before:bg-pink-0 mt-5" to="/login">Login</MenuButton>
         </form>
       </div>
 
