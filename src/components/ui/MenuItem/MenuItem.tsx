@@ -1,7 +1,7 @@
-import { MenuItemProps } from "../../types/interface/interface";
+import { MenuItemProps } from "../../../types/interface/interface";
 import { motion, Variants } from "motion/react";
-import addBtnFront from "../../assets/img/addBtn.svg";
-import addBtnOutline from "../../assets/img/addBtnOutline.svg";
+import addBtnFront from "../../../assets/img/addBtn.svg";
+import addBtnOutline from "../../../assets/img/addBtnOutline.svg";
 
 export default function MenuItem({
   itemName = "Kebab",
