@@ -9,12 +9,10 @@ const Login = () => {
       <figure className="absolute right-0 h-sm mw-auto hidden lg:block">
         <video
           src="./src/assets/video/landing-video.mp4"
-          className="rounded shadow-lg h-full xl:w-[600px] lg:w-[400px] object-cover "
+          className="rounded shadow-lg h-full w-[600px] object-cover"
           autoPlay
-          loop
           muted
-          preload="auto"
-          playsInline
+          loop
         />
       </figure>
 
@@ -23,25 +21,20 @@ const Login = () => {
         src="./src/assets/video/landing-video.mp4"
         className="absolute top-0 left-0 w-full h-full object-cover -z-10 lg:hidden"
         autoPlay
-        loop
         muted
-        preload="auto"
-        playsInline
+        loop
       />
 
       {/* Login-formulär */}
-      <Header className="xl:w-1/2 xl:z-10 w-full z-10 absolute" />
-      <div className="w-full lg:w-3/5 h-screen flex items-center justify-center">
+      <Header className="xl:w-1/2 xl:z-10 w-full z-10 absolute"/>
+      <div className="w-full lg:w-[50vw] h-screen flex items-center justify-center">
         <form
           className="max-w-md p-6 flex flex-col justify-center z-0 md:shadow-none rounded"
           method="POST"
           action="/login"
         >
           <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email
             </label>
             <input
@@ -55,10 +48,7 @@ const Login = () => {
           </div>
 
           <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Password
             </label>
             <input
@@ -70,10 +60,7 @@ const Login = () => {
               required
             />
             <button className="relative mt-2">
-              <a
-                href="/forgot-password"
-                className="text-sm text-blue-500 hover:text-blue-700"
-              >
+              <a href="/forgot-password" className="text-sm text-blue-500 hover:text-blue-700">
                 Forgot password?
               </a>
               <img
@@ -84,9 +71,8 @@ const Login = () => {
             </button>
           </div>
 
-          <MenuButton className="before:bg-pink-0 mt-5" to="/login">
-            Login
-          </MenuButton>
+          <MenuButton className="before:bg-pink-0 mt-5" to="/login">Login</MenuButton>
+
         </form>
       </div>
 
