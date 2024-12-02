@@ -21,7 +21,7 @@ export default function Header({ link, className }: HeaderProps) {
       setMenu(false);
     }
 
-    if (location.pathname === "/logIn") {
+    if (location.pathname === "/login") {
       setLogIn(true);
     } else {
       setLogIn(false);
@@ -70,7 +70,11 @@ export default function Header({ link, className }: HeaderProps) {
   };
 
   return (
-    <header className={`w-full flex items-end justify-between px-5 py-2 ${className || "w-full"}`}>
+    <header
+      className={`w-full flex items-end justify-between px-5 py-2 ${
+        className || "w-full"
+      }`}
+    >
       <h1
         className="font-Londrina text-7xl text-secondary-0 text-shadow-titleBlack font-bold tracking-widest cursor-pointer select-none"
         onClick={(): void => {
@@ -83,13 +87,13 @@ export default function Header({ link, className }: HeaderProps) {
       <section className="font-Roboto ">
         {/* Check what buttons to show */}
         {menu ? (
-          <ul className="flex flex-row items-end justify-between w-56 md:w-screen">
+          <ul className="flex flex-row items-end justify-between w-44">
             <motion.li
               initial="initial"
               whileHover="animate"
               className="flex flex-col items-center relative"
             >
-              <Link to={"/login"} className="">
+              <Link to={"/login"} className="text-white xl:text-black">
                 Sign in
               </Link>
               <svg width="48" height="5" className="absolute top-6">
@@ -117,7 +121,9 @@ export default function Header({ link, className }: HeaderProps) {
             whileHover="animate"
             className="flex flex-col items-center relative"
           >
-            <Link to={"/createAccount"}>Create account</Link>
+            <Link to={"/createAccount"} className="text-white xl:text-black">
+              Create account
+            </Link>
             <svg width="120" height="5" className="absolute top-6">
               <motion.path
                 d="M0,2 Q20,5 40,2 T80,3 T119,1 T120"
@@ -137,7 +143,11 @@ export default function Header({ link, className }: HeaderProps) {
             className="flex flex-col items-center relative"
           >
             <Link to={"/login"}>Sign in</Link>
-            <svg width="48" height="5" className="absolute top-6">
+            <svg
+              width="48"
+              height="5"
+              className="absolute top-6 text-white xl:text-black"
+            >
               <motion.path
                 variants={onClickLinkSignIn}
                 d="M0,2 Q10,0 20,2 T32,2 T50,3"
@@ -155,7 +165,9 @@ export default function Header({ link, className }: HeaderProps) {
               whileHover="animate"
               className="flex flex-col items-center"
             >
-              <Link to={"/login"}>Sign in</Link>
+              <Link to={"/login"} className="text-white md:text-black">
+                Sign in
+              </Link>
               <svg width="48" height="5">
                 <motion.path
                   variants={onClickLinkSignIn}
@@ -172,7 +184,9 @@ export default function Header({ link, className }: HeaderProps) {
               whileHover="animate"
               className="flex flex-col items-center"
             >
-              <Link to={"/createAccount"}>Create account</Link>
+              <Link to={"/createAccount"} className="text-white md:text-black">
+                Create account
+              </Link>
               <svg width="120" height="5">
                 <motion.path
                   d="M0,2 Q20,5 40,2 T80,3 T119,1 T120"
