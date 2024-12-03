@@ -1,13 +1,14 @@
-import { MenuItemProps } from "../../../types/interface/interface";
+import { MenuItemProps, MenuItems } from "../../../types/interface/interface";
 import { motion, Variants } from "motion/react";
 import addBtnFront from "../../../assets/img/addBtn.svg";
 import addBtnOutline from "../../../assets/img/addBtnOutline.svg";
 
 export default function MenuItem({
-  itemName = "Kebab",
-  itemDesc = "Mixed salad greens, cherry tomatoes, cucumber, Kalamata olives, feta cheese, and red onion.",
-  itemPrice = 219,
-}: MenuItemProps) {
+  menuId,
+  ingredients,
+}: // possibleToOrder,
+// missingIngredients,
+MenuItems) {
   const addBtnAnimation: Variants = {
     initial: { y: 0, x: 0 },
     animate: { y: -1, x: -2 },
@@ -16,11 +17,11 @@ export default function MenuItem({
   return (
     <section className="w-72 lg:w-full h-44 border border-slate-300 rounded-lg bg-white px-2 pt-2">
       <h3 className="font-Londrina font-semibold text-2xl tracking-widest">
-        {itemName}
+        {menuId}
       </h3>
-      <p className="font-Roboto font-sm">{itemDesc}</p>
+      <p className="font-Roboto font-sm">{ingredients}</p>
       <p className="font-semibold font-Londrina relative top-6 left-0 text-2xl tracking-widest lg:top-10 lg:left-5 lg:text-3xl">
-        {itemPrice} :-
+        {"0"} :-
       </p>
 
       {/* Add Button */}

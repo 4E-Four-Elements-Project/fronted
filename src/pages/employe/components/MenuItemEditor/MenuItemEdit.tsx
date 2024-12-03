@@ -29,7 +29,7 @@ export default function MenuItemEdit(props: MenuItemProps) {
           <input
             type="text"
             placeholder={categoryName}
-            className="border px-1"
+            className="border px-1 focus:outline-none"
             autoComplete="off"
           />
         ) : (
@@ -42,7 +42,7 @@ export default function MenuItemEdit(props: MenuItemProps) {
           <input
             type="text"
             placeholder={name}
-            className="border px-1 "
+            className="border px-1  focus:outline-none"
             autoComplete="off"
           />
         ) : (
@@ -55,7 +55,7 @@ export default function MenuItemEdit(props: MenuItemProps) {
           <input
             type="text"
             placeholder={description}
-            className="border px-1 "
+            className="border px-1  focus:outline-none"
             autoComplete="off"
           />
         ) : (
@@ -69,7 +69,7 @@ export default function MenuItemEdit(props: MenuItemProps) {
             type="number"
             min={100}
             placeholder={price.toString()}
-            className="border px-1 w-16"
+            className="border px-1 w-16 focus:outline-none"
             autoComplete="off"
           />
         ) : (

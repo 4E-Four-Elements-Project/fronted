@@ -1,13 +1,35 @@
 import Header from "../../components/layout/header/Header";
 import MenuItem from "../../components/ui/MenuItem/MenuItem";
 import MenuHeader from "./components/MenuHeader";
+
+// Assets
 import frame from "../../assets/img/frame.svg";
 import meat from "../../assets/img/meat.svg";
 import salad from "../../assets/img/sallad.svg";
 import soup from "../../assets/img/soup.svg";
 import sauce from "../../assets/img/sauce.svg";
 
+import { useEffect, useState } from "react";
+
+// Api
+import getMenuApi from "../../services/menu/getMenu/getMenuApi";
+import { MenuApiResponse, MenuItems } from "../../types/interface/interface";
+
 export default function Menu() {
+  const [menu, setMenu] = useState<MenuItems[] | null>(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response: MenuApiResponse = await getMenuApi();
+
+      setMenu(response.data.menu);
+
+      // Filtera ut varje kategori och sätt dem i olika useStates, mappa sedan ut
+    };
+    fetchData();
+  }, []);
+
+  console.log(menu);
+
   return (
     <main className="w-full min-h-screen bg-primary-0 flex flex-col items-center md:items-start xl:flex-row">
       <div className="flex-grow w-full mb-5">
@@ -25,12 +47,15 @@ export default function Menu() {
               Meat
             </h2>
             <section className="flex flex-col gap-5 w-full lg:flex-row border-t border-black pt-2 md:grid md:grid-cols-md2Cols lg:grid-cols-lg2Cols lg:px-5">
-              <MenuItem />
-              <MenuItem />
-              <MenuItem />
-              <MenuItem />
-              <MenuItem />
-              <MenuItem />
+              {menu?.map((item, index) => (
+                <MenuItem
+                  key={index}
+                  menuId={item.menuId}
+                  // missingIngredients={item.missingIngredients}
+                  ingredients={item.ingredients}
+                  // possibleToOrder={item.possibleToOrder}
+                />
+              ))}
             </section>
           </section>
 
@@ -40,10 +65,15 @@ export default function Menu() {
               Salad
             </h2>
             <section className="flex flex-col gap-5 w-full lg:flex-row border-t border-black pt-2 md:grid md:grid-cols-md2Cols lg:grid-cols-lg2Cols lg:px-5">
-              <MenuItem />
-              <MenuItem />
-              <MenuItem />
-              <MenuItem />
+              {menu?.map((item, index) => (
+                <MenuItem
+                  key={index}
+                  menuId={item.menuId}
+                  // missingIngredients={item.missingIngredients}
+                  ingredients={item.ingredients}
+                  // possibleToOrder={item.possibleToOrder}
+                />
+              ))}
             </section>
           </section>
 
@@ -53,7 +83,15 @@ export default function Menu() {
               Soup
             </h2>
             <section className="flex flex-col gap-5 w-full lg:flex-row border-t border-black pt-2 md:grid md:grid-cols-md2Cols lg:grid-cols-lg2Cols lg:px-5">
-              <MenuItem />
+              {menu?.map((item, index) => (
+                <MenuItem
+                  key={index}
+                  menuId={item.menuId}
+                  // missingIngredients={item.missingIngredients}
+                  ingredients={item.ingredients}
+                  // possibleToOrder={item.possibleToOrder}
+                />
+              ))}
             </section>
           </section>
 
@@ -63,9 +101,15 @@ export default function Menu() {
               Sauce
             </h2>
             <section className="flex flex-col gap-5 w-full lg:flex-row border-t border-black pt-2 md:grid md:grid-cols-md2Cols lg:grid-cols-lg2Cols lg:px-5">
-              <MenuItem />
-              <MenuItem />
-              <MenuItem />
+              {menu?.map((item, index) => (
+                <MenuItem
+                  key={index}
+                  menuId={item.menuId}
+                  // missingIngredients={item.missingIngredients}
+                  ingredients={item.ingredients}
+                  // possibleToOrder={item.possibleToOrder}
+                />
+              ))}
             </section>
           </section>
         </div>

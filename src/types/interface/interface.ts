@@ -4,11 +4,10 @@ export interface HeaderProps {
 }
 
 export interface MenuItemProps {
-  itemName?: string;
-  itemDesc?: string;
-  itemPrice?: number;
-  itemCategory?: string;
-  // itemButton: () => void;
+  itemName?: string | null;
+  itemDesc?: string | null;
+  itemPrice?: number | null;
+  itemCategory?: string | null;
 }
 
 export interface MenuFilterProps {
@@ -21,6 +20,13 @@ export interface ToggleModalProp {
   setToggle?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-// export interface AddNewItemToMenu extends MenuItemProps {
+export interface MenuItems {
+  menuId?: string;
+  ingredients?: [];
+  // possibleToOrder: "string";
+  // missingIngredients: [];
+}
 
-// }
+export interface MenuApiResponse {
+  data: { menu: MenuItems[] };
+}

@@ -17,7 +17,7 @@ export default function FilterModal({ toggle, setToggle }: MenuFilterProps) {
     <div
       className={`${
         toggle ? "flex" : "hidden"
-      } absolute top-6 -left-3 bg-secondary-0 border border-black rounded-md w-28 h-52 flex-col justify-around z-50`}
+      } absolute top-6 -left-3 bg-white border border-black rounded-md w-28 h-52 flex-col justify-around z-50`}
       ref={ref}
     >
       {/* TEMP */}

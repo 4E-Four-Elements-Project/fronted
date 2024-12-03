@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+// Api
+import getInventory from "../../../../services/menu/getInventory/getInventoryApi";
 
 export default function Inventory() {
   // Update with api from inventory
@@ -6,6 +9,19 @@ export default function Inventory() {
   const [saladAmount, setSaladAmount] = useState<number>(6);
   const [soupAmount, setSoupAmount] = useState<number>(100);
   const [sauceAmount, setSauceAmount] = useState<number>(100);
+
+  // useEffect(() => {
+  //   // getInventory();
+
+  //   const fetchData = async () => {
+  //     const data = await getInventory();
+  //     console.log(data?.quantity);
+  //   };
+
+  //   fetchData();
+  //   // const data = getInventory();
+  //   // console.log(data?.quatity);
+  // }, []);
 
   return (
     <div className="w-full h-80 border border-black bg-white rounded-md col-start-3 flex flex-col items-start justify-around px-6 ">

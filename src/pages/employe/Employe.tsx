@@ -7,6 +7,7 @@ import { Variants, motion } from "motion/react";
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import PendingOrders from "./components/pendingOrders/PendingOrders";
 
 export default function Employe() {
   const [currentStaff, setCurrentStaff] = useState<boolean>(true);
@@ -34,10 +35,10 @@ export default function Employe() {
       <motion.div
         initial="initial"
         whileHover="animate"
-        className="absolute top-10 right-12"
+        className={`absolute top-10 right-14`}
       >
         <button
-          className="text-white md:text-black"
+          className="text-black"
           onClick={() => {
             setCurrentStaff(!currentStaff);
           }}
@@ -60,7 +61,7 @@ export default function Employe() {
         </svg>
       </motion.div>
       {currentStaff ? (
-        // staff (?)
+        // Employe
         <section className="w-auto md:w-2/3 flex flex-col items-center justify-between md:grid md:grid-rows-2 md:grid-cols-3 gap-5 md:items-start md:justify-items-end mt-11 px-8 pb-5">
           <ActiveOrders />
           <Inventory />
@@ -68,16 +69,23 @@ export default function Employe() {
         </section>
       ) : (
         // Chef
-        <section>
-          <h1>test</h1>
+        <section className="w-full md:w-2/3 flex flex-col items-center justify-between md:grid md:grid-cols-4 gap-4 md:items-start md:justify-items-end mt-11 px-8 pb-8 ">
+          {/* Active orders */}
+          <PendingOrders />
+          <PendingOrders />
+          <PendingOrders />
+          <PendingOrders />
+          <PendingOrders />
+          <PendingOrders />
+          <PendingOrders />
         </section>
       )}
       <motion.div
         initial="initial"
         whileHover="animate"
-        className="absolute bottom-10 left-6"
+        className="absolute top-10 right-32 md:right-52"
       >
-        <Link to={"/"} className="text-white md:text-black">
+        <Link to={"/"} className="text-black">
           Sign out
         </Link>
         <svg width="60" height="5" className="absolute top-6">
