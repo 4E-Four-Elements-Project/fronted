@@ -38,3 +38,12 @@ export interface MenuItems {
 export interface MenuApiResponse {
   data: { menu: MenuItems[] };
 }
+
+export interface InventoryApi {
+  menuId?: string;
+  quantity: number;
+}
+
+export interface InventoryApiResponse {
+  data: InventoryApi[];
+}

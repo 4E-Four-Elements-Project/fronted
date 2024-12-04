@@ -5,13 +5,12 @@ export default async function getInventory() {
     const response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error(`Response stataus: ${response.status}`);
+      throw new Error(`Response status: ${response.status}`);
     }
 
-    const json = response.json();
-    console.log(json);
-
+    const json = await response.json();
     return json;
+    // console.log(json);
   } catch (error) {
     console.error((error as Error).message);
   }

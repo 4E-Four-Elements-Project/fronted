@@ -2,26 +2,30 @@ import { useEffect, useState } from "react";
 
 // Api
 import getInventory from "../../../../services/menu/getInventory/getInventoryApi";
+import { InventoryApiResponse } from "../../../../types/interface/interface";
 
 export default function Inventory() {
-  // Update with api from inventory
-  const [meatAmount, setMeatAmount] = useState<number>(50);
-  const [saladAmount, setSaladAmount] = useState<number>(6);
-  const [soupAmount, setSoupAmount] = useState<number>(100);
-  const [sauceAmount, setSauceAmount] = useState<number>(100);
+  const [meatAmount, setMeatAmount] = useState<number>(0);
+  const [saladAmount, setSaladAmount] = useState<number>(0);
+  const [soupAmount, setSoupAmount] = useState<number>(0);
+  const [sauceAmount, setSauceAmount] = useState<number>(0);
 
-  // useEffect(() => {
-  //   // getInventory();
+  useEffect(() => {
+    const fetchData = async () => {
+      const response: InventoryApiResponse = await getInventory();
+      // console.log(response.data);
 
-  //   const fetchData = async () => {
-  //     const data = await getInventory();
-  //     console.log(data?.quantity);
-  //   };
+      const inventoryData = response;
 
-  //   fetchData();
-  //   // const data = getInventory();
-  //   // console.log(data?.quatity);
-  // }, []);
+      // Easiest way to do this when we have such a small inventory
+      setMeatAmount(inventoryData.data[0].quantity);
+      setSaladAmount(inventoryData.data[1].quantity);
+      setSauceAmount(inventoryData.data[2].quantity);
+      setSoupAmount(inventoryData.data[3].quantity);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="w-full h-80 border border-black bg-white rounded-md col-start-3 flex flex-col items-start justify-around px-6 ">
