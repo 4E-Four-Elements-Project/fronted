@@ -1,14 +1,9 @@
-import { MenuItemProps, MenuItems } from "../../../types/interface/interface";
+import { MenuItems } from "../../../types/interface/interface";
 import { motion, Variants } from "motion/react";
 import addBtnFront from "../../../assets/img/addBtn.svg";
 import addBtnOutline from "../../../assets/img/addBtnOutline.svg";
 
-export default function MenuItem({
-  menuId,
-  ingredients,
-}: // possibleToOrder,
-// missingIngredients,
-MenuItems) {
+export default function MenuItem({ menuId, description, price }: MenuItems) {
   const addBtnAnimation: Variants = {
     initial: { y: 0, x: 0 },
     animate: { y: -1, x: -2 },
@@ -19,9 +14,9 @@ MenuItems) {
       <h3 className="font-Londrina font-semibold text-2xl tracking-widest">
         {menuId}
       </h3>
-      <p className="font-Roboto font-sm">{ingredients}</p>
+      <p className="font-Roboto font-sm">{description}</p>
       <p className="font-semibold font-Londrina relative top-6 left-0 text-2xl tracking-widest lg:top-10 lg:left-5 lg:text-3xl">
-        {"0"} :-
+        {price} :-
       </p>
 
       {/* Add Button */}

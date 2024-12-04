@@ -1,6 +1,7 @@
 import Header from "../../components/layout/header/Header";
 import MenuItem from "../../components/ui/MenuItem/MenuItem";
 import MenuHeader from "./components/MenuHeader";
+import { FilterContext } from "../../context/FilterContext";
 
 // Assets
 import frame from "../../assets/img/frame.svg";
@@ -9,26 +10,55 @@ import salad from "../../assets/img/sallad.svg";
 import soup from "../../assets/img/soup.svg";
 import sauce from "../../assets/img/sauce.svg";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 // Api
 import getMenuApi from "../../services/menu/getMenu/getMenuApi";
 import { MenuApiResponse, MenuItems } from "../../types/interface/interface";
 
 export default function Menu() {
-  const [menu, setMenu] = useState<MenuItems[] | null>(null);
+  const [meatCategory, setMeatCategory] = useState<MenuItems[]>([]);
+  const [saladCategory, setSaladCategory] = useState<MenuItems[]>([]);
+  const [sauceCategory, setSauceCategory] = useState<MenuItems[]>([]);
+  const [soupCategory, setSoupCategory] = useState<MenuItems[]>([]);
+
+  const filter = useContext(FilterContext);
+  console.log(filter?.filter);
+
   useEffect(() => {
     const fetchData = async () => {
       const response: MenuApiResponse = await getMenuApi();
+      const menuData = response.data.menu;
 
-      setMenu(response.data.menu);
+      const meat = menuData.filter((item) => item.category === "meat");
+      const salad = menuData.filter((item) => item.category === "salad");
+      const sauce = menuData.filter((item) => item.category === "sauce");
+      const soup = menuData.filter((item) => item.category === "soup");
 
-      // Filtera ut varje kategori och sätt dem i olika useStates, mappa sedan ut
+      const sortItems = (items: MenuItems[]) => {
+        switch (filter?.filter) {
+          case "high":
+            return items.sort((a, b) => b.price - a.price);
+          case "low":
+            return items.sort((a, b) => a.price - b.price);
+          case "alphabetical":
+            return items.sort((a, b) => {
+              const menuIdA = a.menuId ? String(a.menuId) : "";
+              const menuIdB = b.menuId ? String(b.menuId) : "";
+              return menuIdA.localeCompare(menuIdB);
+            });
+          default:
+            return items;
+        }
+      };
+
+      setMeatCategory(sortItems(meat));
+      setSaladCategory(sortItems(salad));
+      setSauceCategory(sortItems(sauce));
+      setSoupCategory(sortItems(soup));
     };
     fetchData();
-  }, []);
-
-  console.log(menu);
+  }, [filter]);
 
   return (
     <main className="w-full min-h-screen bg-primary-0 flex flex-col items-center md:items-start xl:flex-row">
@@ -47,13 +77,14 @@ export default function Menu() {
               Meat
             </h2>
             <section className="flex flex-col gap-5 w-full lg:flex-row border-t border-black pt-2 md:grid md:grid-cols-md2Cols lg:grid-cols-lg2Cols lg:px-5">
-              {menu?.map((item, index) => (
+              {meatCategory.map((item, index) => (
                 <MenuItem
                   key={index}
                   menuId={item.menuId}
-                  // missingIngredients={item.missingIngredients}
+                  category={item.category}
+                  price={item.price}
+                  description={item.description}
                   ingredients={item.ingredients}
-                  // possibleToOrder={item.possibleToOrder}
                 />
               ))}
             </section>
@@ -65,13 +96,14 @@ export default function Menu() {
               Salad
             </h2>
             <section className="flex flex-col gap-5 w-full lg:flex-row border-t border-black pt-2 md:grid md:grid-cols-md2Cols lg:grid-cols-lg2Cols lg:px-5">
-              {menu?.map((item, index) => (
+              {saladCategory.map((item, index) => (
                 <MenuItem
                   key={index}
                   menuId={item.menuId}
-                  // missingIngredients={item.missingIngredients}
+                  category={item.category}
+                  price={item.price}
+                  description={item.description}
                   ingredients={item.ingredients}
-                  // possibleToOrder={item.possibleToOrder}
                 />
               ))}
             </section>
@@ -83,13 +115,14 @@ export default function Menu() {
               Soup
             </h2>
             <section className="flex flex-col gap-5 w-full lg:flex-row border-t border-black pt-2 md:grid md:grid-cols-md2Cols lg:grid-cols-lg2Cols lg:px-5">
-              {menu?.map((item, index) => (
+              {soupCategory.map((item, index) => (
                 <MenuItem
                   key={index}
                   menuId={item.menuId}
-                  // missingIngredients={item.missingIngredients}
+                  category={item.category}
+                  price={item.price}
+                  description={item.description}
                   ingredients={item.ingredients}
-                  // possibleToOrder={item.possibleToOrder}
                 />
               ))}
             </section>
@@ -101,13 +134,14 @@ export default function Menu() {
               Sauce
             </h2>
             <section className="flex flex-col gap-5 w-full lg:flex-row border-t border-black pt-2 md:grid md:grid-cols-md2Cols lg:grid-cols-lg2Cols lg:px-5">
-              {menu?.map((item, index) => (
+              {sauceCategory.map((item, index) => (
                 <MenuItem
                   key={index}
                   menuId={item.menuId}
-                  // missingIngredients={item.missingIngredients}
+                  category={item.category}
+                  price={item.price}
+                  description={item.description}
                   ingredients={item.ingredients}
-                  // possibleToOrder={item.possibleToOrder}
                 />
               ))}
             </section>

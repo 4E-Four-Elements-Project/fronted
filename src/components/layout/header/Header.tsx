@@ -93,7 +93,7 @@ export default function Header({ link, className }: HeaderProps) {
               whileHover="animate"
               className="flex flex-col items-center relative"
             >
-              <Link to={"/login"} className="text-white xl:text-black">
+              <Link to={"/login"} className="">
                 Sign in
               </Link>
               <svg width="48" height="5" className="absolute top-6">

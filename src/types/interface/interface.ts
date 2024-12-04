@@ -3,12 +3,12 @@ export interface HeaderProps {
   className?: string;
 }
 
-export interface MenuItemProps {
-  itemName?: string | null;
-  itemDesc?: string | null;
-  itemPrice?: number | null;
-  itemCategory?: string | null;
-}
+// export interface MenuItemProps {
+//   itemName?: string | null;
+//   itemDesc?: string | null;
+//   itemPrice?: number | null;
+//   itemCategory?: string | null;
+// }
 
 export interface MenuFilterProps {
   toggle: boolean;
@@ -20,9 +20,17 @@ export interface ToggleModalProp {
   setToggle?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+export interface FilterContextType {
+  filter: string;
+  changeFilter: (newFilter: string) => void;
+}
+
 export interface MenuItems {
   menuId?: string;
   ingredients?: [];
+  category?: string;
+  description?: string;
+  price: number;
   // possibleToOrder: "string";
   // missingIngredients: [];
 }
