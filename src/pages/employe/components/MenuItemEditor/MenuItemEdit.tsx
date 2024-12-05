@@ -3,15 +3,34 @@ import editPen from "../../../../assets/img/editPen.svg";
 import delteItem from "../../../../assets/img/delete.svg";
 import submitEditIcon from "../../../../assets/img/check-color.svg";
 import { MenuItemProps } from "../../../../types/interface/interface";
+import * as React from "react";
+
+// break down ingredients sting to an array
+const stringToArray = (ingredientsString: string) => {
+  const ingredientsArr = ingredientsString.split(", ");
+  console.log(ingredientsArr);
+
+  return ingredientsArr;
+};
 
 export default function MenuItemEdit(props: MenuItemProps) {
-  const { itemCategory, itemName, itemDesc, itemPrice } = props;
+  const { itemCategory, itemName, itemDesc, itemPrice, itemIngredients } =
+    props;
   const [categoryName, setCategoryName] = useState(itemCategory);
   const [name, setName] = useState(itemName);
   const [description, setDescription] = useState(itemDesc);
   const [price, setPrice] = useState(itemPrice || 0);
+  const [ingredients, setIngredients] = useState(itemIngredients);
+
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [submitEdit, setSubmitEdit] = useState<boolean>(false);
+
+  const handleIngredients = (e: React.ChangeEvent<HTMLInputElement>) => {
+    stringToArray(e.target.value);
+    setIngredients(stringToArray(e.target.value));
+  };
+
+  // console.log(ingredients);
 
   //   Delete item from menu
   const deleteMenuItem = (): void => {};
@@ -47,6 +66,28 @@ export default function MenuItemEdit(props: MenuItemProps) {
           />
         ) : (
           <p className="font-light">{name}</p>
+        )}
+      </div>
+      <div className="flex flex-col items-start justify-start w-24">
+        <h2 className="font-medium">Ingredients</h2>
+        {isEditing ? (
+          <div className="flex flex-col">
+            <input
+              type="text"
+              name="ingredients"
+              id="ingredients"
+              placeholder="tex salad, meat"
+              className="w-24 border px-1 focus:outline-none"
+              autoComplete="off"
+              onChange={handleIngredients}
+            />
+          </div>
+        ) : (
+          ingredients?.map((ingredient, index) => (
+            <p key={index} className="font-light">
+              {ingredient}
+            </p>
+          ))
         )}
       </div>
       <div className="flex flex-col items-start justify-start w-44">

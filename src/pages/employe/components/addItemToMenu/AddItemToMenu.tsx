@@ -2,6 +2,8 @@ import { useState } from "react";
 import addItem from "../../../../assets/img/check-color.svg";
 import deleteItem from "../../../../assets/img/delete.svg";
 import { FormDataNewItem } from "../../../../types/types/types";
+import addNewItem from "../../../../services/menu/addNewItem/addNewItemApi";
+import getMenu from "../../../../services/menu/getMenu/getMenuApi";
 
 export default function AddItemToMenu({
   toggleItem,
@@ -12,22 +14,35 @@ export default function AddItemToMenu({
 }) {
   const [formData, setFormData] = useState<FormDataNewItem>({
     category: "",
-    name: "",
+    menuId: "",
     description: "",
     price: 0,
+    ingredients: [],
   });
 
+  // Add new item
+  const handleSubmit = async () => {
+    await addNewItem(formData);
+    await getMenu();
+    closeNewItem();
+  };
+
+  // Hande input
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    // Take name and value from every input
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]:
+        // Convert price to a number and ingredients to []
+        name === "price"
+          ? parseFloat(value)
+          : name === "ingredients"
+          ? value.split(",")
+          : // Else keep value as a string
+            value,
     }));
-  };
-
-  const handleSubmit = () => {
-    console.log("formData: ", formData);
-    closeNewItem();
   };
 
   return (
@@ -55,13 +70,27 @@ export default function AddItemToMenu({
         <h2 className="font-medium">Name</h2>
         <input
           type="text"
-          name="name"
+          name="menuId"
           id="name"
           placeholder="Name"
           required
           autoComplete="off"
           className="border px-1 focus:outline-none"
-          value={formData.name}
+          value={formData.menuId}
+          onChange={handleInputChange}
+        />
+      </div>
+
+      <div className="flex flex-col items-start justify-start w-24">
+        <h2 className="font-medium">Ingredients</h2>
+        <input
+          type="text"
+          name="ingredients"
+          id="ingredients"
+          placeholder="tex salad, meat"
+          className="w-24 border px-1 focus:outline-none"
+          autoComplete="off"
+          value={formData.ingredients}
           onChange={handleInputChange}
         />
       </div>
