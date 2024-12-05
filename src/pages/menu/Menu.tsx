@@ -1,13 +1,65 @@
 import Header from "../../components/layout/header/Header";
 import MenuItem from "../../components/ui/MenuItem/MenuItem";
 import MenuHeader from "./components/MenuHeader";
+import { FilterContext } from "../../context/FilterContext";
+
+// Assets
 import frame from "../../assets/img/frame.svg";
 import meat from "../../assets/img/meat.svg";
 import salad from "../../assets/img/sallad.svg";
 import soup from "../../assets/img/soup.svg";
 import sauce from "../../assets/img/sauce.svg";
 
+import { useContext, useEffect, useState } from "react";
+
+// Api
+import getMenuApi from "../../services/menu/getMenu/getMenuApi";
+import { MenuApiResponse, MenuItems } from "../../types/interface/interface";
+
 export default function Menu() {
+  const [meatCategory, setMeatCategory] = useState<MenuItems[]>([]);
+  const [saladCategory, setSaladCategory] = useState<MenuItems[]>([]);
+  const [sauceCategory, setSauceCategory] = useState<MenuItems[]>([]);
+  const [soupCategory, setSoupCategory] = useState<MenuItems[]>([]);
+
+  const filter = useContext(FilterContext);
+  console.log(filter?.filter);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response: MenuApiResponse = await getMenuApi();
+      const menuData = response.data.menu;
+
+      const meat = menuData.filter((item) => item.category === "meat");
+      const salad = menuData.filter((item) => item.category === "salad");
+      const sauce = menuData.filter((item) => item.category === "sauce");
+      const soup = menuData.filter((item) => item.category === "soup");
+
+      const sortItems = (items: MenuItems[]) => {
+        switch (filter?.filter) {
+          case "high":
+            return items.sort((a, b) => b.price - a.price);
+          case "low":
+            return items.sort((a, b) => a.price - b.price);
+          case "alphabetical":
+            return items.sort((a, b) => {
+              const menuIdA = a.menuId ? String(a.menuId) : "";
+              const menuIdB = b.menuId ? String(b.menuId) : "";
+              return menuIdA.localeCompare(menuIdB);
+            });
+          default:
+            return items;
+        }
+      };
+
+      setMeatCategory(sortItems(meat));
+      setSaladCategory(sortItems(salad));
+      setSauceCategory(sortItems(sauce));
+      setSoupCategory(sortItems(soup));
+    };
+    fetchData();
+  }, [filter]);
+
   return (
     <main className="w-full min-h-screen bg-primary-0 flex flex-col items-center md:items-start xl:flex-row">
       <div className="flex-grow w-full mb-5">
@@ -25,12 +77,16 @@ export default function Menu() {
               Meat
             </h2>
             <section className="flex flex-col gap-5 w-full lg:flex-row border-t border-black pt-2 md:grid md:grid-cols-md2Cols lg:grid-cols-lg2Cols lg:px-5">
-              <MenuItem />
-              <MenuItem />
-              <MenuItem />
-              <MenuItem />
-              <MenuItem />
-              <MenuItem />
+              {meatCategory.map((item, index) => (
+                <MenuItem
+                  key={index}
+                  menuId={item.menuId}
+                  category={item.category}
+                  price={item.price}
+                  description={item.description}
+                  ingredients={item.ingredients}
+                />
+              ))}
             </section>
           </section>
 
@@ -40,10 +96,16 @@ export default function Menu() {
               Salad
             </h2>
             <section className="flex flex-col gap-5 w-full lg:flex-row border-t border-black pt-2 md:grid md:grid-cols-md2Cols lg:grid-cols-lg2Cols lg:px-5">
-              <MenuItem />
-              <MenuItem />
-              <MenuItem />
-              <MenuItem />
+              {saladCategory.map((item, index) => (
+                <MenuItem
+                  key={index}
+                  menuId={item.menuId}
+                  category={item.category}
+                  price={item.price}
+                  description={item.description}
+                  ingredients={item.ingredients}
+                />
+              ))}
             </section>
           </section>
 
@@ -53,7 +115,16 @@ export default function Menu() {
               Soup
             </h2>
             <section className="flex flex-col gap-5 w-full lg:flex-row border-t border-black pt-2 md:grid md:grid-cols-md2Cols lg:grid-cols-lg2Cols lg:px-5">
-              <MenuItem />
+              {soupCategory.map((item, index) => (
+                <MenuItem
+                  key={index}
+                  menuId={item.menuId}
+                  category={item.category}
+                  price={item.price}
+                  description={item.description}
+                  ingredients={item.ingredients}
+                />
+              ))}
             </section>
           </section>
 
@@ -63,9 +134,16 @@ export default function Menu() {
               Sauce
             </h2>
             <section className="flex flex-col gap-5 w-full lg:flex-row border-t border-black pt-2 md:grid md:grid-cols-md2Cols lg:grid-cols-lg2Cols lg:px-5">
-              <MenuItem />
-              <MenuItem />
-              <MenuItem />
+              {sauceCategory.map((item, index) => (
+                <MenuItem
+                  key={index}
+                  menuId={item.menuId}
+                  category={item.category}
+                  price={item.price}
+                  description={item.description}
+                  ingredients={item.ingredients}
+                />
+              ))}
             </section>
           </section>
         </div>
