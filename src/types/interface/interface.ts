@@ -27,8 +27,7 @@ export interface MenuItems {
   category?: string;
   description?: string;
   price: number;
-  // possibleToOrder: "string";
-  // missingIngredients: [];
+  quantity?: number;
 }
 
 export interface MenuApiResponse {

@@ -61,8 +61,23 @@ export default function Menu() {
   }, [filter]);
 
   const handleAddToCart = (menuItem: MenuItems) => {
-    setCart((prevCart) => [...prevCart, menuItem]);
-    console.log("Cart updated:", [...cart, menuItem]);
+    setCart((prevCart) => {
+      // Kontrollera om artikeln redan finns i kundvagnen
+      const existingItemIndex = prevCart?.findIndex((item) => item.menuId === menuItem.menuId);
+  
+      if (existingItemIndex !== undefined && existingItemIndex !== -1) {
+        // Om artikeln redan finns, uppdatera endast kvantiteten
+        const updatedCart = [...prevCart];
+        updatedCart[existingItemIndex] = {
+          ...updatedCart[existingItemIndex],
+          quantity: (updatedCart[existingItemIndex].quantity || 0) + 1, // Säkerställ att quantity finns
+        };
+        return updatedCart;
+      }
+  
+      // Om artikeln inte finns, lägg till den som ny med kvantitet 1
+      return [...(prevCart || []), { ...menuItem, quantity: 1 }];
+    });
   };
 
   return (

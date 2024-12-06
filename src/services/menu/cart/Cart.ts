@@ -2,7 +2,7 @@ const BASE_URL = "https://rwxvokmlrj.execute-api.eu-north-1.amazonaws.com";
 
 export const getCartItems = async () => {
     try {
-        const response = await fetch(`${BASE_URL}/cart/get/bcd7969d-adfe-4235-af19-e7db0b43521a`, {
+        const response = await fetch(`${BASE_URL}/cart/get/`, {
             method: "GET",
         });
 
