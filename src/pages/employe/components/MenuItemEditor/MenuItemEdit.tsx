@@ -4,6 +4,7 @@ import delteItem from "../../../../assets/img/delete.svg";
 import submitEditIcon from "../../../../assets/img/check-color.svg";
 import { MenuItemProps } from "../../../../types/interface/interface";
 import * as React from "react";
+import deleteItem from "../../../../services/menu/deleteItem/deleteItem";
 
 // break down ingredients sting to an array
 const stringToArray = (ingredientsString: string) => {
@@ -33,7 +34,14 @@ export default function MenuItemEdit(props: MenuItemProps) {
   // console.log(ingredients);
 
   //   Delete item from menu
-  const deleteMenuItem = (): void => {};
+  const deleteMenuItem = async () => {
+    const menuId = name ?? "invalid";
+    if (menuId === "invalid") {
+      alert("ERROR mayday mayday");
+    }
+    const response = await deleteItem({ menuId: menuId });
+    console.log(response);
+  };
 
   //   Send update to db
   const handleSubmitEdit = (): void => {

@@ -10,11 +10,17 @@ import {
 
 export default function EditMenu() {
   const [toggleNewItem, setToggleNewItem] = useState<boolean>(false);
+  const [fetchItems, setFetchItems] = useState<boolean>(false);
   const [menu, setMenu] = useState<MenuItems[]>();
 
   const handleCloseNewItem = (): void => {
     setToggleNewItem((prev) => !prev);
     // console.log(toggleNewItem);
+  };
+
+  // Updates menu when a item gets added
+  const fetchMenu = (): void => {
+    setFetchItems(!fetchItems);
   };
 
   useEffect(() => {
@@ -25,7 +31,7 @@ export default function EditMenu() {
     };
 
     fetchData();
-  }, []);
+  }, [fetchItems]);
 
   return (
     <div className="w-full bg-white h-80 overflow-y-scroll rounded-md scroll-smooth no-scrollbar col-span-3 border border-black flex flex-col gap-4 px-2 py-3 font-Roboto ">
@@ -49,6 +55,7 @@ export default function EditMenu() {
         <AddItemToMenu
           toggleItem={toggleNewItem}
           closeNewItem={handleCloseNewItem}
+          fetchAllItems={fetchMenu}
         />
       )}
       {menu?.map((item, index) => (

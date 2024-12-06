@@ -2,26 +2,20 @@ import { useEffect, useState } from "react";
 
 // Api
 import getInventory from "../../../../services/menu/getInventory/getInventoryApi";
-import { InventoryApiResponse } from "../../../../types/interface/interface";
+import {
+  InventoryApi,
+  InventoryApiResponse,
+} from "../../../../types/interface/interface";
 
 export default function Inventory() {
-  const [meatAmount, setMeatAmount] = useState<number>(0);
-  const [saladAmount, setSaladAmount] = useState<number>(0);
-  const [soupAmount, setSoupAmount] = useState<number>(0);
-  const [sauceAmount, setSauceAmount] = useState<number>(0);
+  const [inventory, setInvetory] = useState<InventoryApi[]>();
 
   useEffect(() => {
     const fetchData = async () => {
       const response: InventoryApiResponse = await getInventory();
-      // console.log(response.data);
+      const inventoryData = response.data;
 
-      const inventoryData = response;
-
-      // Easiest way to do this when we have such a small inventory
-      setMeatAmount(inventoryData.data[0].quantity);
-      setSaladAmount(inventoryData.data[1].quantity);
-      setSauceAmount(inventoryData.data[2].quantity);
-      setSoupAmount(inventoryData.data[3].quantity);
+      setInvetory(inventoryData);
     };
 
     fetchData();
@@ -33,78 +27,26 @@ export default function Inventory() {
         <p>INGREDIENTS</p>
         <p>STATUS</p>
       </div>
-      <div className="flex justify-between w-full text-xl">
-        <span className="font-roboto">Meat</span>
-        <div className="font-semibold">
-          <span
-            className={`${
-              meatAmount >= 65
-                ? "text-secondary-0"
-                : meatAmount <= 25
-                ? "text-red-400"
-                : "text-yellow-0"
-            }
+      {inventory?.map((item, index) => (
+        <div key={index} className="flex justify-between w-full text-xl">
+          <span className="font-roboto">{item.inventoryId}</span>
+          <div className="font-semibold">
+            <span
+              className={`${
+                item.quantity >= 65
+                  ? "text-secondary-0"
+                  : item.quantity <= 25
+                  ? "text-red-400"
+                  : "text-yellow-0"
+              }
  text-shadow-titleBlack text-md`}
-          >
-            {meatAmount}
-          </span>{" "}
-          /<span> 100</span>
+            >
+              {item.quantity}
+            </span>{" "}
+            /<span> 100</span>
+          </div>
         </div>
-      </div>
-      <div className="flex justify-between w-full text-xl">
-        <span className="font-roboto">Salad</span>
-        <div className="font-semibold">
-          <span
-            className={`${
-              saladAmount >= 65
-                ? "text-secondary-0"
-                : saladAmount <= 25
-                ? "text-red-400"
-                : "text-yellow-0"
-            }
- text-shadow-titleBlack`}
-          >
-            {saladAmount}
-          </span>{" "}
-          /<span> 100</span>
-        </div>
-      </div>
-      <div className="flex justify-between w-full text-xl">
-        <span className="font-roboto">Soup</span>
-        <div className="font-semibold">
-          <span
-            className={`${
-              soupAmount >= 65
-                ? "text-secondary-0"
-                : soupAmount <= 25
-                ? "text-red-400"
-                : "text-yellow-0"
-            }
- text-shadow-titleBlack`}
-          >
-            {soupAmount}
-          </span>{" "}
-          /<span> 100</span>
-        </div>
-      </div>
-      <div className="flex justify-between w-full text-xl">
-        <span className="font-roboto">Sauce</span>
-        <div className="font-semibold">
-          <span
-            className={`${
-              sauceAmount >= 65
-                ? "text-secondary-0"
-                : sauceAmount <= 25
-                ? "text-red-400"
-                : "text-yellow-0"
-            }
- text-shadow-titleBlack`}
-          >
-            {sauceAmount}
-          </span>{" "}
-          /<span> 100</span>
-        </div>
-      </div>
+      ))}
     </div>
   );
 }

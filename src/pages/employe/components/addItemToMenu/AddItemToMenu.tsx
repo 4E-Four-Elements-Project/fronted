@@ -3,14 +3,15 @@ import addItem from "../../../../assets/img/check-color.svg";
 import deleteItem from "../../../../assets/img/delete.svg";
 import { FormDataNewItem } from "../../../../types/types/types";
 import addNewItem from "../../../../services/menu/addNewItem/addNewItemApi";
-import getMenu from "../../../../services/menu/getMenu/getMenuApi";
 
 export default function AddItemToMenu({
   toggleItem,
   closeNewItem,
+  fetchAllItems,
 }: {
   toggleItem: boolean;
   closeNewItem: VoidFunction;
+  fetchAllItems: VoidFunction;
 }) {
   const [formData, setFormData] = useState<FormDataNewItem>({
     category: "",
@@ -23,7 +24,7 @@ export default function AddItemToMenu({
   // Add new item
   const handleSubmit = async () => {
     await addNewItem(formData);
-    await getMenu();
+    fetchAllItems();
     closeNewItem();
   };
 
