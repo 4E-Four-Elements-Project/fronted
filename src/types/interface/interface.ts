@@ -1,14 +1,8 @@
 export interface HeaderProps {
+  cartCount?: number;
+  cart?: MenuItems[];
   link?: string;
   className?: string;
-}
-
-export interface MenuItemProps {
-  itemName?: string;
-  itemDesc?: string;
-  itemPrice?: number;
-  itemCategory?: string;
-  itemIngredients?: string[];
 }
 
 export interface MenuFilterProps {
