@@ -3,12 +3,13 @@ export interface HeaderProps {
   className?: string;
 }
 
-// export interface MenuItemProps {
-//   itemName?: string | null;
-//   itemDesc?: string | null;
-//   itemPrice?: number | null;
-//   itemCategory?: string | null;
-// }
+export interface MenuItemProps {
+  itemName?: string;
+  itemDesc?: string;
+  itemPrice?: number;
+  itemCategory?: string;
+  itemIngredients?: string[];
+}
 
 export interface MenuFilterProps {
   toggle: boolean;

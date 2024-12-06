@@ -1,6 +1,7 @@
 export type FormDataNewItem = {
   category: string;
-  name: string;
+  menuId: string;
   description: string;
   price: number;
+  ingredients: string[];
 };

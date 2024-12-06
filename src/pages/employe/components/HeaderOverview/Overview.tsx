@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import getInventory from "../../../../services/menu/getInventory/getInventoryApi";
+import { InventoryApiResponse } from "../../../../types/interface/interface";
 
 export default function Overview() {
   const [currentOverview, setCurrentOverview] = useState<string>("");
   const [showStatus, setShowStatus] = useState<boolean>(false);
-  const [inventoryStatus, setInventoryStatus] = useState<string>("bg-green-0");
   const [activeOrders, setActiveOrders] = useState<number>(0);
+  const [totalInventory, setTotalInventory] = useState<number>(0);
 
   useEffect((): void => {
     if (location.pathname === "/employe") {
@@ -16,14 +18,21 @@ export default function Overview() {
   }, [location]);
 
   // Update status
-  useEffect(
-    (): void => {
-      // if inventory >= 55 % setInventoryStatus("bg-green-0") else if inventory >= 45 % || <= 55 % setInventoryStatus("bg-yellow-0") else setInventoryStatus("bg-red-400")
-    },
-    [
-      // inventory API
-    ]
-  );
+  useEffect(() => {
+    const fecthInventoryData = async () => {
+      const response: InventoryApiResponse = await getInventory();
+      const responseQuantity = response.data;
+      const addTotalInventoryStock =
+        responseQuantity[0].quantity +
+        responseQuantity[1].quantity +
+        responseQuantity[2].quantity +
+        responseQuantity[3].quantity;
+
+      setTotalInventory(addTotalInventoryStock);
+    };
+
+    fecthInventoryData();
+  }, []);
 
   //  Update orders
   useEffect(
@@ -45,7 +54,15 @@ export default function Overview() {
             <div className="flex justify-between items-center h-auto">
               <h3>stock status: </h3>
               <div
-                className={`w-3 h-3 rounded-full ${inventoryStatus} ml-2 border border-black`}
+                className={`
+                  ${
+                    totalInventory >= 300
+                      ? "bg-green-0"
+                      : totalInventory <= 100
+                      ? "bg-red-400"
+                      : "bg-yellow-0"
+                  }
+                  w-3 h-3 rounded-full  ml-2 border border-black`}
               ></div>
             </div>
             <div className="w-px h-full bg-black"></div>
