@@ -35,7 +35,7 @@ export interface MenuApiResponse {
 }
 
 export interface InventoryApi {
-  menuId?: string;
+  inventoryId?: string;
   quantity: number;
 }
 
