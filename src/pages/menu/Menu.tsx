@@ -21,9 +21,9 @@ export default function Menu() {
   const [saladCategory, setSaladCategory] = useState<MenuItems[]>([]);
   const [sauceCategory, setSauceCategory] = useState<MenuItems[]>([]);
   const [soupCategory, setSoupCategory] = useState<MenuItems[]>([]);
+  const [cart, setCart] = useState<MenuItems[]>([]);
 
   const filter = useContext(FilterContext);
-  console.log(filter?.filter);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,10 +60,15 @@ export default function Menu() {
     fetchData();
   }, [filter]);
 
+  const handleAddToCart = (menuItem: MenuItems) => {
+    setCart((prevCart) => [...prevCart, menuItem]);
+    console.log("Cart updated:", [...cart, menuItem]);
+  };
+
   return (
     <main className="w-full min-h-screen bg-primary-0 flex flex-col items-center md:items-start xl:flex-row">
       <div className="flex-grow w-full mb-5">
-        <Header link="/cart" />
+        <Header cartCount={cart.length} cart={cart} link="/cart" />
         {/* Menu starts */}
 
         {/* Menu header */}
@@ -77,9 +82,11 @@ export default function Menu() {
               Meat
             </h2>
             <section className="flex flex-col gap-5 w-full lg:flex-row border-t border-black pt-2 md:grid md:grid-cols-md2Cols lg:grid-cols-lg2Cols lg:px-5">
-              {meatCategory.map((item, index) => (
+              {meatCategory.map((item) => (
                 <MenuItem
-                  key={index}
+                  key={item.menuId}
+                  {...item}
+                  onAddToCart={handleAddToCart}
                   menuId={item.menuId}
                   category={item.category}
                   price={item.price}
@@ -96,9 +103,11 @@ export default function Menu() {
               Salad
             </h2>
             <section className="flex flex-col gap-5 w-full lg:flex-row border-t border-black pt-2 md:grid md:grid-cols-md2Cols lg:grid-cols-lg2Cols lg:px-5">
-              {saladCategory.map((item, index) => (
+              {saladCategory.map((item) => (
                 <MenuItem
-                  key={index}
+                  key={item.menuId}
+                  {...item}
+                  onAddToCart={handleAddToCart}
                   menuId={item.menuId}
                   category={item.category}
                   price={item.price}
@@ -123,6 +132,7 @@ export default function Menu() {
                   price={item.price}
                   description={item.description}
                   ingredients={item.ingredients}
+                  onAddToCart={handleAddToCart}
                 />
               ))}
             </section>
@@ -142,6 +152,7 @@ export default function Menu() {
                   price={item.price}
                   description={item.description}
                   ingredients={item.ingredients}
+                  onAddToCart={handleAddToCart}
                 />
               ))}
             </section>
@@ -200,3 +211,4 @@ export default function Menu() {
     </main>
   );
 }
+
