@@ -5,9 +5,7 @@ import addBtnOutline from "../../../assets/img/addBtnOutline.svg";
 
 
 interface MenuItemProps extends MenuItems {
-
   onAddToCart: (menuItem: MenuItems) => void;
-
 }
 
 export default function MenuItem({ menuId, description, price, onAddToCart, }: MenuItemProps) {

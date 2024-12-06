@@ -1,4 +1,4 @@
-const BASE_URL = "https://75696n8to3.execute-api.eu-north-1.amazonaws.com";
+const BASE_URL = "https://m1b3lmpsxi.execute-api.eu-north-1.amazonaws.com";
 
 // Typ för användardata
 export interface UserData {
