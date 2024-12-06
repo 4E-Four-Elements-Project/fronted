@@ -1,15 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddItemToMenu from "../addItemToMenu/AddItemToMenu";
 import MenuItemEdit from "../MenuItemEditor/MenuItemEdit";
 import { motion } from "motion/react";
+import getMenu from "../../../../services/menu/getMenu/getMenuApi";
+import {
+  MenuApiResponse,
+  MenuItems,
+} from "../../../../types/interface/interface";
 
 export default function EditMenu() {
   const [toggleNewItem, setToggleNewItem] = useState<boolean>(false);
+  const [menu, setMenu] = useState<MenuItems[]>();
 
   const handleCloseNewItem = (): void => {
     setToggleNewItem((prev) => !prev);
-    console.log(toggleNewItem);
+    // console.log(toggleNewItem);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response: MenuApiResponse = await getMenu();
+      const menuData = response.data.menu;
+      setMenu(menuData);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="w-full bg-white h-80 overflow-y-scroll rounded-md scroll-smooth no-scrollbar col-span-3 border border-black flex flex-col gap-4 px-2 py-3 font-Roboto ">
@@ -35,32 +51,16 @@ export default function EditMenu() {
           closeNewItem={handleCloseNewItem}
         />
       )}
-      <MenuItemEdit
-        itemCategory={"Meat"}
-        itemDesc={
-          "God hamburgare som har senap på locket istället för i brödet. Herregud va fult detta blev. Men detta kanske fungerar bra?!"
-        }
-        itemName={"Hamburgare"}
-        itemPrice={239}
-      />
-      <MenuItemEdit
-        itemCategory={"Meat"}
-        itemDesc={"En stor pizza"}
-        itemName={"Pizza"}
-        itemPrice={239}
-      />
-      <MenuItemEdit
-        itemCategory={"Meat"}
-        itemDesc={"Go' chebab"}
-        itemName={"Kebab"}
-        itemPrice={239}
-      />
-      <MenuItemEdit
-        itemCategory={"Meat"}
-        itemDesc={"En Calzone"}
-        itemName={"Calzone"}
-        itemPrice={239}
-      />
+      {menu?.map((item, index) => (
+        <MenuItemEdit
+          key={index}
+          itemCategory={item.category}
+          itemDesc={item.description}
+          itemName={item.menuId}
+          itemIngredients={item.ingredients}
+          itemPrice={item.price}
+        />
+      ))}
     </div>
   );
 }
