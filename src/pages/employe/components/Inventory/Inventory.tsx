@@ -25,10 +25,13 @@ export default function Inventory() {
     <div className="w-full h-80 border border-black bg-white rounded-md col-start-3 flex flex-col items-start justify-around px-6 ">
       <div className="text-sm font-semibold w-full flex justify-between">
         <p>INGREDIENTS</p>
-        <p>STATUS</p>
+        <p className="hidden lg:flex">STATUS</p>
       </div>
       {inventory?.map((item, index) => (
-        <div key={index} className="flex justify-between w-full text-xl">
+        <div
+          key={index}
+          className="flex justify-between w-full text-xl md:text-base"
+        >
           <span className="font-roboto">{item.inventoryId}</span>
           <div className="font-semibold">
             <span
@@ -42,7 +45,7 @@ export default function Inventory() {
  text-shadow-titleBlack text-md`}
             >
               {item.quantity}
-            </span>{" "}
+            </span>
             /<span> 100</span>
           </div>
         </div>

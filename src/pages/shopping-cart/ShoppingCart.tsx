@@ -13,10 +13,13 @@ interface CartItem {
 const ShoppingCart = () => {
   const location = useLocation();
   const cart = location.state?.cart || []; // Hämta varukorgen från state
-  console.log(cart);
+  // console.log(cart);
 
   const calculateTotal = () =>
-    cart.reduce((total: number, item: CartItem) => total + item.price * item.quantity, 1);
+    cart.reduce(
+      (total: number, item: CartItem) => total + item.price * item.quantity,
+      1
+    );
 
   if (cart.length === 0) {
     return (
@@ -38,15 +41,18 @@ const ShoppingCart = () => {
         </div>
 
         <ul className="flex flex-col gap-3 font-thin">
-        {cart.map((item: CartItem) => (
-            <li key={item.id} className="border border-black rounded-xl p-3 flex flex-row gap-2 bg-[#f1f1f1] justify-between">
-            <div className="font-roboto flex flex-col gap-2">
+          {cart.map((item: CartItem) => (
+            <li
+              key={item.id}
+              className="border border-black rounded-xl p-3 flex flex-row gap-2 bg-[#f1f1f1] justify-between"
+            >
+              <div className="font-roboto flex flex-col gap-2">
                 <p>{item.description}</p>
                 <p>{item.price} kr</p>
                 <p>Quantity: {item.quantity}</p>
-            </div>
+              </div>
             </li>
-        ))}
+          ))}
         </ul>
 
         <div className="flex justify-between mt-5">

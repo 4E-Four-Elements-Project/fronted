@@ -28,7 +28,6 @@ export default function Overview() {
         responseQuantity[2]?.quantity +
         responseQuantity[3]?.quantity;
       setTotalInventory(addTotalInventoryStock);
-      console.log(responseQuantity[0]?.quantity);
     };
 
     fecthInventoryData();

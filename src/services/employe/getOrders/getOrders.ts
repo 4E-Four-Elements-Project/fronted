@@ -1,6 +1,6 @@
-const url = import.meta.env.VITE_GET_INVENTORY_URL;
+const url = import.meta.env.VITE_GET_ORDERS_URL;
 
-export default async function getInventory() {
+export default async function getOrders() {
   try {
     const token = localStorage.getItem("authToken");
 
