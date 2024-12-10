@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import Order from "../Order/Order";
 import getOrders from "../../../../services/employe/getOrders/getOrders";
+import {
+  GetOrderInformation,
+  OrderInformationResponse,
+} from "../../../../types/interface/interface";
 
 export default function ActiveOrders() {
   const [selectedCheckbox, setSelectedCheckbox] = useState<string>("newest");
+  const [orderItems, setOrderItems] = useState<OrderInformationResponse>();
+  const [sortedItems, setSortedItems] = useState<GetOrderInformation[]>();
 
   // Change value on the checkboxes
   const handleCheckboxChange = (value: string) => {
@@ -13,17 +19,33 @@ export default function ActiveOrders() {
   // Fetch orders
   useEffect(() => {
     const fetchData = async () => {
-      await getOrders();
+      const response: OrderInformationResponse = await getOrders();
+      console.log(response);
+
+      setOrderItems(response);
     };
 
     fetchData();
   }, []);
+
+  // Sort orders by date
+  useEffect(() => {
+    const data = orderItems?.data || [];
+    const sortedData = [...data].sort((a, b) => {
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+
+      return selectedCheckbox === "newest" ? dateB - dateA : dateA - dateB;
+    });
+    setSortedItems(sortedData);
+  }, [selectedCheckbox, orderItems]);
 
   return (
     <section className="w-72 md:w-full h-80 overflow-y-scroll rounded-md scroll-smooth no-scrollbar flex flex-col gap-4 font-Roboto p-2 py-4 bg-white border border-black col-span-2 relative">
       <div className="flex justify-between items-center w-full">
         <p>Active orders</p>
 
+        {/* Checkboxes */}
         <div className="w-34 h-12 flex flex-col justify-between items-end lg:w-64 lg:items-center lg:flex-row">
           <div className="flex items-center justify-between gap-3 text-sm">
             <label
@@ -59,8 +81,10 @@ export default function ActiveOrders() {
           </div>
         </div>
       </div>
-      {/* Send selectedCheckbox as a prop */}
-      <Order filterStatus={selectedCheckbox} />
+      {/* Render the sorted orders */}
+      {sortedItems?.map((orderItem) => (
+        <Order key={orderItem.orderId} orderItem={orderItem} />
+      ))}
     </section>
   );
 }

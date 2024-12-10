@@ -6,12 +6,13 @@ import Overview from "./components/HeaderOverview/Overview";
 import { Variants, motion } from "motion/react";
 
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
 import PendingOrders from "./components/pendingOrders/PendingOrders";
 import handleLogout from "../logut/Logut";
 
 export default function Employe() {
   const [currentStaff, setCurrentStaff] = useState<boolean>(true);
+  const [currentOrder, setCurrentOrder] = useState<[]>([]);
+
   useEffect(() => {
     if (location.pathname === "/chef") {
       setCurrentStaff(!currentStaff);
@@ -86,7 +87,7 @@ export default function Employe() {
         whileHover="animate"
         className="absolute top-10 right-32 md:right-52"
       >
-        <span onClick={handleLogout} className="text-black">
+        <span onClick={handleLogout} className="text-black cursor-pointer">
           Sign out
         </span>
         <svg width="60" height="5" className="absolute top-6">
