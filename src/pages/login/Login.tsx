@@ -10,15 +10,14 @@ const Login = () => {
 
   const LOGIN_API_URL = import.meta.env.VITE_POST_LOGIN_URL;
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
     setLoading(true);
     setError("");
-  
+
     try {
-      console.log("Sending request to:", LOGIN_API_URL);
-      console.log("Data sent:", { username, password });
-  
       const response = await fetch(LOGIN_API_URL, {
         method: "POST",
         headers: {
@@ -29,29 +28,35 @@ const Login = () => {
           password,
         }),
       });
-  
-      console.log("Response status:", response.status);
-  
+
       if (!response.ok) {
         const errorText = await response.text();
         console.error("API error response:", errorText);
-        throw new Error(errorText || "Login failed. Please check your credentials.");
+        throw new Error(
+          errorText || "Login failed. Please check your credentials."
+        );
       }
-  
+
       // Hämta texten från svaret
       const responseText = await response.text();
-      console.log("Login successful. Response text:", responseText);
-  
+
       // Extrahera token från texten
       const tokenMatch = responseText.match(/token:\s*([\w.-]+)/); // Regex för att hitta token
       const token = tokenMatch ? tokenMatch[1] : null;
-  
-      if (token) {
-        console.log("Extracted token:", token);
-  
+
+      const roleMatch = responseText.match(/role:\s*([\w.-]+)/); // Regex för att hitta role
+      const role = roleMatch ? roleMatch[1] : null;
+
+      if (token && role === "staff") {
         // Spara token i localStorage
         localStorage.setItem("authToken", token);
-  
+
+        // Navigera till en annan sida
+        window.location.href = "/employe";
+      } else if (token && role === "user") {
+        // Spara token i localStorage
+        localStorage.setItem("authToken", token);
+
         // Navigera till en annan sida
         window.location.href = "/";
       } else {
@@ -64,8 +69,6 @@ const Login = () => {
       setLoading(false);
     }
   };
-  
-  
 
   return (
     <div className="min-h-screen relative">
@@ -145,7 +148,10 @@ const Login = () => {
 
           {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
 
-          <button className="relative block w-full px-4 py-2 text-lg text-green-600 border border-solid border-black rounded bg-white before:absolute before:content-[''] before:top-1/4 before:left-0 before:ml-2 before:w-[calc(100%)] before:h-10 before:bg-secondary before:rounded before:border before:border-black before:-z-10 before:bg-secondary-0 before:transition-transform before:duration-300 hover:before:translate-x-[-8px] hover:before:translate-y-[-7px]" type="submit">
+          <button
+            className="relative block w-full px-4 py-2 text-lg text-green-600 border border-solid border-black rounded bg-white before:absolute before:content-[''] before:top-1/4 before:left-0 before:ml-2 before:w-[calc(100%)] before:h-10 before:bg-secondary before:rounded before:border before:border-black before:-z-10 before:bg-secondary-0 before:transition-transform before:duration-300 hover:before:translate-x-[-8px] hover:before:translate-y-[-7px]"
+            type="submit"
+          >
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>

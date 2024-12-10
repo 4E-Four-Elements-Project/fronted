@@ -41,3 +41,25 @@ export interface InventoryApi {
 export interface InventoryApiResponse {
   data: InventoryApi[];
 }
+
+export interface ProtectedRoutes {
+  children: React.ReactNode;
+}
+
+export interface GetOrderInformation {
+  cartId: string;
+  comment?: string;
+  createdAt: string;
+  menuId: string;
+  orderId: string;
+  orderLocked: false;
+  paymentMethod: string;
+  price: string;
+  quantity: number;
+  totalPrice: number;
+  userId: string;
+}
+
+export interface OrderInformationResponse {
+  data: GetOrderInformation[];
+}

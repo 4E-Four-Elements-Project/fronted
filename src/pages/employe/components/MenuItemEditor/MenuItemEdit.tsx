@@ -2,36 +2,33 @@ import { useState } from "react";
 import editPen from "../../../../assets/img/editPen.svg";
 import delteItem from "../../../../assets/img/delete.svg";
 import submitEditIcon from "../../../../assets/img/check-color.svg";
-import { MenuItemProps } from "../../../../types/interface/interface";
+import { MenuItems } from "../../../../types/interface/interface";
 import * as React from "react";
 import deleteItem from "../../../../services/menu/deleteItem/deleteItem";
 
-// break down ingredients sting to an array
+// break down ingredients string to an array
 const stringToArray = (ingredientsString: string) => {
   const ingredientsArr = ingredientsString.split(", ");
-  console.log(ingredientsArr);
+  // console.log(ingredientsArr);
 
   return ingredientsArr;
 };
 
-export default function MenuItemEdit(props: MenuItemProps) {
-  const { itemCategory, itemName, itemDesc, itemPrice, itemIngredients } =
-    props;
-  const [categoryName, setCategoryName] = useState(itemCategory);
-  const [name, setName] = useState(itemName);
-  const [description, setDescription] = useState(itemDesc);
-  const [price, setPrice] = useState(itemPrice || 0);
-  const [ingredients, setIngredients] = useState(itemIngredients);
+export default function MenuItemEdit(props: MenuItems) {
+  const { category, menuId, description, price, ingredients } = props;
+  const [categoryName, setCategoryName] = useState(category);
+  const [name, setName] = useState(menuId);
+  const [desc, setDesc] = useState(description);
+  const [unitPrice, setUnitPrice] = useState(price || 0);
+  const [ingred, setIngred] = useState(ingredients || [""]);
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [submitEdit, setSubmitEdit] = useState<boolean>(false);
 
   const handleIngredients = (e: React.ChangeEvent<HTMLInputElement>) => {
     stringToArray(e.target.value);
-    setIngredients(stringToArray(e.target.value));
+    setIngred(stringToArray(e.target.value));
   };
-
-  // console.log(ingredients);
 
   //   Delete item from menu
   const deleteMenuItem = async () => {
@@ -39,8 +36,7 @@ export default function MenuItemEdit(props: MenuItemProps) {
     if (menuId === "invalid") {
       alert("ERROR mayday mayday");
     }
-    const response = await deleteItem({ menuId: menuId });
-    console.log(response);
+    await deleteItem({ menuId: menuId });
   };
 
   //   Send update to db
@@ -49,7 +45,7 @@ export default function MenuItemEdit(props: MenuItemProps) {
   };
 
   return (
-    <div className="w-full h-auto border border-black rounded-md flex flex-col md:flex-row justify-between px-2 py-1">
+    <div className="w-full h-auto border border-black rounded-md flex flex-col lg:flex-row justify-between px-2 py-1 gap-1">
       <div className="flex flex-col items-start justify-start w-24">
         <h2 className="font-medium">Category</h2>
         {isEditing ? (
@@ -91,24 +87,24 @@ export default function MenuItemEdit(props: MenuItemProps) {
             />
           </div>
         ) : (
-          ingredients?.map((ingredient, index) => (
+          ingredients?.map((ingred, index) => (
             <p key={index} className="font-light">
-              {ingredient}
+              {ingred}
             </p>
           ))
         )}
       </div>
-      <div className="flex flex-col items-start justify-start w-44">
+      <div className="flex flex-col items-start justify-start w-32">
         <h2 className="font-medium">Description</h2>
         {isEditing ? (
           <input
             type="text"
-            placeholder={description}
+            placeholder={desc}
             className="border px-1  focus:outline-none"
             autoComplete="off"
           />
         ) : (
-          <p className="font-light">{description}</p>
+          <p className="font-light">{desc}</p>
         )}
       </div>
       <div className="flex flex-col items-start justify-start w-24">
@@ -117,17 +113,17 @@ export default function MenuItemEdit(props: MenuItemProps) {
           <input
             type="number"
             min={100}
-            placeholder={price.toString()}
+            placeholder={unitPrice.toString()}
             className="border px-1 w-16 focus:outline-none"
             autoComplete="off"
           />
         ) : (
           <p className="font-light">
-            {price} <span className="font-bold tracking-widest">:-</span>
+            {unitPrice} <span className="font-bold tracking-widest">:-</span>
           </p>
         )}
       </div>
-      <div className="w-full md:w-32 flex justify-evenly items-center">
+      <div className="w-full self-center md:w-32 flex justify-evenly items-center">
         {submitEdit ? (
           <img
             src={submitEditIcon}

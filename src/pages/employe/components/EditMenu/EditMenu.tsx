@@ -15,7 +15,6 @@ export default function EditMenu() {
 
   const handleCloseNewItem = (): void => {
     setToggleNewItem((prev) => !prev);
-    // console.log(toggleNewItem);
   };
 
   // Updates menu when a item gets added
@@ -26,6 +25,7 @@ export default function EditMenu() {
   useEffect(() => {
     const fetchData = async () => {
       const response: MenuApiResponse = await getMenu();
+      // console.log("Menu data received:", response.data.menu);
       const menuData = response.data.menu;
       setMenu(menuData);
     };
@@ -58,14 +58,14 @@ export default function EditMenu() {
           fetchAllItems={fetchMenu}
         />
       )}
-      {menu?.map((item, index) => (
+      {menu?.map((item) => (
         <MenuItemEdit
-          key={index}
-          itemCategory={item.category}
-          itemDesc={item.description}
-          itemName={item.menuId}
-          itemIngredients={item.ingredients}
-          itemPrice={item.price}
+          key={item.menuId}
+          category={item.category}
+          description={item.description}
+          menuId={item.menuId}
+          ingredients={item.ingredients}
+          price={item.price}
         />
       ))}
     </div>

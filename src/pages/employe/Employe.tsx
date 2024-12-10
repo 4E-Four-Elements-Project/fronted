@@ -8,6 +8,7 @@ import { Variants, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import PendingOrders from "./components/pendingOrders/PendingOrders";
+import handleLogout from "../logut/Logut";
 
 export default function Employe() {
   const [currentStaff, setCurrentStaff] = useState<boolean>(true);
@@ -85,9 +86,9 @@ export default function Employe() {
         whileHover="animate"
         className="absolute top-10 right-32 md:right-52"
       >
-        <Link to={"/"} className="text-black">
+        <span onClick={handleLogout} className="text-black">
           Sign out
-        </Link>
+        </span>
         <svg width="60" height="5" className="absolute top-6">
           <motion.path
             variants={onClickSignOut}
