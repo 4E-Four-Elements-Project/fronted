@@ -104,7 +104,6 @@ const ShoppingCart = () => {
   const calculateTotal = () =>
     cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
-
   if (cart.length === 0) {
     return (
       <div className="flex flex-col justify-center items-center">

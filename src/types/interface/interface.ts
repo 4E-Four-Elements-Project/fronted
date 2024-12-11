@@ -5,13 +5,13 @@ export interface HeaderProps {
   className?: string;
 }
 
+
 export interface CartItem {
   id: string;    // eller number om id:t är en numerisk identifierare
   name: string;  // Namnet på varan
   price: number; // Priset på varan
   quantity: number; // Antalet av varan i kundvagnen (om tillämpligt)
 }
-
 
 export interface MenuFilterProps {
   toggle: boolean;
@@ -30,7 +30,7 @@ export interface FilterContextType {
 
 export interface MenuItems {
   menuId?: string;
-  ingredients?: [];
+  ingredients?: string[];
   category?: string;
   description?: string;
   price: number;
@@ -43,10 +43,33 @@ export interface MenuApiResponse {
 }
 
 export interface InventoryApi {
-  menuId?: string;
+  inventoryId?: string;
   quantity: number;
 }
 
 export interface InventoryApiResponse {
   data: InventoryApi[];
+}
+
+export interface ProtectedRoutes {
+  children: React.ReactNode;
+}
+
+export interface GetOrderInformation {
+  cartId: string;
+  comment?: string;
+  createdAt: string;
+  menuId: string;
+  orderId: string;
+  orderLocked: false;
+  paymentMethod: string;
+  price: string;
+  quantity: number;
+  totalPrice: number;
+  userId: string;
+  status: string;
+}
+
+export interface OrderInformationResponse {
+  data: GetOrderInformation[];
 }

@@ -6,11 +6,13 @@ import Overview from "./components/HeaderOverview/Overview";
 import { Variants, motion } from "motion/react";
 
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
 import PendingOrders from "./components/pendingOrders/PendingOrders";
+import handleLogout from "../logut/Logut";
 
 export default function Employe() {
   const [currentStaff, setCurrentStaff] = useState<boolean>(true);
+  const [currentOrder, setCurrentOrder] = useState<[]>([]);
+
   useEffect(() => {
     if (location.pathname === "/chef") {
       setCurrentStaff(!currentStaff);
@@ -71,13 +73,10 @@ export default function Employe() {
         // Chef
         <section className="w-full md:w-2/3 flex flex-col items-center justify-between md:grid md:grid-cols-4 gap-4 md:items-start md:justify-items-end mt-11 px-8 pb-8 ">
           {/* Active orders */}
-          <PendingOrders />
-          <PendingOrders />
-          <PendingOrders />
-          <PendingOrders />
-          <PendingOrders />
-          <PendingOrders />
-          <PendingOrders />
+
+          {/* {currentOrder.map((order) => (
+            <PendingOrders />
+          ))} */}
         </section>
       )}
       <motion.div
@@ -85,9 +84,9 @@ export default function Employe() {
         whileHover="animate"
         className="absolute top-10 right-32 md:right-52"
       >
-        <Link to={"/"} className="text-black">
+        <span onClick={handleLogout} className="text-black cursor-pointer">
           Sign out
-        </Link>
+        </span>
         <svg width="60" height="5" className="absolute top-6">
           <motion.path
             variants={onClickSignOut}

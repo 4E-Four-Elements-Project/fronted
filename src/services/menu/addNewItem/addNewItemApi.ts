@@ -2,11 +2,16 @@ const url = import.meta.env.VITE_ADD_ITEM_URL;
 
 export default async function addNewItem(body: object) {
   try {
-    console.log(body, "Body");
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
+      throw new Error("Can't find token");
+    }
 
     const response = await fetch(url, {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),

@@ -3,14 +3,15 @@ import addItem from "../../../../assets/img/check-color.svg";
 import deleteItem from "../../../../assets/img/delete.svg";
 import { FormDataNewItem } from "../../../../types/types/types";
 import addNewItem from "../../../../services/menu/addNewItem/addNewItemApi";
-import getMenu from "../../../../services/menu/getMenu/getMenuApi";
 
 export default function AddItemToMenu({
   toggleItem,
   closeNewItem,
+  fetchAllItems,
 }: {
   toggleItem: boolean;
   closeNewItem: VoidFunction;
+  fetchAllItems: VoidFunction;
 }) {
   const [formData, setFormData] = useState<FormDataNewItem>({
     category: "",
@@ -22,8 +23,12 @@ export default function AddItemToMenu({
 
   // Add new item
   const handleSubmit = async () => {
+    console.log("testar innan await");
+
     await addNewItem(formData);
-    await getMenu();
+    // BEHÖVER UPPDATERAS, DEN OMRENDERAS INTE
+    fetchAllItems();
+
     closeNewItem();
   };
 
@@ -49,9 +54,9 @@ export default function AddItemToMenu({
     <form
       className={`${
         toggleItem ? "flex" : "hidden"
-      }  w-full h-auto border border-black rounded-md flex-col md:flex-row justify-between px-2 py-5`}
+      }  w-full h-auto border border-black rounded-md flex-col lg:flex-row justify-between px-2 py-5 `}
     >
-      <div className="flex flex-col items-start justify-start w-24">
+      <div className="flex flex-col items-start justify-start w-20">
         <h2 className="font-medium">Category</h2>
         <input
           type="text"
@@ -60,13 +65,13 @@ export default function AddItemToMenu({
           placeholder="Category"
           required
           autoComplete="off"
-          className="border px-1 focus:outline-none"
+          className="border px-1 focus:outline-none w-full"
           value={formData.category}
           onChange={handleInputChange}
         />
       </div>
 
-      <div className="flex flex-col items-start justify-start w-24">
+      <div className="flex flex-col items-start justify-start w-16">
         <h2 className="font-medium">Name</h2>
         <input
           type="text"
@@ -75,7 +80,7 @@ export default function AddItemToMenu({
           placeholder="Name"
           required
           autoComplete="off"
-          className="border px-1 focus:outline-none"
+          className="border px-1 focus:outline-none w-full"
           value={formData.menuId}
           onChange={handleInputChange}
         />
@@ -88,14 +93,14 @@ export default function AddItemToMenu({
           name="ingredients"
           id="ingredients"
           placeholder="tex salad, meat"
-          className="w-24 border px-1 focus:outline-none"
+          className="border px-1 focus:outline-none w-full"
           autoComplete="off"
           value={formData.ingredients}
           onChange={handleInputChange}
         />
       </div>
 
-      <div className="flex flex-col items-start justify-start w-62">
+      <div className="flex flex-col items-start justify-start w-32">
         <h2 className="font-medium">Description</h2>
         <input
           type="text"
@@ -104,13 +109,13 @@ export default function AddItemToMenu({
           placeholder="Description"
           required
           autoComplete="off"
-          className="border px-1 focus:outline-none"
+          className="border px-1 focus:outline-none w-full"
           value={formData.description}
           onChange={handleInputChange}
         />
       </div>
 
-      <div className="flex flex-col items-start justify-start w-24">
+      <div className="flex flex-col items-start justify-start w-16">
         <h2 className="font-medium">Price</h2>
         <input
           type="number"
@@ -120,12 +125,12 @@ export default function AddItemToMenu({
           placeholder="0 :-"
           required
           autoComplete="off"
-          className="border px-1 w-16 focus:outline-none"
+          className="border px-1 focus:outline-none w-full"
           value={formData.price}
           onChange={handleInputChange}
         />
       </div>
-      <div className="w-full md:w-24 h-auto flex items-center justify-between ml-4">
+      <div className="w-24 self-center h-auto flex items-center justify-between ml-4">
         <img
           src={addItem}
           alt="Add item icon"

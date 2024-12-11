@@ -5,7 +5,11 @@ import cartImg from "../../../assets/img/shopping-cart.svg";
 import { HeaderProps } from "../../../types/interface/interface";
 import Logut from "../../../pages/logut/Logut";
 
-export default function Header({ cartCount = 0, cart = [], className }: HeaderProps) {
+export default function Header({
+  cartCount = 0,
+  cart = [],
+  className,
+}: HeaderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -31,7 +35,9 @@ export default function Header({ cartCount = 0, cart = [], className }: HeaderPr
 
   return (
     <header
-      className={`w-full flex items-center justify-between px-5 py-3 ${className || "w-full"}`}
+      className={`w-full flex items-center justify-between px-5 py-3 ${
+        className || "w-full"
+      }`}
     >
       {/* Logotyp (vänster) */}
       <h1
@@ -51,6 +57,7 @@ export default function Header({ cartCount = 0, cart = [], className }: HeaderPr
             className="flex flex-col items-center relative"
           >
             <button onClick={Logut} className="text-white md:text-black">
+
               Logout
             </button>
             <svg width="48" height="5" className="absolute top-6">
@@ -70,7 +77,7 @@ export default function Header({ cartCount = 0, cart = [], className }: HeaderPr
             whileHover="animate"
             className="flex flex-col items-center relative"
           >
-            <Link to="/login" className="text-white md:text-black">
+            <Link to="/login" className="text-white xl:text-black">
               Sign in
             </Link>
             <svg width="48" height="5" className="absolute top-6">
@@ -145,7 +152,7 @@ export default function Header({ cartCount = 0, cart = [], className }: HeaderPr
             whileHover="animate"
             className="flex flex-col items-center justify-center relative"
           >
-            <Link to="/createAccount" className="text-white md:text-black">
+            <Link to="/createAccount" className="text-white xl:text-black">
               Create account
             </Link>
             <svg width="120" height="5" className="absolute top-6">
@@ -164,3 +171,4 @@ export default function Header({ cartCount = 0, cart = [], className }: HeaderPr
     </header>
   );
 }
+

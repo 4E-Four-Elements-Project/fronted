@@ -2,7 +2,10 @@ import { useState } from "react";
 import Contact from "../../components/layout/contact/contact";
 import Header from "../../components/layout/header/Header";
 import MenuButton from "../../components/layout/menu-button/menu-button";
-import { createAccount, UserData } from "../../services/users/createAccount/CreateAccount";
+import {
+  createAccount,
+  UserData,
+} from "../../services/users/createAccount/CreateAccount";
 
 const CreateAccount = () => {
   const [formData, setFormData] = useState({
@@ -21,38 +24,42 @@ const CreateAccount = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
-    console.log(`Updating field: ${name} to value: ${value}`); // Loggar vilken fält som uppdateras
-    setFormData((prevFormData: FormData) => ({ ...prevFormData, [name]: value }));
+    // console.log(`Updating field: ${name} to value: ${value}`); // Loggar vilken fält som uppdateras
+    setFormData((prevFormData: FormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
 
-    console.log("handleSubmit triggered"); // För att kontrollera att funktionen körs
+    // console.log("handleSubmit triggered"); // För att kontrollera att funktionen körs
 
     if (formData.password !== formData.confirmPassword) {
-        alert("Passwords do not match");
-        return;
+      alert("Passwords do not match");
+      return;
     }
 
     try {
-        const userData: UserData = {
-            username: formData.username,
-            email: formData.email,
-            password: formData.password,
-        };
+      const userData: UserData = {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      };
 
-        console.log("Sending data to API:", userData); // Logga datan som skickas
+      // console.log("Sending data to API:", userData); // Logga datan som skickas
 
-        const response = await createAccount(userData);
+      const response = await createAccount(userData);
 
-        alert(response.message || "Account created successfully!");
+      alert(response.message || "Account created successfully!");
     } catch (error) {
-        alert("Failed to create account. Please try again.");
-        console.error("Error:", error);
+      alert("Failed to create account. Please try again.");
+      console.error("Error:", error);
     }
-};
-
+  };
 
   return (
     <div className="min-h-screen relative">
@@ -84,7 +91,10 @@ const CreateAccount = () => {
           onSubmit={handleSubmit}
         >
           <div className="mb-4">
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="username"
+              className="block text-sm font-medium text-gray-700"
+            >
               Username
             </label>
             <input
@@ -100,7 +110,10 @@ const CreateAccount = () => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
               Email
             </label>
             <input
@@ -116,7 +129,10 @@ const CreateAccount = () => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
               Enter a password
             </label>
             <input
@@ -132,7 +148,10 @@ const CreateAccount = () => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="confirmPassword"
+              className="block text-sm font-medium text-gray-700"
+            >
               Confirm password
             </label>
             <input
@@ -148,12 +167,12 @@ const CreateAccount = () => {
           </div>
 
           <div>
-          <MenuButton
+            <MenuButton
               type="submit"
               className="before:absolute before:content-[''] before:top-1/4 before:left-0 before:ml-2 before:w-[calc(100%)] before:h-10 before:bg-pink-0 before:rounded before:border before:border-black before:-z-10 before:transition-transform before:duration-300 hover:before:translate-x-[-8px] hover:before:translate-y-[-7px]"
-          >
+            >
               Sign Up
-          </MenuButton>
+            </MenuButton>
           </div>
         </form>
       </div>
