@@ -4,11 +4,13 @@ import { useState, useRef } from "react";
 import { motion } from "motion/react";
 import { GetOrderInformation } from "../../../../types/interface/interface";
 import deleteOrder from "../../../../services/employe/deleteOrder/deleteOrder";
-import sendOrderToKitchen from "../../../../services/employe/sendOrderToKitchen/sendOrderToKitchen";
+import updateOrderStatus from "../../../../services/employe/updateOrderStatus/updateOrderStatus";
 
 export default function Order({
   orderItem,
+  refreshOrders,
 }: {
+  refreshOrders: React.Dispatch<React.SetStateAction<boolean>>;
   orderItem: GetOrderInformation;
 }) {
   const [additionalInfo, setAdditionalInfo] = useState<string>(
@@ -31,12 +33,14 @@ export default function Order({
     const orderId: string = orderItem.orderId;
     await deleteOrder({ orderId });
     setIsOrderDeleted(true);
+    refreshOrders(true);
   };
 
   // Send order to kithcen
   const handleAcceptOrder = async () => {
     const orderId: string = orderItem.orderId;
-    await sendOrderToKitchen({ orderId });
+    await updateOrderStatus({ orderId, status: "kitchen" });
+    refreshOrders(true);
   };
 
   return (

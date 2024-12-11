@@ -24,16 +24,16 @@ export default function ActiveOrders() {
     const fetchData = async () => {
       const response: OrderInformationResponse = await getOrders();
 
-      console.log(response); // Remove
-
       // Filter by status.
       const pendingOrders = response.data.filter(
-        (order) => order.status === "pending"
+        (order) => order.orderStatus === "pending"
       );
 
       // Only use orders with status "PENDING"
       setOrderItems({ ...response, data: pendingOrders });
     };
+
+    setRefreshOrders(false);
 
     fetchData();
     // Fetch every 60 sec
@@ -108,7 +108,11 @@ export default function ActiveOrders() {
       </div>
       {/* Render the sorted orders */}
       {sortedItems?.map((orderItem) => (
-        <Order key={orderItem.orderId} orderItem={orderItem} />
+        <Order
+          key={orderItem.orderId}
+          orderItem={orderItem}
+          refreshOrders={setRefreshOrders}
+        />
       ))}
     </section>
   );
