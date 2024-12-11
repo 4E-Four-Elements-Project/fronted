@@ -3,19 +3,27 @@ import Header from "../../components/layout/header/Header";
 
 interface CartItem {
   menuId: string;
+  name: string;
   price: number;
+  description: string;
+  quantity: number;
 }
-import MenuButton from "../../components/layout/menu-button/menu-button";
 
 const OrderConfirmation = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const cart = location.state?.cart || [];
+  const cart: CartItem[] = location.state?.cart || [];
+  const orderId = location.state?.orderId;
 
+  // Funktion för att räkna ut totalen
   const calculateTotal = () => {
-    return cart.reduce((total: number, item: CartItem) => total + item.price, 0);
+    return cart.reduce(
+      (total: number, item: CartItem) => total + item.price * item.quantity,
+      0
+    );
   };
 
+  // Rendera komponenten
   return (
     <>
       <Header />
@@ -25,55 +33,53 @@ const OrderConfirmation = () => {
             <h1>Order Confirmation</h1>
           </div>
 
-          <div className="flex w-full justify-between">
-            <div className="font-bold font-Roboto">TOTAL</div>
-            <div className="font-bold font-Roboto">{calculateTotal()} KR</div>
-          </div>
+          {cart.length > 0 ? (
+            <>
+              <h1 className="flex items-center justi gap-3 font-Londrina text-2xl">Order Number:<p className="font-Roboto text-lg">{orderId}</p></h1>
 
-          <div className="flex w-full justify-between">
-            <div>ORDER ID</div>
-            <div>{cart.length > 0 ? "123456" : "No items in cart"}</div>
-          </div>
-
-          <ul className="w-full">
-            {cart.map((item: CartItem, index: number) => (
-              <li
-                key={index}
-                className="flex justify-between border-b py-2"
-              >
-                <span className="italic">{item.menuId.replace("_", " ")}</span>
-                <span>{item.price} KR</span>
-              </li>
-            ))}
-          </ul>
-
-          <div className="w-full">
-            <div className="flex justify-between">
-              <div className="italic font-bold font-Roboto">ORDER STATUS:</div>
-              <div>
-                <MenuButton
-                  onClick={() => {
-                    console.log("Navigating with cart data:", cart);
-                    navigate("/edit", { state: { cart } });
-                  }}
-                  className="h-[25px] pt-0 before:h-[21px] before:bg-secondary-0 before:ml-1 hover:before:translate-x-[-5px] hover:before:translate-y-[-5px]"
-                  type="button"
-                  to="#"
-                >
-                  Edit
-                </MenuButton>
+              <ul className="w-full">
+                {cart.map((item: CartItem, index: number) => (
+                  <li key={index} className="flex justify-between border-b py-2">
+                    <span className="italic">
+                      {item.menuId.replace("_", " ")}{" "}
+                      <span className="font-bold text-sm">x{item.quantity}</span>
+                    </span>
+                    <span>{item.price * item.quantity} KR</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="flex w-full justify-between">
+                <div className="font-bold font-Roboto">TOTAL</div>
+                <div className="font-bold font-Roboto">{calculateTotal()} KR</div>
               </div>
-            </div>
-          </div>
 
-          <div className="font-Roboto italic flex w-full gap-2 flex-col">
-            <a className="flex w-full justify-end" href="/history">
-              <div>Order History</div>
-            </a>
-            <a className="flex w-full justify-end" href="/menu">
-              <div>Menu</div>
-            </a>
-          </div>
+              <div className="text-l flex items-center justify-between w-full">
+
+                <h1>Order status:</h1>
+
+                  <button
+                    onClick={() =>
+                      navigate("/edit", {
+                        state: {
+                          cart, // Skickar varukorgens innehåll
+                          orderId, // Skickar order-ID
+                        },
+                      })
+                    }
+                    className="relative bg-white w-1/6 text-sm text-center border border-black rounded before:absolute before:content-[''] before:top-1/4 before:left-0 before:ml-4 before:w-20 before:h-5 before:bg-secondary before:rounded before:border before:border-black before:-z-10 before:transition-transform before:duration-300 hover:before:translate-x-[-8px] hover:before:translate-y-[-6px] before:bg-secondary-0"
+                  >
+                    Edit
+                  </button>
+              </div>
+
+              <div className="flex flex-col items-end w-full gap-3 mt-4">
+                <button onClick={() => navigate ("/order-history")}>Order History</button>
+                <button onClick={() => navigate ("/menu")}>Menu</button>
+              </div>
+            </>
+          ) : (
+            <p className="text-center text-gray-500">Din varukorg är tom.</p>
+          )}
         </div>
       </div>
     </>

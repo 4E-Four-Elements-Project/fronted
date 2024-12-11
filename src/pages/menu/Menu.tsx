@@ -59,26 +59,86 @@ export default function Menu() {
     };
     fetchData();
   }, [filter]);
-
-  const handleAddToCart = (menuItem: MenuItems) => {
-    setCart((prevCart) => {
-      // Kontrollera om artikeln redan finns i kundvagnen
-      const existingItemIndex = prevCart?.findIndex((item) => item.menuId === menuItem.menuId);
   
-      if (existingItemIndex !== undefined && existingItemIndex !== -1) {
-        // Om artikeln redan finns, uppdatera endast kvantiteten
-        const updatedCart = [...prevCart];
-        updatedCart[existingItemIndex] = {
-          ...updatedCart[existingItemIndex],
-          quantity: (updatedCart[existingItemIndex].quantity || 0) + 1, // Säkerställ att quantity finns
-        };
-        return updatedCart;
+  const handleAddToCart = async (menuItem: MenuItems) => {
+    try {
+      // Logga datan som skickas till servern
+      console.log("Skickar följande data till /cart:", {
+        menuId: menuItem.menuId,
+        ingredients: menuItem.ingredients,
+        price: menuItem.price,
+        category: menuItem.category,
+        description: menuItem.description,
+        quantity: 1,
+      });
+  
+      // Skicka POST-förfrågan till /cart
+      const response = await fetch("https://j4u384wgne.execute-api.eu-north-1.amazonaws.com/cart/post", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          menuId: menuItem.menuId,
+          ingredients: menuItem.ingredients,
+          price: menuItem.price,
+          category: menuItem.category,
+          description: menuItem.description,
+          quantity: 1,
+        }),
+      });
+  
+      // Logga responsen från servern
+      const responseData = await response.json();
+      console.log("Respons från servern:", responseData);
+  
+      // Kontrollera om servern returnerade ett fel
+      if (!response.ok) {
+        console.error("Serverfel vid POST till /cart:", response.statusText);
+        return;
       }
   
-      // Om artikeln inte finns, lägg till den som ny med kvantitet 1
-      return [...(prevCart || []), { ...menuItem, quantity: 1 }];
-    });
+      // Kontrollera om cartId finns i svaret och uppdatera cart med det nya objektet
+      if (responseData?.data?.cartItem?.cartId) {
+        const cartId = responseData.data.cartItem.cartId;
+        
+        // Uppdatera cart med det nya objektet
+        setCart((prevCart) => {
+          console.log("Tidigare innehåll i cart:", prevCart);
+  
+          // Kolla om objektet redan finns i cart
+          const existingItemIndex = prevCart.findIndex((item) => item.menuId === menuItem.menuId);
+          
+          if (existingItemIndex !== -1) {
+            // Om det finns, uppdatera mängden
+            const updatedCart = [...prevCart];
+            updatedCart[existingItemIndex] = {
+              ...updatedCart[existingItemIndex],
+              quantity: (updatedCart[existingItemIndex].quantity || 0) + 1,
+              cartId,  // Lägg till cartId till det uppdaterade objektet
+            };
+  
+            console.log("Uppdaterad cart:", updatedCart);
+            return updatedCart;
+          }
+  
+          // Annars, skapa ett nytt objekt i cart
+          const newCart = [
+            ...prevCart,
+            { ...menuItem, quantity: 1, cartId },  // Lägg till cartId till det nya objektet
+          ];
+          console.log("Ny cart:", newCart);
+          return newCart;
+        });
+      } else {
+        console.error("Inget cartId mottaget från servern");
+      }
+    } catch (error) {
+      // Logga eventuella fel
+      console.error("Misslyckades med att lägga till i cart:", error);
+    }
   };
+  
 
   return (
     <main className="w-full min-h-screen bg-primary-0 flex flex-col items-center md:items-start xl:flex-row">

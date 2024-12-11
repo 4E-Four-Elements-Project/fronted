@@ -1,9 +1,11 @@
 const handleLogout = async () => {
     const LOGOUT_API_URL = import.meta.env.VITE_POST_LOGOUT_URL;
-  
+
+    console.log("LOGOUT_API_URL:", LOGOUT_API_URL);
+    console.log("Environment variables:", import.meta.env);
+
     // Hämta token från localStorage
     const token = localStorage.getItem("authToken");
-    const username = "Buffy"; // Ersätt med användarens namn om det är dynamiskt
   
     if (!token) {
       console.error("No token found in localStorage.");
@@ -12,17 +14,14 @@ const handleLogout = async () => {
   
     try {
       console.log("Sending logout request to:", LOGOUT_API_URL);
-      console.log("Data sent:", { username, token });
+      console.log("Data sent:", { token });
   
       const response = await fetch(LOGOUT_API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          username,
-          token,
-        }),
       });
   
       console.log("Response status:", response.status);

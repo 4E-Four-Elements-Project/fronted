@@ -11,22 +11,25 @@ import { FilterProvider } from "./context/FilterContext.tsx";
 import CreateAccount from "./pages/createAccount/CreateAccount.tsx";
 import EditOrder from "./pages/edit/EditOrder.tsx";
 import OrderConfirmation from "./pages/confirmation/OrderConfirmation.tsx";
+import { AuthProvider } from "./services/auth/auth.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <FilterProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/menu" element={<Menu />} />
-          <Route path="/cart" element={<ShoppingCart />} />
-          <Route path="/createaccount" element={<CreateAccount />} />
-          <Route path="/confirmation" element={<OrderConfirmation />} />
-          <Route path="/edit" element={<EditOrder />} />
-          <Route path="/employe" element={<Employe />} />
-        </Routes>
-      </BrowserRouter>
-    </FilterProvider>
-  </StrictMode>
+  <AuthProvider>
+    <StrictMode>
+      <FilterProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/menu" element={<Menu />} />
+            <Route path="/cart" element={<ShoppingCart />} />
+            <Route path="/createaccount" element={<CreateAccount />} />
+            <Route path="/confirmation" element={<OrderConfirmation />} />
+            <Route path="/edit" element={<EditOrder />} />
+            <Route path="/employe" element={<Employe />} />
+          </Routes>
+        </BrowserRouter>
+      </FilterProvider>
+    </StrictMode>
+  </AuthProvider>
 );
