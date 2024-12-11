@@ -1,6 +1,6 @@
 import greenMark from "../../../../assets/img/check-color.svg";
 import deleteMark from "../../../../assets/img/delete.svg";
-import { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "motion/react";
 import { GetOrderInformation } from "../../../../types/interface/interface";
 import deleteOrder from "../../../../services/employe/deleteOrder/deleteOrder";
@@ -39,7 +39,15 @@ export default function Order({
   // Send order to kithcen
   const handleAcceptOrder = async () => {
     const orderId: string = orderItem.orderId;
-    await updateOrderStatus({ orderId, status: "kitchen" });
+
+    const additionalInfoToSend =
+      additionalInfo !== orderItem.comment ? additionalInfo : undefined;
+
+    await updateOrderStatus({
+      orderId,
+      status: "kitchen",
+      additionalInfo: additionalInfoToSend,
+    });
     refreshOrders(true);
   };
 

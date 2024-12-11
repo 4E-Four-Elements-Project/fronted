@@ -5,19 +5,23 @@ const url = import.meta.env.VITE_PUT_ORDER_URL;
 export default async function updateOrderStatus({
   orderId,
   status,
+  additionalInfo,
 }: {
   orderId: string;
   status: string;
+  additionalInfo?: string;
 }) {
   try {
     const orderDataResponse = await getSpecificOrder({ orderId });
 
     const orderData = orderDataResponse.data["Order-details"];
+    console.log("logging from api", additionalInfo);
 
     const updatedOrder = {
       ...orderData,
       orderStatus: status,
       price: parseFloat(orderData.price),
+      comment: additionalInfo,
     };
 
     const response = await fetch(`${url}${orderId}`, {

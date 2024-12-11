@@ -52,8 +52,10 @@ export default function Employe() {
     fetchOrders();
 
     const interval = setInterval(fetchOrders, 60000);
-    return () => clearInterval(interval);
-  }, [refreshOrders]);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <main className="bg-primary-0 w-full min-h-screen overflow-hidden flex flex-col items-center pt-24">
@@ -68,6 +70,7 @@ export default function Employe() {
           className="text-black"
           onClick={() => {
             setCurrentStaff(!currentStaff);
+            setRefreshOrders(true);
           }}
         >
           {currentStaff ? "Chef" : "Employe"}
