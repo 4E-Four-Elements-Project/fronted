@@ -27,6 +27,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/createaccount" element={<CreateAccount />} />
             <Route path="/confirmation" element={<OrderConfirmation />} />
             <Route path="/edit" element={<EditOrder />} />
+
             {/* Protected routes */}
             <Route
               path="/employe"
