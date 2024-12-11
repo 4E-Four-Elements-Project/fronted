@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { GetOrderInformation } from "../../../../types/interface/interface";
-import sendOrderToKitchen from "../../../../services/employe/updateOrderStatus/updateOrderStatus";
+
 import updateOrderStatus from "../../../../services/employe/updateOrderStatus/updateOrderStatus";
 
 export default function PendingOrders({
