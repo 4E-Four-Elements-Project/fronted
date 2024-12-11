@@ -73,13 +73,10 @@ export default function Employe() {
         // Chef
         <section className="w-full md:w-2/3 flex flex-col items-center justify-between md:grid md:grid-cols-4 gap-4 md:items-start md:justify-items-end mt-11 px-8 pb-8 ">
           {/* Active orders */}
-          <PendingOrders />
-          <PendingOrders />
-          <PendingOrders />
-          <PendingOrders />
-          <PendingOrders />
-          <PendingOrders />
-          <PendingOrders />
+
+          {/* {currentOrder.map((order) => (
+            <PendingOrders />
+          ))} */}
         </section>
       )}
       <motion.div

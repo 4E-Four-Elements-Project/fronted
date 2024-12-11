@@ -20,7 +20,7 @@ export default async function updateItem({
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ updatedItem }),
+      body: JSON.stringify(updatedItem),
     });
 
     if (!response.ok) {

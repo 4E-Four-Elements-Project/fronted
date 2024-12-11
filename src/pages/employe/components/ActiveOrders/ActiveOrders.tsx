@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import Order from "../Order/Order";
 import getOrders from "../../../../services/employe/getOrders/getOrders";
+import refreshIcon from "../../../../assets/img/refresh.svg";
 import {
   GetOrderInformation,
   OrderInformationResponse,
 } from "../../../../types/interface/interface";
+import { motion } from "motion/react";
 
 export default function ActiveOrders() {
   const [selectedCheckbox, setSelectedCheckbox] = useState<string>("newest");
   const [orderItems, setOrderItems] = useState<OrderInformationResponse>();
   const [sortedItems, setSortedItems] = useState<GetOrderInformation[]>();
+  const [refreshOrders, setRefreshOrders] = useState<boolean>(false);
 
   // Change value on the checkboxes
   const handleCheckboxChange = (value: string) => {
@@ -20,13 +23,24 @@ export default function ActiveOrders() {
   useEffect(() => {
     const fetchData = async () => {
       const response: OrderInformationResponse = await getOrders();
-      console.log(response);
 
-      setOrderItems(response);
+      console.log(response); // Remove
+
+      // Filter by status.
+      const pendingOrders = response.data.filter(
+        (order) => order.status === "pending"
+      );
+
+      // Only use orders with status "PENDING"
+      setOrderItems({ ...response, data: pendingOrders });
     };
 
     fetchData();
-  }, []);
+    // Fetch every 60 sec
+    const interval = setInterval(() => fetchData(), 60000);
+
+    return () => clearInterval(interval);
+  }, [refreshOrders]);
 
   // Sort orders by date
   useEffect(() => {
@@ -43,7 +57,18 @@ export default function ActiveOrders() {
   return (
     <section className="w-72 md:w-full h-80 overflow-y-scroll rounded-md scroll-smooth no-scrollbar flex flex-col gap-4 font-Roboto p-2 py-4 bg-white border border-black col-span-2 relative">
       <div className="flex justify-between items-center w-full">
-        <p>Active orders</p>
+        <div className="flex items-center justify-between w-36">
+          <p>Active orders</p>
+          <div className="cursor-pointer">
+            <motion.img
+              whileTap={{ rotate: 360 }}
+              src={refreshIcon}
+              alt="Refresh icon"
+              className="w-6 "
+              onClick={() => setRefreshOrders(!refreshOrders)}
+            />
+          </div>
+        </div>
 
         {/* Checkboxes */}
         <div className="w-34 h-12 flex flex-col justify-between items-end lg:w-64 lg:items-center lg:flex-row">

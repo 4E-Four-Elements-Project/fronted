@@ -58,6 +58,7 @@ export interface GetOrderInformation {
   quantity: number;
   totalPrice: number;
   userId: string;
+  status: string;
 }
 
 export interface OrderInformationResponse {
