@@ -51,8 +51,6 @@ const ShoppingCart = () => {
       paymentMethod: paymentMethod || "Pay Online", // Standardbetalningsmetod
     };
   
-    console.log("Order data som skickas:", orderData);
-  
     try {
       const response = await fetch(
         "https://j4u384wgne.execute-api.eu-north-1.amazonaws.com/order/post",
@@ -104,6 +102,14 @@ const ShoppingCart = () => {
   const calculateTotal = () =>
     cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
+  const cart = location.state?.cart || []; // Hämta varukorgen från state
+  // console.log(cart);
+
+  const calculateTotal = () =>
+    cart.reduce(
+      (total: number, item: CartItem) => total + item.price * item.quantity,
+      1
+    );
 
   if (cart.length === 0) {
     return (
@@ -155,6 +161,15 @@ const ShoppingCart = () => {
                     className="flex item-center justify-center w-5 h-5"
                   />
                 </button>
+          {cart.map((item: CartItem) => (
+            <li
+              key={item.id}
+              className="border border-black rounded-xl p-3 flex flex-row gap-2 bg-[#f1f1f1] justify-between"
+            >
+              <div className="font-roboto flex flex-col gap-2">
+                <p>{item.description}</p>
+                <p>{item.price} kr</p>
+                <p>Quantity: {item.quantity}</p>
               </div>
             </li>
           ))}

@@ -23,15 +23,24 @@ export default function Overview() {
       const response: InventoryApiResponse = await getInventory();
       const responseQuantity = response.data;
       const addTotalInventoryStock =
-        responseQuantity[0].quantity +
-        responseQuantity[1].quantity +
-        responseQuantity[2].quantity +
-        responseQuantity[3].quantity;
-
+        responseQuantity[0]?.quantity +
+        responseQuantity[1]?.quantity +
+        responseQuantity[2]?.quantity +
+        responseQuantity[3]?.quantity;
       setTotalInventory(addTotalInventoryStock);
     };
 
     fecthInventoryData();
+
+    // 10 min
+    const min = 100000;
+
+    // Update inventory every min
+    const interval = setInterval(() => {
+      fecthInventoryData();
+    }, min);
+
+    return () => clearInterval(interval);
   }, []);
 
   //  Update orders

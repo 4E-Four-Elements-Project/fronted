@@ -11,6 +11,7 @@ import { FilterProvider } from "./context/FilterContext.tsx";
 import CreateAccount from "./pages/createAccount/CreateAccount.tsx";
 import EditOrder from "./pages/edit/EditOrder.tsx";
 import OrderConfirmation from "./pages/confirmation/OrderConfirmation.tsx";
+import ProtectedRoute from "./context/protectedRoutes.tsx";
 import { AuthProvider } from "./services/auth/auth.tsx";
 
 createRoot(document.getElementById("root")!).render(
@@ -27,6 +28,15 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/confirmation" element={<OrderConfirmation />} />
             <Route path="/edit" element={<EditOrder />} />
             <Route path="/employe" element={<Employe />} />
+            {/* Protected routes */}
+            <Route
+              path="/employe"
+              element={
+                <ProtectedRoute>
+                  <Employe />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </FilterProvider>

@@ -12,7 +12,6 @@ export interface CartItem {
   quantity: number; // Antalet av varan i kundvagnen (om tillämpligt)
 }
 
-
 export interface MenuFilterProps {
   toggle: boolean;
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
@@ -43,10 +42,32 @@ export interface MenuApiResponse {
 }
 
 export interface InventoryApi {
-  menuId?: string;
+  inventoryId?: string;
   quantity: number;
 }
 
 export interface InventoryApiResponse {
   data: InventoryApi[];
+}
+
+export interface ProtectedRoutes {
+  children: React.ReactNode;
+}
+
+export interface GetOrderInformation {
+  cartId: string;
+  comment?: string;
+  createdAt: string;
+  menuId: string;
+  orderId: string;
+  orderLocked: false;
+  paymentMethod: string;
+  price: string;
+  quantity: number;
+  totalPrice: number;
+  userId: string;
+}
+
+export interface OrderInformationResponse {
+  data: GetOrderInformation[];
 }

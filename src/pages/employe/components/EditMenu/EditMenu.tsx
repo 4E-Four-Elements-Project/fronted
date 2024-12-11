@@ -10,22 +10,28 @@ import {
 
 export default function EditMenu() {
   const [toggleNewItem, setToggleNewItem] = useState<boolean>(false);
+  const [fetchItems, setFetchItems] = useState<boolean>(false);
   const [menu, setMenu] = useState<MenuItems[]>();
 
   const handleCloseNewItem = (): void => {
     setToggleNewItem((prev) => !prev);
-    // console.log(toggleNewItem);
+  };
+
+  // Updates menu when a item gets added
+  const fetchMenu = (): void => {
+    setFetchItems(!fetchItems);
   };
 
   useEffect(() => {
     const fetchData = async () => {
       const response: MenuApiResponse = await getMenu();
+      // console.log("Menu data received:", response.data.menu);
       const menuData = response.data.menu;
       setMenu(menuData);
     };
 
     fetchData();
-  }, []);
+  }, [fetchItems]);
 
   return (
     <div className="w-full bg-white h-80 overflow-y-scroll rounded-md scroll-smooth no-scrollbar col-span-3 border border-black flex flex-col gap-4 px-2 py-3 font-Roboto ">
@@ -49,16 +55,17 @@ export default function EditMenu() {
         <AddItemToMenu
           toggleItem={toggleNewItem}
           closeNewItem={handleCloseNewItem}
+          fetchAllItems={fetchMenu}
         />
       )}
-      {menu?.map((item, index) => (
+      {menu?.map((item) => (
         <MenuItemEdit
-          key={index}
-          itemCategory={item.category}
-          itemDesc={item.description}
-          itemName={item.menuId}
-          itemIngredients={item.ingredients}
-          itemPrice={item.price}
+          key={item.menuId}
+          category={item.category}
+          description={item.description}
+          menuId={item.menuId}
+          ingredients={item.ingredients}
+          price={item.price}
         />
       ))}
     </div>
