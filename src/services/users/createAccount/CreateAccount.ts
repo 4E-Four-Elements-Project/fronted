@@ -1,4 +1,5 @@
-const BASE_URL = import.meta.env.VITE_CREATE_ACC_URL;
+
+const BASE_URL = "https://j4u384wgne.execute-api.eu-north-1.amazonaws.com";
 
 // Typ för användardata
 export interface UserData {
