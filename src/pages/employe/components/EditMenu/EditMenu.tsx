@@ -25,8 +25,14 @@ export default function EditMenu() {
   useEffect(() => {
     const fetchData = async () => {
       const response: MenuApiResponse = await getMenu();
-      // console.log("Menu data received:", response.data.menu);
       const menuData = response.data.menu;
+      // Sort by category
+      menuData?.sort((a, b) => {
+        const categoryA = a.category || "";
+        const categoryB = b.category || "";
+
+        return categoryA.localeCompare(categoryB);
+      });
       setMenu(menuData);
     };
 

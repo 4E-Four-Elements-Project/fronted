@@ -2,7 +2,11 @@ import { MenuItems } from "../../../types/interface/interface";
 
 const url = import.meta.env.VITE_UPDATE_ITEM_URL;
 
-export default async function updateItem({ body }: { body: MenuItems }) {
+export default async function updateItem({
+  updatedItem,
+}: {
+  updatedItem: MenuItems;
+}) {
   try {
     const token = localStorage.getItem("authToken");
 
@@ -16,12 +20,12 @@ export default async function updateItem({ body }: { body: MenuItems }) {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(updatedItem),
     });
 
     if (!response.ok) {
       throw new Error(
-        `Error updating ${"MATRÄTT"}. Status: ${response.status}`
+        `Error updating ${updatedItem}. Status: ${response.status}`
       );
     }
 

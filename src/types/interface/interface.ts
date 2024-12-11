@@ -22,7 +22,7 @@ export interface FilterContextType {
 
 export interface MenuItems {
   menuId?: string;
-  ingredients?: [];
+  ingredients?: string[];
   category?: string;
   description?: string;
   price: number;
@@ -58,6 +58,7 @@ export interface GetOrderInformation {
   quantity: number;
   totalPrice: number;
   userId: string;
+  status: string;
 }
 
 export interface OrderInformationResponse {
