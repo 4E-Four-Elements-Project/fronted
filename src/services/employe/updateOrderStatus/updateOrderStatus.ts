@@ -2,10 +2,12 @@ import getSpecificOrder from "../getSpecificOrder/getSpecificOrder";
 
 const url = import.meta.env.VITE_PUT_ORDER_URL;
 
-export default async function sendOrderToKitchen({
+export default async function updateOrderStatus({
   orderId,
+  status,
 }: {
   orderId: string;
+  status: string;
 }) {
   try {
     const orderDataResponse = await getSpecificOrder({ orderId });
@@ -14,7 +16,7 @@ export default async function sendOrderToKitchen({
 
     const updatedOrder = {
       ...orderData,
-      status: "kitchen",
+      orderStatus: status,
       price: parseFloat(orderData.price),
     };
 

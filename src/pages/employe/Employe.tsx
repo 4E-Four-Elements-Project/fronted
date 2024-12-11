@@ -8,10 +8,13 @@ import { Variants, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import PendingOrders from "./components/pendingOrders/PendingOrders";
 import handleLogout from "../logut/Logut";
+import getOrders from "../../services/employe/getOrders/getOrders";
+import { GetOrderInformation } from "../../types/interface/interface";
 
 export default function Employe() {
   const [currentStaff, setCurrentStaff] = useState<boolean>(true);
-  const [currentOrder, setCurrentOrder] = useState<[]>([]);
+  const [kitchenOrders, setKitchenOrders] = useState<[]>([]);
+  const [refreshOrders, setRefreshOrders] = useState<boolean>(false);
 
   useEffect(() => {
     if (location.pathname === "/chef") {
@@ -29,6 +32,28 @@ export default function Employe() {
       transition: { duration: 1 },
     },
   };
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await getOrders();
+
+        const kitchenOrders = response.data.filter(
+          (order: GetOrderInformation) => order.orderStatus === "kitchen"
+        );
+
+        setRefreshOrders(false);
+        setKitchenOrders(kitchenOrders);
+      } catch (error) {
+        console.error("Error fetching orders: ", error);
+      }
+    };
+
+    fetchOrders();
+
+    const interval = setInterval(fetchOrders, 60000);
+    return () => clearInterval(interval);
+  }, [refreshOrders]);
 
   return (
     <main className="bg-primary-0 w-full min-h-screen overflow-hidden flex flex-col items-center pt-24">
@@ -71,12 +96,17 @@ export default function Employe() {
         </section>
       ) : (
         // Chef
-        <section className="w-full md:w-2/3 flex flex-col items-center justify-between md:grid md:grid-cols-4 gap-4 md:items-start md:justify-items-end mt-11 px-8 pb-8 ">
+        <section className="w-full md:w-full flex flex-col items-center justify-between md:grid md:grid-cols-4 gap-4 md:items-start md:justify-items-end mt-11 px-8 pb-8 ">
           {/* Active orders */}
 
-          {/* {currentOrder.map((order) => (
-            <PendingOrders />
-          ))} */}
+          {kitchenOrders.map((order, index) => (
+            <PendingOrders
+              kitchenOrders={order}
+              key={index}
+              refreshOrders={setRefreshOrders}
+            />
+          ))}
+          {/* <PendingOrders /> */}
         </section>
       )}
       <motion.div

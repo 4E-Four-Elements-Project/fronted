@@ -49,7 +49,10 @@ export default function Overview() {
   // Fetch orders length
   const fetchOrders = async () => {
     const response = await getOrders();
-    setActiveOrders(response.data.length);
+    const allActiveOrders = response.data.filter(
+      (order: any) => order.orderStatus !== "done"
+    );
+    setActiveOrders(allActiveOrders.length);
   };
 
   //  Update orders
@@ -78,7 +81,7 @@ export default function Overview() {
                       ? "bg-red-400"
                       : "bg-yellow-0"
                   }
-                  w-3 h-3 rounded-full  ml-2 border border-black`}
+                  w-3 h-3 rounded-full  ml-1 border border-black`}
               ></div>
             </div>
             <div className="w-px h-full bg-black"></div>
