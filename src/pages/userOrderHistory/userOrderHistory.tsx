@@ -1,9 +1,10 @@
 import Header from "../../components/layout/header/Header";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import {GetOrderInformation } from "../../types/interface/interface";
 import deleteOrder from "../../services/users/deleteOrder/deleteOrder";
 
-const parseJwt = (token: string): { [key: string] } | null => {
+const parseJwt = (token: string): { [key: string]: any } | null => {
   try {
     const base64Url = token.split(".")[1]; // Extract payload 
     const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/"); // Convert to base64 
@@ -21,6 +22,7 @@ const parseJwt = (token: string): { [key: string] } | null => {
 };
 
 const Orders = () => {
+  const location = useLocation(); // ta bort?
   const [currentOrder, setCurrentOrder] = useState<GetOrderInformation | null>(
     null
   ); // Latest order
@@ -78,7 +80,7 @@ const Orders = () => {
   }
 
   return (
-    <div className="relative flex justify-end items-center  bg-primary-0">
+    <div className="relative flex justify-end items-center h-screen w-screen bg-primary-0">
       <div className="flex flex-col justify-center items-center bg-primary-0 w-full">
       {/* Header */}
       <div className="flex-grow w-full mb-5 p-0 m-0">
@@ -102,9 +104,10 @@ const Orders = () => {
                 <div className="font-roboto flex flex-col gap-2">
                 <p className="text-sm">Date: {currentOrder.createdAt}</p>
                 <p className="text-sm">Order ID: {currentOrder.orderId}</p>
+                <p className="">Status: {currentOrder.orderStatus}</p>
                 <p className="text-sm"><em>Order Summary:</em></p>
                 <p className="text-sm">{currentOrder.menuId}</p>
-                  <p><strong>Total Price:</strong> {currentOrder.totalPrice} USD</p>
+                <p><strong>Total Price:</strong> {currentOrder.totalPrice} USD</p>
                 </div>
                 <button
                 onClick={async () => {
@@ -115,7 +118,7 @@ const Orders = () => {
               >
                 X
               </button>
-
+          
               </li>
             </ul>
           ) : (
