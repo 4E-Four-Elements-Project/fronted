@@ -57,7 +57,6 @@ export default function Header({
             className="flex flex-col items-center relative"
           >
             <button onClick={Logut} className="text-white md:text-black">
-
               Logout
             </button>
             <svg width="48" height="5" className="absolute top-6">
@@ -171,4 +170,3 @@ export default function Header({
     </header>
   );
 }
-

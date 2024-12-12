@@ -23,6 +23,8 @@ export default async function updateOrderStatus({
       comment: additionalInfo,
     };
 
+    console.log("updated order: ", updatedOrder);
+
     const response = await fetch(`${url}${orderId}`, {
       method: "PUT",
       headers: {
@@ -30,6 +32,8 @@ export default async function updateOrderStatus({
       },
       body: JSON.stringify(updatedOrder),
     });
+
+    console.log(response);
 
     if (!response.ok) {
       throw new Error(`Error updating ${orderId}. Status: ${response.status}`);
