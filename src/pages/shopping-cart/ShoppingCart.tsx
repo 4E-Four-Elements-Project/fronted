@@ -30,16 +30,16 @@ const ShoppingCart = () => {
 
   const handleCheckout = async () => {
     if (cart.length === 0) {
-      alert("Din varukorg är tom. Lägg till produkter innan du checkar ut.");
+      alert("Your shopping cart is empty. Add products before checking out.");
       return;
     }
-  
+
     const token = localStorage;
     if (!token) {
-      alert("Ingen autentiseringstoken hittades. Logga in igen.");
+      alert("No authentication token found. Log in again.");
       return;
     }
-  
+
     // Kombinera data för att skapa en enda order
     const orderData = {
       cartId: cart[0].menuId, // Representativt unikt ID, kan vara något annat
@@ -50,9 +50,9 @@ const ShoppingCart = () => {
         .toFixed(2), // Summerar totalpriset
       paymentMethod: paymentMethod || "Pay Online", // Standardbetalningsmetod
     };
-  
+
     console.log("Order data som skickas:", orderData);
-  
+
     try {
       const response = await fetch(
         "https://j4u384wgne.execute-api.eu-north-1.amazonaws.com/order/post",
@@ -65,11 +65,13 @@ const ShoppingCart = () => {
           body: JSON.stringify(orderData),
         }
       );
-  
+
       const responseData = await response.json();
-  
+
       if (response.ok) {
-        alert(`Din order har skickats! Order ID: ${responseData.data.orderItem.orderId}`);
+        alert(
+          `Din order har skickats! Order ID: ${responseData.data.orderItem.orderId}`
+        );
         navigate("/confirmation", {
           state: {
             cart, // Skickar varukorgens innehåll
@@ -79,7 +81,9 @@ const ShoppingCart = () => {
         });
       } else {
         console.error("Fel vid orderhantering:", responseData);
-        alert(`Fel vid orderhantering: ${responseData.data?.message || "Okänt fel"}`);
+        alert(
+          `Fel vid orderhantering: ${responseData.data?.message || "Okänt fel"}`
+        );
       }
     } catch (error) {
       console.error("Nätverksfel:", error);
@@ -115,7 +119,9 @@ const ShoppingCart = () => {
 
   return (
     <div className="flex flex-col justify-center items-center mb-24">
-      <Header cartCount={cart.reduce((count, item) => count + item.quantity, 0)} />
+      <Header
+        cartCount={cart.reduce((count, item) => count + item.quantity, 0)}
+      />
       <div className="w-1/2 h-full flex justify-center flex-col mt-5">
         <div className="flex items-start w-full mb-7">
           <h1 className="font-Londrina text-4xl lg:text-6xl lg:pl-5 pb-2 border-b-2 border-black w-full">
@@ -147,7 +153,10 @@ const ShoppingCart = () => {
                 >
                   +
                 </button>
-                <button onClick={() => deleteCartItem(item.menuId)} className="w-5 h-5">
+                <button
+                  onClick={() => deleteCartItem(item.menuId)}
+                  className="w-5 h-5"
+                >
                   <img
                     src={deleteItem}
                     alt="Delete item"
