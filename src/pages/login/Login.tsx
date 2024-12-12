@@ -62,7 +62,7 @@ const Login = () => {
       } else {
         console.warn("Token not found in response.");
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error("Error during login:", err);
       setError(err.message || "Something went wrong. Please try again.");
     } finally {
