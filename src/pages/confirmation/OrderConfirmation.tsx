@@ -73,7 +73,7 @@ const OrderConfirmation = () => {
               </div>
 
               <div className="flex flex-col items-end w-full gap-3 mt-4">
-                <button onClick={() => navigate ("/order-history")}>Order History</button>
+                <button onClick={() => navigate ("/history")}>Order History</button>
                 <button onClick={() => navigate ("/menu")}>Menu</button>
               </div>
             </>

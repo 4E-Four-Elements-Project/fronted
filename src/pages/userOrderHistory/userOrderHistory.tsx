@@ -1,10 +1,9 @@
 import Header from "../../components/layout/header/Header";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import {GetOrderInformation } from "../../types/interface/interface";
 import deleteOrder from "../../services/users/deleteOrder/deleteOrder";
 
-const parseJwt = (token: string): { [key: string]: any } | null => {
+const parseJwt = (token: string): { [key: string] } | null => {
   try {
     const base64Url = token.split(".")[1]; // Extract payload 
     const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/"); // Convert to base64 
@@ -22,7 +21,6 @@ const parseJwt = (token: string): { [key: string]: any } | null => {
 };
 
 const Orders = () => {
-  const location = useLocation();
   const [currentOrder, setCurrentOrder] = useState<GetOrderInformation | null>(
     null
   ); // Latest order
