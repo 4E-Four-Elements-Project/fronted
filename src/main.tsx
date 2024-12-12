@@ -13,6 +13,8 @@ import EditOrder from "./pages/edit/EditOrder.tsx";
 import OrderConfirmation from "./pages/confirmation/OrderConfirmation.tsx";
 import ProtectedRoute from "./context/protectedRoutes.tsx";
 import { AuthProvider } from "./services/auth/auth.tsx";
+import UserLandingPage from "./pages/userLandingPage/userLandingPage.tsx";
+import UserOrderHistory from "./pages/userOrderHistory/userOrderHistory.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <AuthProvider>
@@ -27,6 +29,8 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/createaccount" element={<CreateAccount />} />
             <Route path="/confirmation" element={<OrderConfirmation />} />
             <Route path="/edit" element={<EditOrder />} />
+            <Route path="/landing" element={<UserLandingPage />} />
+            <Route path="/history" element={<UserOrderHistory />} />
             {/* Protected routes */}
             <Route
               path="/employe"
