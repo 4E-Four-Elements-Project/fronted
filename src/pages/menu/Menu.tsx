@@ -73,18 +73,16 @@ export default function Menu() {
       });
   
       // Skicka POST-förfrågan till /cart
+      const token = localStorage.getItem("authToken");
       const response = await fetch("https://j4u384wgne.execute-api.eu-north-1.amazonaws.com/cart/post", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           menuId: menuItem.menuId,
-          ingredients: menuItem.ingredients,
           price: menuItem.price,
-          category: menuItem.category,
-          description: menuItem.description,
-          quantity: 1,
         }),
       });
   
