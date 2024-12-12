@@ -51,14 +51,21 @@ const ShoppingCart = () => {
       paymentMethod: paymentMethod || "Pay Online", // Standardbetalningsmetod
     };
     try {
+      const token = localStorage.getItem("authToken");
+      // Construct headers dynamically
+     const headers: Record<string, string> = {
+       "Content-Type": "application/json",
+     };
+
+     if (token) {
+       headers["Authorization"] = `Bearer ${token}`;
+     }
+
       const response = await fetch(
         "https://j4u384wgne.execute-api.eu-north-1.amazonaws.com/order/post",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
+          headers,
           body: JSON.stringify(orderData),
         }
       );
@@ -68,7 +75,6 @@ const ShoppingCart = () => {
       if (response.ok) {
 
         alert(`Your order has been confirmed! Order ID: ${responseData.data.orderItem.orderId}`);
->>>
         navigate("/confirmation", {
           state: {
             cart, // Skickar varukorgens innehåll

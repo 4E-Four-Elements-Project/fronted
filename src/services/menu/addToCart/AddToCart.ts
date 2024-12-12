@@ -1,19 +1,28 @@
 import { MenuItems } from "../../../types/interface/interface";
 
 const handleAddToCart = async (menuItem: MenuItems) => {
+  //if token exist it should add it to the authorization header, if not nothing should be in the authorization header
+  const token = localStorage.getItem("token");
+   // Construct headers dynamically
+   const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  console.log('headers',headers);
+  
+
+
     try {
       const response = await fetch("https://j4u384wgne.execute-api.eu-north-1.amazonaws.com/cart/post", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers,
         body: JSON.stringify({
           menuId: menuItem.menuId,
-          // ingredients: menuItem.ingredients || "Not specified",
           price: menuItem.price,
-          // category: menuItem.category || "Unknown",
-          // description: menuItem.description,
-          // quantity: 1,
         }),
       });
   

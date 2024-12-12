@@ -65,21 +65,28 @@ export default function Menu() {
       // Logga datan som skickas till servern
       console.log("Skickar följande data till /cart:", {
         menuId: menuItem.menuId,
-        ingredients: menuItem.ingredients,
+        // ingredients: menuItem.ingredients,
         price: menuItem.price,
-        category: menuItem.category,
-        description: menuItem.description,
-        quantity: 1,
+        // category: menuItem.category,
+        // description: menuItem.description,
+        // quantity: 1,
       });
   
       // Skicka POST-förfrågan till /cart
       const token = localStorage.getItem("authToken");
+       // Construct headers dynamically
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
+  console.log('headers',headers);
       const response = await fetch("https://j4u384wgne.execute-api.eu-north-1.amazonaws.com/cart/post", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        headers,
         body: JSON.stringify({
           menuId: menuItem.menuId,
           price: menuItem.price,

@@ -1,12 +1,10 @@
 import Header from "../../components/layout/header/Header";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import {GetOrderInformation } from "../../types/interface/interface";
 import deleteOrder from "../../services/users/deleteOrder/deleteOrder";
 
 
 const Orders = () => {
-  const location = useLocation(); // ta bort?
   const [currentOrder, setCurrentOrder] = useState<GetOrderInformation | null>(
     null
   ); // Latest order
@@ -19,12 +17,6 @@ const Orders = () => {
       console.log('token', token);
       
       if (!token) throw new Error("Authentication token not found");
-  
-      // const decodedToken = parseJwt(token);
-      // const userId = decodedToken?.userId; // Extract userId from payload
-      // if (!userId) throw new Error("User ID not found in token");
-  
-      // console.log("Decoded User ID:", userId);
   
       const url = `${import.meta.env.VITE_GET_USER_ORDER_URL}`;
       console.log('url', url);
@@ -42,20 +34,31 @@ const Orders = () => {
           `Failed to fetch: ${response.status} - ${response.statusText}`
         );
       }
-  
-      try {
-        const json = await response.json();
-        console.log("Fetched Orders:", json);
-        const orders = json.data.orders || [];
-        if (orders.length > 0) {
-          setCurrentOrder(orders[0]);
-          setOrderHistory(orders.slice(1));
-        }
-      } catch (error) {
-        console.error("Error parsing JSON response:", error);
-        const text = await response.text(); // Log the response body as text
-        console.log("Response Text:", text);
+
+      console.log('response', response);
+      
+
+      const json = await response.json();
+      console.log("Fetched Orders:", json);
+      const orders = json.data.orders || [];
+      if (orders.length > 0) {
+        setCurrentOrder(orders[0]);
+        setOrderHistory(orders.slice(1));
       }
+  
+      // try {
+      //   const json = await response.json();
+      //   console.log("Fetched Orders:", json);
+      //   const orders = json.data.orders || [];
+      //   if (orders.length > 0) {
+      //     setCurrentOrder(orders[0]);
+      //     setOrderHistory(orders.slice(1));
+      //   }
+      // } catch (error) {
+      //   console.error("Error parsing JSON response:", error);
+      //   const text = await response.text(); // Log the response body as text
+      //   console.log("Response Text:", text);
+      // }
 
      
     } catch (error) {
