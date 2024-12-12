@@ -58,7 +58,7 @@ const Login = () => {
         localStorage.setItem("authToken", token);
 
         // Navigera till en annan sida
-        window.location.href = "/";
+        window.location.href = "/landing";
       } else {
         console.warn("Token not found in response.");
       }
