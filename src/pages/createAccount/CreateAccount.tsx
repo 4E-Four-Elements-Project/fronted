@@ -55,6 +55,7 @@ const CreateAccount = () => {
       const response = await createAccount(userData);
 
       alert(response.message || "Account created successfully!");
+      window.location.href = "/login";
     } catch (error) {
       alert("Failed to create account. Please try again.");
       console.error("Error:", error);

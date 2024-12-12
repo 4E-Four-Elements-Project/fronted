@@ -1,5 +1,4 @@
-
-const BASE_URL = "https://j4u384wgne.execute-api.eu-north-1.amazonaws.com";
+const url = import.meta.env.VITE_CREATE_ACC_URL;
 
 // Typ för användardata
 export interface UserData {
@@ -13,7 +12,7 @@ export const createAccount = async (
   userData: UserData
 ): Promise<{ message: string }> => {
   try {
-    const response = await fetch(`${BASE_URL}`, {
+    const response = await fetch(`${url}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userData),
