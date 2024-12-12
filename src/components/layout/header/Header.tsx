@@ -2,6 +2,7 @@ import { useNavigate, useLocation, Link } from "react-router";
 import { useEffect, useState } from "react";
 import { motion, Variants } from "motion/react";
 import cartImg from "../../../assets/img/shopping-cart.svg";
+import cartImgWhite from "../../../assets/img/shoppingcart-white.svg";
 import { HeaderProps } from "../../../types/interface/interface";
 import Logut from "../../../pages/logut/Logut";
 
@@ -11,6 +12,7 @@ export default function Header({
   className,
 }: HeaderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -18,6 +20,25 @@ export default function Header({
     const token = localStorage.getItem("authToken");
     setIsLoggedIn(!!token);
   }, [location]);
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); 
+    };
+  
+    handleResize(); 
+  
+    window.addEventListener("resize", handleResize);
+  
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  
+  
+  useEffect(() => {
+    console.log("isMobile:", isMobile);
+  }, [isMobile]);
+
 
   const handleLinks = () => {
     navigate("/cart", { state: { cart } });
@@ -147,32 +168,33 @@ export default function Header({
           </motion.li>
         ) : (
           <div className="flex justify-between gap-3">
-            <motion.li
-              initial="initial"
-              whileHover="animate"
-              className="flex flex-col items-center justify-center relative"
-            >
-              <Link to="/createAccount" className="text-green-0 xl:text-black">
-                Create account
-              </Link>
-              <svg width="120" height="5" className="absolute top-6">
-                <motion.path
-                  variants={onClickLink}
-                  d="M0,2 Q20,5 40,2 T80,3 T119,1 T120"
-                  fill="none"
-                  stroke="#C8D6AF"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </motion.li>
-            <img
-              src={cartImg}
-              alt="cart"
-              className="w-10 cursor-pointer"
-              onClick={handleLinks}
-            />
-          </div>
+          <motion.li
+            initial="initial"
+            whileHover="animate"
+            className="flex flex-col items-center justify-center relative"
+          >
+            <Link to="/createAccount" className="text-green-0 xl:text-black">
+              Create account
+            </Link>
+            <svg width="120" height="5" className="absolute top-6">
+              <motion.path
+                variants={onClickLink}
+                d="M0,2 Q20,5 40,2 T80,3 T119,1 T120"
+                fill="none"
+                stroke="#C8D6AF"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
+
+          </motion.li>
+          <img
+          src={isMobile ? cartImgWhite : cartImg} 
+          alt="cart"
+          className="w-10 cursor-pointer"
+          onClick={handleLinks}
+        />
+              </div>
         )}
       </section>
     </header>

@@ -30,13 +30,17 @@ const ShoppingCart = () => {
 
   const handleCheckout = async () => {
     if (cart.length === 0) {
-      alert("Your shopping cart is empty. Add products before checking out.");
+
+      alert("Your cart is empty. Add products before checking out.");
+
       return;
     }
 
     const token = localStorage;
     if (!token) {
-      alert("No authentication token found. Log in again.");
+
+      alert("No authentication token was found. Please log in again.");
+
       return;
     }
 
@@ -50,9 +54,6 @@ const ShoppingCart = () => {
         .toFixed(2), // Summerar totalpriset
       paymentMethod: paymentMethod || "Pay Online", // Standardbetalningsmetod
     };
-
-    console.log("Order data som skickas:", orderData);
-
     try {
       const response = await fetch(
         "https://j4u384wgne.execute-api.eu-north-1.amazonaws.com/order/post",
@@ -69,9 +70,9 @@ const ShoppingCart = () => {
       const responseData = await response.json();
 
       if (response.ok) {
-        alert(
-          `Din order har skickats! Order ID: ${responseData.data.orderItem.orderId}`
-        );
+
+        alert(`Your order has been confirmed! Order ID: ${responseData.data.orderItem.orderId}`);
+>>>
         navigate("/confirmation", {
           state: {
             cart, // Skickar varukorgens innehåll
@@ -80,10 +81,7 @@ const ShoppingCart = () => {
           },
         });
       } else {
-        console.error("Fel vid orderhantering:", responseData);
-        alert(
-          `Fel vid orderhantering: ${responseData.data?.message || "Okänt fel"}`
-        );
+        alert(`Error in order processing: ${responseData.data?.message || "Okänt fel"}`);
       }
     } catch (error) {
       console.error("Nätverksfel:", error);
