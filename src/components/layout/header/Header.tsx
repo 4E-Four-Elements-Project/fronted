@@ -56,7 +56,7 @@ export default function Header({
             whileHover="animate"
             className="flex flex-col items-center relative"
           >
-            <button onClick={Logut} className="text-white md:text-black">
+            <button onClick={Logut} className="text-green-0 md:text-black">
               Logout
             </button>
             <svg width="48" height="5" className="absolute top-6">
@@ -76,7 +76,7 @@ export default function Header({
             whileHover="animate"
             className="flex flex-col items-center relative"
           >
-            <Link to="/login" className="text-white xl:text-black">
+            <Link to="/login" className="text-green-0 xl:text-black">
               Sign in
             </Link>
             <svg width="48" height="5" className="absolute top-6">
@@ -101,7 +101,7 @@ export default function Header({
           >
             <button
               onClick={() => navigate("/menu")}
-              className="text-white md:text-black"
+              className="text-green-0 md:text-black"
             >
               Menu
             </button>
@@ -146,25 +146,33 @@ export default function Header({
             </div>
           </motion.li>
         ) : (
-          <motion.li
-            initial="initial"
-            whileHover="animate"
-            className="flex flex-col items-center justify-center relative"
-          >
-            <Link to="/createAccount" className="text-white xl:text-black">
-              Create account
-            </Link>
-            <svg width="120" height="5" className="absolute top-6">
-              <motion.path
-                variants={onClickLink}
-                d="M0,2 Q20,5 40,2 T80,3 T119,1 T120"
-                fill="none"
-                stroke="#C8D6AF"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </motion.li>
+          <div className="flex justify-between gap-3">
+            <motion.li
+              initial="initial"
+              whileHover="animate"
+              className="flex flex-col items-center justify-center relative"
+            >
+              <Link to="/createAccount" className="text-green-0 xl:text-black">
+                Create account
+              </Link>
+              <svg width="120" height="5" className="absolute top-6">
+                <motion.path
+                  variants={onClickLink}
+                  d="M0,2 Q20,5 40,2 T80,3 T119,1 T120"
+                  fill="none"
+                  stroke="#C8D6AF"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </motion.li>
+            <img
+              src={cartImg}
+              alt="cart"
+              className="w-10 cursor-pointer"
+              onClick={handleLinks}
+            />
+          </div>
         )}
       </section>
     </header>
