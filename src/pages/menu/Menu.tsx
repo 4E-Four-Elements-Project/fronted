@@ -82,11 +82,7 @@ export default function Menu() {
         },
         body: JSON.stringify({
           menuId: menuItem.menuId,
-          // ingredients: menuItem.ingredients,
           price: menuItem.price,
-          // category: menuItem.category,
-          // description: menuItem.description,
-          // quantity: 1,
         }),
       });
   
