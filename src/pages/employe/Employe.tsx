@@ -39,7 +39,8 @@ export default function Employe() {
         const response = await getOrders();
 
         const kitchenOrders = response.data.filter(
-          (order: GetOrderInformation) => order.orderStatus === "kitchen"
+          (order: GetOrderInformation) =>
+            order.orderStatus === "kitchen" || order.orderStatus === "cooking"
         );
 
         setRefreshOrders(false);
@@ -55,7 +56,7 @@ export default function Employe() {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [refreshOrders]);
 
   return (
     <main className="bg-primary-0 w-full min-h-screen overflow-hidden flex flex-col items-center pt-24">

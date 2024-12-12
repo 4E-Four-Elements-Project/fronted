@@ -83,7 +83,16 @@ export default function Order({
           {isOrderItemVisible && (
             <div className="w-full h-auto row-span-2 flex flex-col mt-2">
               <p className="font-semibold select-none">Ordered Items</p>
-              <span>{orderItem.menuId}</span>
+
+              {orderItem.menuDetails.map((items, index) => (
+                <div
+                  className="w-full flex justify-between items-center "
+                  key={index}
+                >
+                  <span>{items.menuId}</span>
+                  <span>{items.quantity}</span>
+                </div>
+              ))}
             </div>
           )}
           <div className={`${""} w-full`}>

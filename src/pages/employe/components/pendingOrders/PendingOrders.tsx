@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GetOrderInformation } from "../../../../types/interface/interface";
 
 import updateOrderStatus from "../../../../services/employe/updateOrderStatus/updateOrderStatus";
@@ -12,16 +12,6 @@ export default function PendingOrders({
   refreshOrders: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [cooking, setCooking] = useState<boolean>(false);
-  const [menuArray, setMenuArray] = useState<string[]>([]);
-
-  // Log the items
-  useEffect(() => {
-    if (Array.isArray(kitchenOrders.menuId)) {
-      setMenuArray(kitchenOrders.menuId);
-    } else if (typeof kitchenOrders.menuId === "string") {
-      setMenuArray(kitchenOrders.menuId.split(","));
-    }
-  }, [kitchenOrders]);
 
   const handleCookingBtn = async () => {
     setCooking(!cooking);
@@ -44,11 +34,11 @@ export default function PendingOrders({
       </h2>
       <div className="w-full h-auto flex flex-col items-start justify-between">
         {/* Items */}
-        {menuArray.map((item, index) => (
-          <ul key={index}>
-            <li>{item}</li>
-            <br />
-          </ul>
+        {kitchenOrders.menuDetails.map((item, index) => (
+          <div className="flex w-full justify-between items-center" key={index}>
+            <span>{item.menuId}</span>
+            <span>{item.quantity}</span>
+          </div>
         ))}
       </div>
       {kitchenOrders.comment && (
