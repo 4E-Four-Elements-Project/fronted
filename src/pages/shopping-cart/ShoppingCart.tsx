@@ -34,20 +34,23 @@ const ShoppingCart = () => {
       return;
     }
   
-    const token = localStorage;
-    if (!token) {
-      alert("No authentication token was found. Please log in again.");
-      return;
-    }
+    const token = localStorage.getItem("authToken");
+    console.log('token', token);
+    
+    // if (!token) {
+    //   alert("No authentication token was found. Please log in again.");
+    //   return;
+    // }
   
     // Kombinera data för att skapa en enda order
     const orderData = {
-      cartId: cart[0].menuId, // Representativt unikt ID, kan vara något annat
-      menuId: cart.map((item) => item.menuId).join(", "), // Kombinerar alla menuId
-      quantity: cart.reduce((total, item) => total + item.quantity, 0), // Summerar alla kvantiteter
-      price: cart
-        .reduce((total, item) => total + item.price * item.quantity, 0)
-        .toFixed(2), // Summerar totalpriset
+      // cartId: cart[0].menuId, // Representativt unikt ID, kan vara något annat
+      // menuId: cart.map((item) => item.menuId).join(", "), // Kombinerar alla menuId
+      // quantity: cart.reduce((total, item) => total + item.quantity, 0), // Summerar alla kvantiteter
+      // price: cart
+      //   .reduce((total, item) => total + item.price * item.quantity, 0)
+      //   .toFixed(2), // Summerar totalpriset
+      comment: additionalInfo || "No comment",
       paymentMethod: paymentMethod || "Pay Online", // Standardbetalningsmetod
     };
   
@@ -60,7 +63,7 @@ const ShoppingCart = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            "Authorization": `Bearer ${token}`,
           },
           body: JSON.stringify(orderData),
         }

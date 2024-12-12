@@ -9,11 +9,11 @@ const handleAddToCart = async (menuItem: MenuItems) => {
         },
         body: JSON.stringify({
           menuId: menuItem.menuId,
-          ingredients: menuItem.ingredients || "Not specified",
+          // ingredients: menuItem.ingredients || "Not specified",
           price: menuItem.price,
-          category: menuItem.category || "Unknown",
-          description: menuItem.description,
-          quantity: 1,
+          // category: menuItem.category || "Unknown",
+          // description: menuItem.description,
+          // quantity: 1,
         }),
       });
   

@@ -2,23 +2,22 @@ import Header from "../../components/layout/header/Header";
 import { useEffect, useState } from "react";
 import {GetOrderInformation } from "../../types/interface/interface";
 import deleteOrder from "../../services/users/deleteOrder/deleteOrder";
-
-const parseJwt = (token: string): { [key: string] } | null => {
-  try {
-    const base64Url = token.split(".")[1]; // Extract payload 
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/"); // Convert to base64 
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split("")
-        .map((c) => `%${c.charCodeAt(0).toString(16).padStart(2, "0")}`)
-        .join("")
-    );
-    return JSON.parse(jsonPayload); // Parse JSON payload
-  } catch (error) {
-    console.error("Failed to parse JWT:", error);
-    return null;
-  }
-};
+// const parseJwt = (token: string): { [key: string] } | null => {
+//   try {
+//     const base64Url = token.split(".")[1]; // Extract payload 
+//     const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/"); // Convert to base64 
+//     const jsonPayload = decodeURIComponent(
+//       atob(base64)
+//         .split("")
+//         .map((c) => `%${c.charCodeAt(0).toString(16).padStart(2, "0")}`)
+//         .join("")
+//     );
+//     return JSON.parse(jsonPayload); // Parse JSON payload
+//   } catch (error) {
+//     console.error("Failed to parse JWT:", error);
+//     return null;
+//   }
+// };
 
 const Orders = () => {
   const [currentOrder, setCurrentOrder] = useState<GetOrderInformation | null>(
@@ -30,20 +29,24 @@ const Orders = () => {
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem("authToken");
+      console.log('token', token);
+      
       if (!token) throw new Error("Authentication token not found");
   
-      const decodedToken = parseJwt(token);
-      const userId = decodedToken?.userId; // Extract userId from payload
-      if (!userId) throw new Error("User ID not found in token");
+      // const decodedToken = parseJwt(token);
+      // const userId = decodedToken?.userId; // Extract userId from payload
+      // if (!userId) throw new Error("User ID not found in token");
   
-      console.log("Decoded User ID:", userId);
+      // console.log("Decoded User ID:", userId);
   
-      const url = `${import.meta.env.VITE_GET_USER_ORDER_URL}/${userId}`;
+      const url = `${import.meta.env.VITE_GET_USER_ORDER_URL}`;
+      console.log('url', url);
+      
       const response = await fetch(url, {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
       });
   
@@ -53,14 +56,21 @@ const Orders = () => {
         );
       }
   
-      const json = await response.json();
-      console.log("Fetched Orders:", json.data.orders);
-  
-      const orders = json.data.orders || [];
-      if (orders.length > 0) {
-        setCurrentOrder(orders[0]);
-        setOrderHistory(orders.slice(1));
+      try {
+        const json = await response.json();
+        console.log("Fetched Orders:", json);
+        const orders = json.data.orders || [];
+        if (orders.length > 0) {
+          setCurrentOrder(orders[0]);
+          setOrderHistory(orders.slice(1));
+        }
+      } catch (error) {
+        console.error("Error parsing JSON response:", error);
+        const text = await response.text(); // Log the response body as text
+        console.log("Response Text:", text);
       }
+
+     
     } catch (error) {
       console.error("Failed to fetch order history:", error);
     } finally {
