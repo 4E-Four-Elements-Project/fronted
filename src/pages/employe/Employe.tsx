@@ -1,4 +1,5 @@
 import Logo from "../../components/ui/4eLogo/Logo";
+import updateOrders from "../../assets/img/refresh.svg";
 import ActiveOrders from "./components/ActiveOrders/ActiveOrders";
 import EditMenu from "./components/EditMenu/EditMenu";
 import Inventory from "./components/Inventory/Inventory";
@@ -101,8 +102,14 @@ export default function Employe() {
       ) : (
         // Chef
         <section className="w-full md:w-full flex flex-col items-center justify-between md:grid md:grid-cols-4 gap-4 md:items-start md:justify-items-end mt-11 px-8 pb-8 ">
+          <motion.img
+            whileTap={{ rotate: 360 }}
+            src={updateOrders}
+            alt="refresh orders icon"
+            className="w-8 absolute bottom-10 right-5 cursor-pointer"
+            onClick={() => setRefreshOrders(true)}
+          />
           {/* Active orders */}
-
           {kitchenOrders.map((order, index) => (
             <PendingOrders
               kitchenOrders={order}
