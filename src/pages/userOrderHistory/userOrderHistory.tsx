@@ -45,20 +45,6 @@ const Orders = () => {
         setCurrentOrder(orders[0]);
         setOrderHistory(orders.slice(1));
       }
-  
-      // try {
-      //   const json = await response.json();
-      //   console.log("Fetched Orders:", json);
-      //   const orders = json.data.orders || [];
-      //   if (orders.length > 0) {
-      //     setCurrentOrder(orders[0]);
-      //     setOrderHistory(orders.slice(1));
-      //   }
-      // } catch (error) {
-      //   console.error("Error parsing JSON response:", error);
-      //   const text = await response.text(); // Log the response body as text
-      //   console.log("Response Text:", text);
-      // }
 
      
     } catch (error) {
