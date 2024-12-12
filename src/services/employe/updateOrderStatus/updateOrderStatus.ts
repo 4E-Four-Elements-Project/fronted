@@ -34,8 +34,6 @@ export default async function updateOrderStatus({
     if (!response.ok) {
       throw new Error(`Error updating ${orderId}. Status: ${response.status}`);
     }
-
-    // const json = await response.json();
   } catch (error) {
     console.error(error);
   }

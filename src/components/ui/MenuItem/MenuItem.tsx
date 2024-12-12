@@ -3,19 +3,23 @@ import { motion, Variants } from "motion/react";
 import addBtnFront from "../../../assets/img/addBtn.svg";
 import addBtnOutline from "../../../assets/img/addBtnOutline.svg";
 
-
 interface MenuItemProps extends MenuItems {
   onAddToCart: (menuItem: MenuItems) => void;
 }
 
-export default function MenuItem({ menuId, description, price, onAddToCart, }: MenuItemProps) {
+export default function MenuItem({
+  menuId,
+  description,
+  price,
+  onAddToCart,
+}: MenuItemProps) {
   const addBtnAnimation: Variants = {
     initial: { y: 0, x: 0 },
     animate: { y: -1, x: -2 },
   };
 
   return (
-    <section className="w-72 lg:w-full h-44 border border-slate-300 rounded-lg bg-white px-2 pt-2">
+    <section className="w-72 lg:w-full min-h-52 border border-slate-300 rounded-lg bg-white px-2 pt-2">
       <h3 className="font-Londrina font-semibold text-2xl tracking-widest">
         {(menuId ?? "").replace("_", " ")}
       </h3>

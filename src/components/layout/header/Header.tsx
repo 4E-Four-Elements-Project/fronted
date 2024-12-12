@@ -2,6 +2,7 @@ import { useNavigate, useLocation, Link } from "react-router";
 import { useEffect, useState } from "react";
 import { motion, Variants } from "motion/react";
 import cartImg from "../../../assets/img/shopping-cart.svg";
+import cartImgWhite from "../../../assets/img/shoppingcart-white.svg";
 import { HeaderProps } from "../../../types/interface/interface";
 import Logut from "../../../pages/logut/Logut";
 
@@ -11,6 +12,7 @@ export default function Header({
   className,
 }: HeaderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -18,6 +20,25 @@ export default function Header({
     const token = localStorage.getItem("authToken");
     setIsLoggedIn(!!token);
   }, [location]);
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); 
+    };
+  
+    handleResize(); 
+  
+    window.addEventListener("resize", handleResize);
+  
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  
+  
+  useEffect(() => {
+    console.log("isMobile:", isMobile);
+  }, [isMobile]);
+
 
   const handleLinks = () => {
     navigate("/cart", { state: { cart } });
@@ -57,7 +78,6 @@ export default function Header({
             className="flex flex-col items-center relative"
           >
             <button onClick={Logut} className="text-green-0 md:text-black">
-
               Logout
             </button>
             <svg width="48" height="5" className="absolute top-6">
@@ -168,16 +188,15 @@ export default function Header({
             </svg>
 
           </motion.li>
-                <img
-                src={cartImg}
-                alt="cart"
-                className="w-10 cursor-pointer"
-                onClick={handleLinks}
-              />
+          <img
+          src={isMobile ? cartImgWhite : cartImg} 
+          alt="cart"
+          className="w-10 cursor-pointer"
+          onClick={handleLinks}
+        />
               </div>
         )}
       </section>
     </header>
   );
 }
-
