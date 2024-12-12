@@ -1,12 +1,12 @@
 import Header from "../../components/layout/header/Header";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+
 import {GetOrderInformation } from "../../types/interface/interface";
 import deleteOrder from "../../services/users/deleteOrder/deleteOrder";
 
 
 const Orders = () => {
-  const location = useLocation(); // ta bort?
+
   const [currentOrder, setCurrentOrder] = useState<GetOrderInformation | null>(
     null
   ); // Latest order

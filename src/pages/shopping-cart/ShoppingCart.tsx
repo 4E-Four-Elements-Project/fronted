@@ -68,7 +68,7 @@ const ShoppingCart = () => {
       if (response.ok) {
 
         alert(`Your order has been confirmed! Order ID: ${responseData.data.orderItem.orderId}`);
->>>
+
         navigate("/confirmation", {
           state: {
             cart, // Skickar varukorgens innehåll
