@@ -17,21 +17,21 @@ const EditOrder = () => {
   const navigate = useNavigate();
   const orderId = location.state?.orderId || ""; // Hämta orderId från state
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-
+  let numberOfItemsInCart = ""
   useEffect(() => {
     const fetchOrder = async () => {
       console.log("Försöker hämta order med orderId:", orderId); // Debug
       try {
         const response = await fetch(
-          "https://j4u384wgne.execute-api.eu-north-1.amazonaws.com/order/get",
+          `https://j4u384wgne.execute-api.eu-north-1.amazonaws.com/order/get/${orderId}`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ orderId }), // Skicka orderId i body
+            // body: JSON.stringify( orderId ), // Skicka orderId i body
           }
         );
 
@@ -44,9 +44,9 @@ const EditOrder = () => {
         }
 
         const data = await response.json();
-        console.log("Orderdata mottaget:", data); // Debug JSON-data
-
-        setCart(data.items); // Förutsätter att API:t returnerar en `items`-array
+        console.log("Orderdata mottaget:", data.data["Order-details"].menuDetails.length); // Debug JSON-data
+        numberOfItemsInCart = data.data["Order-details"].menuDetails.length
+        setCart(data.data["Order-details"]); // Förutsätter att API:t returnerar en `items`-array
       } catch (error) {
         console.error("Fel vid hämtning av order:", error); // Debug vid exception
         setError(error instanceof Error ? error.message : "Okänt fel.");
@@ -63,6 +63,9 @@ const EditOrder = () => {
       setLoading(false);
     }
   }, [orderId]);
+
+  console.log(typeof cart);
+  
 
   const handleIncrease = (id: string) => {
     console.log("Ökar kvantitet för menuId:", id); // Debug vid kvantitetsökning
@@ -89,11 +92,11 @@ const EditOrder = () => {
     setCart((prevCart) => prevCart.filter((item) => item.menuId !== id));
   };
 
-  const calculateTotal = () => {
-    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    console.log("Totalpris beräknat:", total); // Debug vid totalberäkning
-    return total;
-  };
+  // const calculateTotal = () => {
+  //   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  //   console.log("Totalpris beräknat:", total); // Debug vid totalberäkning
+  //   return total;
+  // };
 
   if (loading) {
     console.log("Laddar orderdata..."); // Debug vid laddning
@@ -124,10 +127,12 @@ const EditOrder = () => {
   }
 
   console.log("Varukorg att redigera:", cart); // Debug innan renderingen
+  console.log("typeof cart", typeof cart);
+  
 
   return (
     <div className="flex flex-col justify-center items-center mb-24">
-      <Header cartCount={cart.reduce((count, item) => count + item.quantity, 0)} />
+      <Header cartCount={numberOfItemsInCart} />
       <div className="w-1/2 h-full flex justify-center flex-col mt-5">
         <div className="flex items-start w-full mb-7">
           <h1 className="font-Londrina text-4xl lg:text-6xl lg:pl-5 pb-2 border-b-2 border-black w-full">
@@ -136,7 +141,7 @@ const EditOrder = () => {
         </div>
 
         <ul className="flex flex-col gap-3 font-thin">
-          {cart.map((item) => (
+          {cart.menuDetails.map((item) => (
             <li
               key={item.menuId}
               className="border border-black rounded-xl p-3 flex items-center flex-row gap-2 bg-[#f1f1f1] justify-between"
@@ -173,7 +178,7 @@ const EditOrder = () => {
 
         <div className="flex justify-between mt-5">
           <h2 className="font-bold text-xl">TOTAL</h2>
-          <h2 className="font-bold text-xl">{calculateTotal()} kr</h2>
+          {/* <h2 className="font-bold text-xl">{calculateTotal()} kr</h2> */}
         </div>
 
         <MenuButton
