@@ -1,76 +1,72 @@
 import greenMark from "../../../../assets/img/check-color.svg";
 import deleteMark from "../../../../assets/img/delete.svg";
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "motion/react";
-import getOrders from "../../../../services/employe/getOrders/getOrders";
-import {
-  // GetOrderInformation,
-  OrderInformationResponse,
-} from "../../../../types/interface/interface";
+import { GetOrderInformation } from "../../../../types/interface/interface";
+import deleteOrder from "../../../../services/employe/deleteOrder/deleteOrder";
+import updateOrderStatus from "../../../../services/employe/updateOrderStatus/updateOrderStatus";
 
-export default function Order({ filterStatus }: { filterStatus: string }) {
-  const [order, setOrder] = useState<OrderInformationResponse>();
-  const [additionalInfo, setAdditionalInfo] = useState<string | undefined>("");
+export default function Order({
+  orderItem,
+  refreshOrders,
+}: {
+  refreshOrders: React.Dispatch<React.SetStateAction<boolean>>;
+  orderItem: GetOrderInformation;
+}) {
+  const [additionalInfo, setAdditionalInfo] = useState<string>(
+    orderItem.comment || ""
+  );
   const [isOrderItemVisible, setIsOrderItemsVisible] = useState<boolean>(false);
-  // const [menuIdArr, setMenuIdArr] = useState();
+  const [isOrderDeleted, setIsOrderDeleted] = useState<boolean>(false);
+
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      const response: OrderInformationResponse = await getOrders();
-      // setMenuIdArr(response?.data.map((item) => item.menuId.split(", "));
-
-      setOrder(response);
-    };
-
-    fetchOrders();
-  }, []);
-
-  // console.log(order?.data.map((filter) => filter.createdAt));
-
-  // order?.data.map((item) => item.menuId.split);
-  // console.log(order?.data.map((item) => console.log(item)));
-  // console.log();
-
-  useEffect(() => {
-    if (filterStatus === "newest") {
-      order?.data.sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      );
-    } else {
-      order?.data.sort(
-        (a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-      );
-    }
-  }, [filterStatus, order?.data]);
-
-  useEffect(() => {
-    console.log(additionalInfo);
-  }, [additionalInfo]);
-
+  // Update state when textarea changes
   const handleInfoField = (): void => {
-    setAdditionalInfo(textareaRef.current?.value);
+    if (textareaRef.current) {
+      setAdditionalInfo(textareaRef.current.value);
+    }
+  };
+
+  // Delete order
+  const handleDeleteOrder = async () => {
+    const orderId: string = orderItem.orderId;
+    await deleteOrder({ orderId });
+    setIsOrderDeleted(true);
+    refreshOrders(true);
+  };
+
+  // Send order to kithcen
+  const handleAcceptOrder = async () => {
+    const orderId: string = orderItem.orderId;
+
+    const additionalInfoToSend =
+      additionalInfo !== orderItem.comment ? additionalInfo : undefined;
+
+    await updateOrderStatus({
+      orderId,
+      status: "kitchen",
+      additionalInfo: additionalInfoToSend,
+    });
+    refreshOrders(true);
   };
 
   return (
-    <div className="w-full h-auto border border-black flex flex-col items-start px-4 font-Roboto rounded-md">
-      {order?.data?.map((orderItem) => (
+    !isOrderDeleted && (
+      <div className="w-full h-auto border border-black flex flex-col items-start px-4 font-Roboto rounded-md">
         <div
-          key={orderItem.orderId}
           className={`w-full h-auto grid py-1 ${
             isOrderItemVisible ? "grid-rows-3" : "grid-rows-3"
           }`}
         >
-          <div className="flex justify-between items-center h-full w-full row-span-1">
+          <div className="flex flex-col lg:flex-row justify-between items-start h-full w-full row-span-1">
             <div className="flex-col">
               <p className="font-semibold select-none">Order</p>
-              <span className="p-1 border border-black text-sm ">
+              <span className="p-1 border border-black text-sm">
                 {orderItem.orderId}
               </span>
             </div>
-            <div className="border border-black rounded-sm bg-secondary-0 w-20 h-8 relative top-3">
+            <div className="border border-black rounded-sm bg-secondary-0 w-20 h-8 relative top-3 self-end">
               <motion.div
                 whileHover={{ x: 2, y: 2 }}
                 whileTap={{ scale: 0.95 }}
@@ -87,11 +83,7 @@ export default function Order({ filterStatus }: { filterStatus: string }) {
           {isOrderItemVisible && (
             <div className="w-full h-auto row-span-2 flex flex-col mt-2">
               <p className="font-semibold select-none">Ordered Items</p>
-              {/* Map out all the items */}
-              <p>{orderItem.menuId}</p>
-              {/* {orderItem.menuId.map((item) => (
-                <span>{item}</span>
-              ))} */}
+              <span>{orderItem.menuId}</span>
             </div>
           )}
           <div className={`${""} w-full`}>
@@ -113,16 +105,18 @@ export default function Order({ filterStatus }: { filterStatus: string }) {
                 src={greenMark}
                 alt="Green mark"
                 className="cursor-pointer w-8"
+                onClick={handleAcceptOrder}
               />
               <img
                 src={deleteMark}
                 alt="Trash can"
                 className="cursor-pointer w-8"
+                onClick={handleDeleteOrder}
               />
             </div>
           </div>
         </div>
-      ))}
-    </div>
+      </div>
+    )
   );
 }

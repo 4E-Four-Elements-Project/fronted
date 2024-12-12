@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import getInventory from "../../../../services/menu/getInventory/getInventoryApi";
 import { InventoryApiResponse } from "../../../../types/interface/interface";
+import getOrders from "../../../../services/employe/getOrders/getOrders";
 
 export default function Overview() {
   const [currentOverview, setCurrentOverview] = useState<string>("");
@@ -22,20 +23,22 @@ export default function Overview() {
     const fecthInventoryData = async () => {
       const response: InventoryApiResponse = await getInventory();
       const responseQuantity = response.data;
-      const addTotalInventoryStock =
-        responseQuantity[0]?.quantity +
-        responseQuantity[1]?.quantity +
-        responseQuantity[2]?.quantity +
-        responseQuantity[3]?.quantity;
+
+      const addTotalInventoryStock = responseQuantity.reduce((acc, item) => {
+        const quantity = item?.quantity;
+        if (typeof quantity === "number" && !isNaN(quantity)) {
+          return acc + quantity;
+        }
+        return acc;
+      }, 0);
       setTotalInventory(addTotalInventoryStock);
     };
 
     fecthInventoryData();
 
     // 10 min
-    const min = 100000;
+    const min = 600000;
 
-    // Update inventory every min
     const interval = setInterval(() => {
       fecthInventoryData();
     }, min);
@@ -43,15 +46,22 @@ export default function Overview() {
     return () => clearInterval(interval);
   }, []);
 
+  // Fetch orders length
+  const fetchOrders = async () => {
+    const response = await getOrders();
+    const allActiveOrders = response.data.filter(
+      (order: any) => order.orderStatus !== "done"
+    );
+    setActiveOrders(allActiveOrders.length);
+  };
+
   //  Update orders
-  useEffect(
-    () => {
-      // SetActiveOrders(activeOrders)
-    },
-    [
-      // Active orders API
-    ]
-  );
+  useEffect(() => {
+    fetchOrders();
+
+    const intervalId = setInterval(fetchOrders, 60000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <section className="flex-col justify-between w-2/3 h-auto md:h-auto bortder-2 border-blue-700">
@@ -71,7 +81,7 @@ export default function Overview() {
                       ? "bg-red-400"
                       : "bg-yellow-0"
                   }
-                  w-3 h-3 rounded-full  ml-2 border border-black`}
+                  w-3 h-3 rounded-full  ml-1 border border-black`}
               ></div>
             </div>
             <div className="w-px h-full bg-black"></div>

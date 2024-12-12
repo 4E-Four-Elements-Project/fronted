@@ -3,7 +3,7 @@ import Contact from "../../components/layout/contact/contact";
 import Header from "../../components/layout/header/Header";
 
 const Login = () => {
-  const [username, setUsername] = useState(""); // Uppdaterad till username
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);

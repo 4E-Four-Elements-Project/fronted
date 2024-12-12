@@ -6,12 +6,16 @@ import Overview from "./components/HeaderOverview/Overview";
 import { Variants, motion } from "motion/react";
 
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
 import PendingOrders from "./components/pendingOrders/PendingOrders";
 import handleLogout from "../logut/Logut";
+import getOrders from "../../services/employe/getOrders/getOrders";
+import { GetOrderInformation } from "../../types/interface/interface";
 
 export default function Employe() {
   const [currentStaff, setCurrentStaff] = useState<boolean>(true);
+  const [kitchenOrders, setKitchenOrders] = useState<[]>([]);
+  const [refreshOrders, setRefreshOrders] = useState<boolean>(false);
+
   useEffect(() => {
     if (location.pathname === "/chef") {
       setCurrentStaff(!currentStaff);
@@ -29,6 +33,30 @@ export default function Employe() {
     },
   };
 
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await getOrders();
+
+        const kitchenOrders = response.data.filter(
+          (order: GetOrderInformation) => order.orderStatus === "kitchen"
+        );
+
+        setRefreshOrders(false);
+        setKitchenOrders(kitchenOrders);
+      } catch (error) {
+        console.error("Error fetching orders: ", error);
+      }
+    };
+
+    fetchOrders();
+
+    const interval = setInterval(fetchOrders, 60000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <main className="bg-primary-0 w-full min-h-screen overflow-hidden flex flex-col items-center pt-24">
       <Logo link="/employe" />
@@ -42,6 +70,7 @@ export default function Employe() {
           className="text-black"
           onClick={() => {
             setCurrentStaff(!currentStaff);
+            setRefreshOrders(true);
           }}
         >
           {currentStaff ? "Chef" : "Employe"}
@@ -70,15 +99,17 @@ export default function Employe() {
         </section>
       ) : (
         // Chef
-        <section className="w-full md:w-2/3 flex flex-col items-center justify-between md:grid md:grid-cols-4 gap-4 md:items-start md:justify-items-end mt-11 px-8 pb-8 ">
+        <section className="w-full md:w-full flex flex-col items-center justify-between md:grid md:grid-cols-4 gap-4 md:items-start md:justify-items-end mt-11 px-8 pb-8 ">
           {/* Active orders */}
-          <PendingOrders />
-          <PendingOrders />
-          <PendingOrders />
-          <PendingOrders />
-          <PendingOrders />
-          <PendingOrders />
-          <PendingOrders />
+
+          {kitchenOrders.map((order, index) => (
+            <PendingOrders
+              kitchenOrders={order}
+              key={index}
+              refreshOrders={setRefreshOrders}
+            />
+          ))}
+          {/* <PendingOrders /> */}
         </section>
       )}
       <motion.div
@@ -86,7 +117,7 @@ export default function Employe() {
         whileHover="animate"
         className="absolute top-10 right-32 md:right-52"
       >
-        <span onClick={handleLogout} className="text-black">
+        <span onClick={handleLogout} className="text-black cursor-pointer">
           Sign out
         </span>
         <svg width="60" height="5" className="absolute top-6">
