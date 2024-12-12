@@ -15,7 +15,6 @@ export default async function updateOrderStatus({
     const orderDataResponse = await getSpecificOrder({ orderId });
 
     const orderData = orderDataResponse.data["Order-details"];
-    console.log("logging from api", additionalInfo);
 
     const updatedOrder = {
       ...orderData,

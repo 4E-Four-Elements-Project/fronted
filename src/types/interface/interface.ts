@@ -5,10 +5,9 @@ export interface HeaderProps {
   className?: string;
 }
 
-
 export interface CartItem {
-  id: string;    // eller number om id:t är en numerisk identifierare
-  name: string;  // Namnet på varan
+  id: string; // eller number om id:t är en numerisk identifierare
+  name: string; // Namnet på varan
   price: number; // Priset på varan
   quantity: number; // Antalet av varan i kundvagnen (om tillämpligt)
 }
@@ -59,7 +58,7 @@ export interface GetOrderInformation {
   cartId: string;
   comment?: string;
   createdAt: string;
-  menuId: string;
+  menuId?: string;
   orderId: string;
   orderLocked: false;
   paymentMethod: string;
@@ -68,8 +67,14 @@ export interface GetOrderInformation {
   totalPrice: number;
   userId: string;
   orderStatus: string;
+  menuDetails: orderItems[];
 }
 
 export interface OrderInformationResponse {
   data: GetOrderInformation[];
+}
+
+export interface orderItems {
+  menuId: string;
+  quantity: number;
 }
