@@ -118,7 +118,6 @@ const Login = () => {
               required
               value={username}
               onChange={(e) => {
-                console.log("Username changed:", e.target.value); // Loggar användarnamnändring
                 setUsername(e.target.value);
               }}
             />
@@ -140,7 +139,6 @@ const Login = () => {
               required
               value={password}
               onChange={(e) => {
-                console.log("Password changed"); // Loggar lösenordändring
                 setPassword(e.target.value);
               }}
             />

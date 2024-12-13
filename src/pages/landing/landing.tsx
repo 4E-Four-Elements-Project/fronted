@@ -1,7 +1,7 @@
 import Contact from "../../components/layout/contact/contact";
 import Header from "../../components/layout/header/Header";
 import MenuButton from "../../components/layout/menu-button/menu-button";
-import SearchButton from "../../components/layout/search-button/SearchButton";
+// import SearchButton from "../../components/layout/search-button/SearchButton";
 
 const HeroSection: React.FC = () => {
   return (
@@ -23,16 +23,18 @@ const HeroSection: React.FC = () => {
         {/* Content */}
 
         <div className="relative z-10 w-full flex flex-col items-center md:flex-row justify-between h-screen">
-          <div className="w-full flex items-center justify-center md:justify-center h-screen">
+          <div className="w-full flex items-center  h-screen">
             {/* Left Section */}
             <Header className="md:w-2/3 md:pr-20 md:pl-20 md:3/5 absolute top-0 z-20 w-screen" />
-
-            <div className="max-w-lg space-y-4">
-              <MenuButton className="before:bg-secondary-0" to="/menu">
-                Menu
-              </MenuButton>
-
-              <div className="flex items-center mt-4">
+            <div className=" flex flex-col justify-between items-center w-full h-44">
+            <h1 className="font-Londrina text-7xl">Welcome</h1>
+            <p>Please check out our menu :)</p>
+              <div className="w-72 space-y-4">
+                <MenuButton className="before:bg-secondary-0" to="/menu">
+                  Menu
+                </MenuButton>
+              </div>
+              {/* <div className="flex items-center mt-4">
                 <input
                   type="text"
                   placeholder="Order nr..."
@@ -40,10 +42,9 @@ const HeroSection: React.FC = () => {
                 />
 
                 <SearchButton />
+              </div> */}
               </div>
-
-              <Contact />
-            </div>
+            <Contact />
           </div>
 
           {/* Right Section */}
