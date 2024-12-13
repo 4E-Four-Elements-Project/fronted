@@ -48,6 +48,12 @@ const Orders = () => {
           order.orderStatus === "pending" ||
           order.orderStatus === "cooking" ||
           order.orderStatus === "kitchen"
+      );  
+      
+      
+      const historyOrders = orders.filter(
+        (order: GetOrderInformation) =>
+          order.orderStatus === "done"
       );
 
       const historyOrders = orders.filter(

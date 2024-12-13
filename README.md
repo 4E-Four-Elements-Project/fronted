@@ -1,50 +1,47 @@
-# React + TypeScript + Vite
+# Four Elements Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to Four Elements, your go-to takeaway restaurant where flavor meets convenience. Our menu is crafted with care, offering a variety of dishes to satisfy every craving. Order your meal online or over the phone, and it will be freshly prepared and ready for pickup in no time. Whether you’re looking for a quick lunch, a family dinner, or a treat for yourself, we’ve got you covered. Experience delicious food without the wait – Four Elements is here to make your mealtime effortless and enjoyable!
 
-Currently, two official plugins are available:
+## Figma
+https://www.figma.com/design/3pHE1aIEZOREBhf5yULsKL/Design-File?node-id=0-1&t=JPey3NOFMm6U2USr-1
+## Figjam
+https://www.figma.com/board/Im9f4I7byvOw35eRK5UgeJ/Figjam?node-id=0-1&t=Zg9yCicx37otLY66-1
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Demo accounts
+Admin: 
+ Username: StaffTest
+ password: staff123456
 
-## Expanding the ESLint configuration
+User:
+ Username: Stamkund
+ password: test123
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Getting started
 
-- Configure the top-level `parserOptions` property like this:
+### Installing
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+1. Clone this repository
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+   ```bash
+   git clone https://github.com/4E-Four-Elements-Project/frontend.git
+   ```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+2. Navigate to the project directory
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+   ```bash
+   cd <location>/frontend
+   ```
+
+3. Install dependencies  
+   Make sure you have [Node.js](https://nodejs.org/) installed. Then, install the required dependencies by running:
+
+   ```bash
+   npm install
+   ```
+
+4. Run the application  
+   Start the application locally using:
+   ```bash
+   npm run dev
+   ```
+   This will run the app at `http://localhost:3000`. Open the URL in your browser to view the design.
