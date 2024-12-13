@@ -41,13 +41,13 @@ const Orders = () => {
       const orders = json.data.orders
       const currentOrders = orders.filter(
         (order: GetOrderInformation) =>
-          order.orderStatus === "pending" || order.orderStatus === "cooking" || order.orderStatus === "kitchen"
+          order.orderStatus === "pending" || order.orderStatus === "cooking" || order.orderStatus === "kitchen" || order.orderStatus === "updated"
       );  
       
       
       const historyOrders = orders.filter(
         (order: GetOrderInformation) =>
-          order.orderStatus === "done" || order.orderStatus === "updated"
+          order.orderStatus === "done" 
       );
 
    
