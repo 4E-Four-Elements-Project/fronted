@@ -170,7 +170,7 @@ export default function Header({
             <Link to="/createAccount" className="text-green-0 xl:text-black">
               Create account
             </Link>
-            <svg width="120" height="5" className="absolute top-6">
+            <svg width="120" height="5" className="absolute top-8">
               <motion.path
                 variants={onClickLink}
                 d="M0,2 Q20,5 40,2 T80,3 T119,1 T120"

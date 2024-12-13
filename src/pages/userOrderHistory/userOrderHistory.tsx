@@ -14,19 +14,20 @@ const Orders = () => {
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      // console.log('token', token);
-      
-      if (!token) throw new Error("Authentication token not found");
-  
+      // Construct headers dynamically
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
       const url = `${import.meta.env.VITE_GET_USER_ORDER_URL}`;
-      // console.log('url', url);
       
       const response = await fetch(url, {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
+        headers
       });
   
       if (!response.ok) {
@@ -35,16 +36,28 @@ const Orders = () => {
         );
       }
 
-      // console.log('response', response);
-      
-
       const json = await response.json();
-      console.log("Fetched Orders:", json);
-      const orders = json.data.orders || [];
-      if (orders.length > 0) {
-        setCurrentOrder(orders[0]);
-        setOrderHistory(orders.slice(1));
-      }
+      const orders = json.data.orders
+      const currentOrders = orders.filter(
+        (order: GetOrderInformation) =>
+          order.orderStatus === "pending" || order.orderStatus === "cooking" || order.orderStatus === "kitchen"
+      );
+      const historyOrders = orders.filter(
+        (order: GetOrderInformation) =>
+          order.orderStatus === "done" || order.orderStatus === "updated"
+      );
+
+   
+      setCurrentOrder(currentOrders)
+      setOrderHistory(historyOrders)
+
+      // const orders = json.data.orders || [];
+      // if (orders.length > 0) {
+      //   setCurrentOrder(orders[0]);
+      //   setOrderHistory(orders.slice(1));
+      // }
+      // console.log('orders', orders);
+      
 
      
     } catch (error) {
@@ -81,21 +94,20 @@ const Orders = () => {
           </h1>
           {currentOrder ? (
             <ul className="flex flex-col gap-3 font-thin pt-5">
+              {currentOrder.map((item, index) => (
               <li
-                key={currentOrder.orderId}
+                key={index}
                 className="border border-black rounded-xl p-2 flex flex-row gap-2 bg-white justify-between"
               >
                 <div className="font-roboto flex flex-col gap-2">
-                <p className="text-sm">Date: {currentOrder.createdAt}</p>
-                <p className="text-sm">Order ID: {currentOrder.orderId}</p>
-                <p className="">Status: {currentOrder.orderStatus}</p>
-                <p className="text-sm"><em>Order Summary:</em></p>
-                <p className="text-sm">{currentOrder.menuId}</p>
-                <p><strong>Total Price:</strong> {currentOrder.totalPrice} USD</p>
+                <p className="text-sm">Date: {item.createdAt}</p>
+                <p className="text-sm">Order ID: {item.orderId}</p>
+                <p className="">Status: {item.orderStatus}</p>
+                <p><strong>Total Price:</strong> {item.totalPrice} SEK</p>
                 </div>
                 <button
                 onClick={async () => {
-                  await deleteOrder({ orderId: currentOrder.orderId });
+                  await deleteOrder({ orderId: item.orderId });
                   setCurrentOrder(null);
                 }}
                 className="text-red-500 hover:text-red-700 font-bold ml-4"
@@ -103,7 +115,7 @@ const Orders = () => {
                 X
               </button>
           
-              </li>
+              </li>))}
             </ul>
           ) : (
             <p>No current order available.</p>
@@ -125,9 +137,7 @@ const Orders = () => {
                   <div className="font-roboto flex flex-col gap-2">
                     <p className="text-sm">Date: {item.createdAt}</p>
                     <p className="text-sm">Order ID: {item.orderId}</p>
-                    <p className="text-sm"><em>Order Summary:</em></p>
-                    <p className="text-sm">{item.menuId}</p>
-                    <p className="text-sm"><strong>Total Price:</strong> {item.totalPrice} USD</p>
+                    <p className="text-sm"><strong>Total Price:</strong> {item.totalPrice} SEK</p>
                   </div>
                 </li>
               ))}
