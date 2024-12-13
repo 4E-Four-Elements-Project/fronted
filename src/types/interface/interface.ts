@@ -78,3 +78,34 @@ export interface orderItems {
   menuId: string;
   quantity: number;
 }
+
+export interface GetOrderHistory {
+  cartId: string;
+  comment?: string;
+  createdAt: string;
+  menuId?: string;
+  orderId: string;
+  orderLocked: false;
+  paymentMethod: string;
+  price: string;
+  quantity: number;
+  totalPrice: number;
+  userId: string;
+  orderStatus: string;
+  menuDetails: orderHistoryItems[];
+}
+
+export interface orderHistoryItems {
+  menuId: string;
+  quantity: number;
+  cartId: string
+  createdAt: string, 
+  orderId: string, 
+  orderLocked: boolean,
+  paymentMethod: string,
+  price: string,
+  totalPrice: number,
+  userId: string,
+  orderStatus: string,
+  comment: string
+}

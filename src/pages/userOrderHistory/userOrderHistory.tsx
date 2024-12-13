@@ -1,13 +1,14 @@
 import Header from "../../components/layout/header/Header";
 import { useEffect, useState } from "react";
-import {GetOrderInformation } from "../../types/interface/interface";
+import {GetOrderInformation, GetOrderHistory } from "../../types/interface/interface";
 import deleteOrder from "../../services/users/deleteOrder/deleteOrder";
 
 
 const Orders = () => {
-  const [currentOrder, setCurrentOrder] = useState<GetOrderInformation | null>(
-    null
-  ); // Latest order
+  // const [currentOrder, setCurrentOrder] = useState<GetOrderInformation | null>(
+  //   null
+  // ); // Latest order
+  const [currentOrder, setCurrentOrder] = useState<GetOrderHistory[]>([]); // Latest order
   const [orderHistory, setOrderHistory] = useState<GetOrderInformation[]>([]); // All past orders
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -41,7 +42,9 @@ const Orders = () => {
       const currentOrders = orders.filter(
         (order: GetOrderInformation) =>
           order.orderStatus === "pending" || order.orderStatus === "cooking" || order.orderStatus === "kitchen"
-      );
+      );  
+      
+      
       const historyOrders = orders.filter(
         (order: GetOrderInformation) =>
           order.orderStatus === "done" || order.orderStatus === "updated"
@@ -50,14 +53,6 @@ const Orders = () => {
    
       setCurrentOrder(currentOrders)
       setOrderHistory(historyOrders)
-
-      // const orders = json.data.orders || [];
-      // if (orders.length > 0) {
-      //   setCurrentOrder(orders[0]);
-      //   setOrderHistory(orders.slice(1));
-      // }
-      // console.log('orders', orders);
-      
 
      
     } catch (error) {
@@ -94,7 +89,8 @@ const Orders = () => {
           </h1>
           {currentOrder ? (
             <ul className="flex flex-col gap-3 font-thin pt-5">
-              {currentOrder.map((item, index) => (
+              {currentOrder?.map((item, index
+              ) => (
               <li
                 key={index}
                 className="border border-black rounded-xl p-2 flex flex-row gap-2 bg-white justify-between"
@@ -108,7 +104,7 @@ const Orders = () => {
                 <button
                 onClick={async () => {
                   await deleteOrder({ orderId: item.orderId });
-                  setCurrentOrder(null);
+                  // setCurrentOrder(null);
                 }}
                 className="text-red-500 hover:text-red-700 font-bold ml-4"
               >

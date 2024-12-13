@@ -38,7 +38,7 @@ const EditOrder = () => {
         const menuDetails = orderDetails?.menuDetails;
 
         if (Array.isArray(menuDetails)) {
-          const cartItems = menuDetails.map((item: any) => ({
+          const cartItems = menuDetails.map((item) => ({
             menuId: item.menuId,
             name: item.name || item.menuId,
             price: item.price || 0,
