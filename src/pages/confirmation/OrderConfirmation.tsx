@@ -1,29 +1,71 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../../components/layout/header/Header";
+import getSpecificOrder from "../../services/employe/getSpecificOrder/getSpecificOrder";
+import {useEffect, useState} from "react";
 
-interface CartItem {
+interface UpdatedCartItem {
+  orderId: string,
+  createdAt: string,
+  menuDetails: MenuDetails[];
+  orderStatus: string;
+  totalPrice: number;
+  orderLocked: boolean;
+  userId: string;
+  comment: string;
+  paymentMethod: string;
+}
+
+interface MenuDetails {
   menuId: string;
-  name: string;
   price: number;
-  description: string;
   quantity: number;
 }
 
 const OrderConfirmation = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const cart: CartItem[] = location.state?.cart || [];
   const orderId = location.state?.orderId;
+  const [order, setOrder] = useState<UpdatedCartItem | undefined>(undefined)
+  const [orderExist, setOrderExist] = useState(false)
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await getSpecificOrder({orderId});
+        console.log('response', response.data["Order-details"]);
+        const orderDetails = response.data["Order-details"];
 
-  // Funktion för att räkna ut totalen
-  const calculateTotal = () => {
-    return cart.reduce(
-      (total: number, item: CartItem) => total + item.price * item.quantity,
-      0
-    );
-  };
+        if(orderDetails){
+          setOrder(orderDetails as UpdatedCartItem);
+          setOrderExist(true)
+        } else {
+          console.error("Order details not found in response");
+          setOrderExist(false)
+        }
 
-  // Rendera komponenten
+      } catch (error) {
+        console.error("Error fetching orders: ", error);
+      }
+    };
+  
+    fetchOrders();
+  }, [orderId])
+  
+  const Status = () => {
+    if (!order) return null; 
+    if(order.orderStatus === "pending"){
+      return <p className="text-[#78BC61] font-extrabold text-xl">{order.orderStatus}</p>
+    } else if (order.orderStatus === "kitchen"){
+      return <p className="text-[#FF0000]">{order.orderStatus}</p>
+    } else if (order.orderStatus === "cooking"){
+      return <p className="text-[#FFA500]">{order.orderStatus}</p>
+    } else if (order.orderStatus === "done"){
+      return <p className="text-[#411bff]">{order.orderStatus}</p>
+    }
+    return null;
+  }
+    
+  
+
   return (
     <>
       <Header />
@@ -33,12 +75,12 @@ const OrderConfirmation = () => {
             <h1>Order Confirmation</h1>
           </div>
 
-          {cart.length > 0 ? (
+          {orderExist && order ? (
             <>
               <h1 className="flex flex-col sm:flex-row items-center justi gap-3 font-Londrina text-2xl">Order Number:<p className="font-Roboto text-lg">{orderId}</p></h1>
 
               <ul className="w-full">
-                {cart.map((item: CartItem, index: number) => (
+                {order.menuDetails.map((item: MenuDetails, index: number) => (
                   <li key={index} className="flex justify-between border-b py-2">
                     <span className="italic">
                       {item.menuId.replace("_", " ")}{" "}
@@ -50,18 +92,18 @@ const OrderConfirmation = () => {
               </ul>
               <div className="flex w-full justify-between">
                 <div className="font-bold font-Roboto">TOTAL</div>
-                <div className="font-bold font-Roboto">{calculateTotal()} KR</div>
+                <div className="font-bold font-Roboto">{order.totalPrice} KR</div>
               </div>
 
               <div className="text-l flex items-center justify-between w-full">
 
-                <h1>Order status:</h1>
-
+                {/* <h1>Order status: {order.orderStatus}</h1> */}
+                <div><p>Status:</p><Status /></div>
                   <button
                     onClick={() =>
                       navigate("/edit", {
                         state: {
-                          cart, // Skickar varukorgens innehåll
+                          order, // Skickar varukorgens innehåll
                           orderId, // Skickar order-ID
                         },
                       })
