@@ -51,6 +51,7 @@ const OrderConfirmation = () => {
   }, [orderId])
   
   const Status = () => {
+    if (!order) return null; 
     if(order.orderStatus === "pending"){
       return <p className="text-[#78BC61] font-extrabold text-xl">{order.orderStatus}</p>
     } else if (order.orderStatus === "kitchen"){
@@ -60,6 +61,7 @@ const OrderConfirmation = () => {
     } else if (order.orderStatus === "done"){
       return <p className="text-[#411bff]">{order.orderStatus}</p>
     }
+    return null;
   }
     
   
@@ -73,7 +75,7 @@ const OrderConfirmation = () => {
             <h1>Order Confirmation</h1>
           </div>
 
-          {orderExist ? (
+          {orderExist && order ? (
             <>
               <h1 className="flex flex-col sm:flex-row items-center justi gap-3 font-Londrina text-2xl">Order Number:<p className="font-Roboto text-lg">{orderId}</p></h1>
 
