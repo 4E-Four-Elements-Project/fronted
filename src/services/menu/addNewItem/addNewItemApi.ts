@@ -21,7 +21,7 @@ export default async function addNewItem(body: object) {
     }
 
     const json = await response.json();
-    console.log(json);
+    // console.log(json);
 
     return json;
   } catch (error) {

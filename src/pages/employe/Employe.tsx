@@ -1,5 +1,5 @@
 import Logo from "../../components/ui/4eLogo/Logo";
-import updateOrders from "../../assets/img/refresh.svg";
+import updateOrders from "/img/refresh.svg";
 import ActiveOrders from "./components/ActiveOrders/ActiveOrders";
 import EditMenu from "./components/EditMenu/EditMenu";
 import Inventory from "./components/Inventory/Inventory";

@@ -1,5 +1,5 @@
-import greenMark from "../../../../assets/img/check-color.svg";
-import deleteMark from "../../../../assets/img/delete.svg";
+import greenMark from "/img/check-color.svg";
+import deleteMark from "/img/delete.svg";
 import { useState, useRef } from "react";
 import { motion } from "motion/react";
 import { GetOrderInformation } from "../../../../types/interface/interface";

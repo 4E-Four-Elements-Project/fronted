@@ -67,7 +67,7 @@ const CreateAccount = () => {
       {/* Video */}
       <figure className="absolute right-0 h-sm mw-auto hidden md:block">
         <video
-          src="./src/assets/video/landing-video.mp4"
+          src="/video/landing-video.mp4"
           className="rounded shadow-lg h-full w-[600px] object-cover"
           autoPlay
           muted
@@ -77,7 +77,7 @@ const CreateAccount = () => {
 
       {/* Mobilbakgrund för videon */}
       <video
-        src="./src/assets/video/landing-video.mp4"
+        src="/video/landing-video.mp4"
         className="absolute top-0 left-0 w-full h-full object-cover -z-10 md:hidden"
         autoPlay
         muted

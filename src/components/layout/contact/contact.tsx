@@ -1,9 +1,9 @@
-import letter_open from '../../../assets/img/letter-open.svg';
-import letter_open_white from '../../../assets/img/letter-open-white.svg';
-import letter_closed from '../../../assets/img/letter-closed.svg';
-import letter_closed_white from '../../../assets/img/letter-closed-white.svg';
-import phone_black from '../../../assets/img/phone.svg';
-import phone_white from '../../../assets/img/phone-white.svg';
+import letter_open from '/img/letter-open.svg';
+import letter_open_white from '/img/letter-open-white.svg';
+import letter_closed from '/img/letter-closed.svg';
+import letter_closed_white from '/img/letter-closed-white.svg';
+import phone_black from '/img/phone.svg';
+import phone_white from '/img/phone-white.svg';
 import { useEffect, useState } from "react";
 
 

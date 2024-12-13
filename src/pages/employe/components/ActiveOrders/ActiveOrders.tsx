@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Order from "../Order/Order";
 import getOrders from "../../../../services/employe/getOrders/getOrders";
-import refreshIcon from "../../../../assets/img/refresh.svg";
+import refreshIcon from "/img/refresh.svg";
 import {
   GetOrderInformation,
   OrderInformationResponse,

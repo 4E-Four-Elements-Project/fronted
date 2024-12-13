@@ -4,11 +4,11 @@ import MenuHeader from "./components/MenuHeader";
 import { FilterContext } from "../../context/FilterContext";
 
 // Assets
-import frame from "../../assets/img/frame.svg";
-import meat from "../../assets/img/meat.svg";
-import salad from "../../assets/img/sallad.svg";
-import soup from "../../assets/img/soup.svg";
-import sauce from "../../assets/img/sauce.svg";
+import frame from "/img/frame.svg";
+import meat from "/img/meat.svg";
+import salad from "/img/sallad.svg";
+import soup from "/img/soup.svg";
+import sauce from "/img/sauce.svg";
 
 import { useContext, useEffect, useState } from "react";
 
@@ -63,14 +63,14 @@ export default function Menu() {
   const handleAddToCart = async (menuItem: MenuItems) => {
     try {
       // Logga datan som skickas till servern
-      console.log("Skickar följande data till /cart:", {
-        menuId: menuItem.menuId,
-        // ingredients: menuItem.ingredients,
-        price: menuItem.price,
-        // category: menuItem.category,
-        // description: menuItem.description,
-        // quantity: 1,
-      });
+      // console.log("Skickar följande data till /cart:", {
+      //   menuId: menuItem.menuId,
+      //   // ingredients: menuItem.ingredients,
+      //   price: menuItem.price,
+      //   // category: menuItem.category,
+      //   // description: menuItem.description,
+      //   // quantity: 1,
+      // });
   
       // Skicka POST-förfrågan till /cart
       const token = localStorage.getItem("authToken");
@@ -95,7 +95,7 @@ export default function Menu() {
   
       // Logga responsen från servern
       const responseData = await response.json();
-      console.log("Respons från servern:", responseData);
+      // console.log("Respons från servern:", responseData);
   
       // Kontrollera om servern returnerade ett fel
       if (!response.ok) {
@@ -109,7 +109,7 @@ export default function Menu() {
         
         // Uppdatera cart med det nya objektet
         setCart((prevCart) => {
-          console.log("Tidigare innehåll i cart:", prevCart);
+          // console.log("Tidigare innehåll i cart:", prevCart);
   
           // Kolla om objektet redan finns i cart
           const existingItemIndex = prevCart.findIndex((item) => item.menuId === menuItem.menuId);
@@ -123,7 +123,7 @@ export default function Menu() {
               cartId,  // Lägg till cartId till det uppdaterade objektet
             };
   
-            console.log("Uppdaterad cart:", updatedCart);
+            // console.log("Uppdaterad cart:", updatedCart);
             return updatedCart;
           }
   
@@ -132,7 +132,7 @@ export default function Menu() {
             ...prevCart,
             { ...menuItem, quantity: 1, cartId },  // Lägg till cartId till det nya objektet
           ];
-          console.log("Ny cart:", newCart);
+          // console.log("Ny cart:", newCart);
           return newCart;
         });
       } else {

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../../components/layout/header/Header";
 import MenuButton from "../../components/layout/menu-button/menu-button";
-import deleteItemsvg from "../../assets/img/delete.svg";
+import deleteItemsvg from "/img/delete.svg";
 import getSpecificOrder from "../../services/employe/getSpecificOrder/getSpecificOrder";
 import deleteItem from "../../services/menu/deleteItem/deleteItem";
 import updateOrderStatus from "../../services/employe/updateOrderStatus/updateOrderStatus";

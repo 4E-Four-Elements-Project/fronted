@@ -1,6 +1,6 @@
 import { useState } from "react";
-import addItem from "../../../../assets/img/check-color.svg";
-import deleteItem from "../../../../assets/img/delete.svg";
+import addItem from "/img/check-color.svg";
+import deleteItem from "/img/delete.svg";
 import { FormDataNewItem } from "../../../../types/types/types";
 import addNewItem from "../../../../services/menu/addNewItem/addNewItemApi";
 

@@ -1,8 +1,8 @@
 import { useNavigate, useLocation, Link } from "react-router";
 import { useEffect, useState } from "react";
 import { motion, Variants } from "motion/react";
-import cartImg from "../../../assets/img/shopping-cart.svg";
-import cartImgWhite from "../../../assets/img/shoppingcart-white.svg";
+import cartImg from "/img/shopping-cart.svg";
+import cartImgWhite from "/img/shoppingcart-white.svg";
 import { HeaderProps } from "../../../types/interface/interface";
 import Logut from "../../../pages/logut/Logut";
 
@@ -33,12 +33,6 @@ export default function Header({
   
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  
-  
-  useEffect(() => {
-    console.log("isMobile:", isMobile);
-  }, [isMobile]);
-
 
   const handleLinks = () => {
     navigate("/cart", { state: { cart } });
@@ -56,7 +50,7 @@ export default function Header({
 
   return (
     <header
-      className={`w-full flex items-center justify-between px-5 py-3 ${
+      className={` w-full flex items-center justify-between px-5 py-3 ${
         className || "w-full"
       }`}
     >
@@ -188,13 +182,27 @@ export default function Header({
             </svg>
 
           </motion.li>
+
+          <div className="relative">
           <img
           src={isMobile ? cartImgWhite : cartImg} 
           alt="cart"
           className="w-10 cursor-pointer"
           onClick={handleLinks}
         />
-              </div>
+              {cartCount > 0 && (
+                <motion.div
+                  className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-black text-white text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center border-white border-2 z-10"
+                  variants={badgeVariants}
+                  initial="hidden"
+                  animate="visible"
+                  key={cartCount}
+                >
+                  {cartCount}
+                </motion.div>
+              )}
+            </div>
+          </div>
         )}
       </section>
     </header>

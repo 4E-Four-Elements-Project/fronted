@@ -1,5 +1,5 @@
-import filterFront from "../../../assets/img/filterFront.svg";
-import filterBack from "../../../assets/img/filterBack.svg";
+import filterFront from "/img/filterFront.svg";
+import filterBack from "/img/filterBack.svg";
 import { motion, Variants } from "motion/react";
 import { useState } from "react";
 import FilterModal from "./FilterModal";

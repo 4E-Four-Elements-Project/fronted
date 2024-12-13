@@ -14,12 +14,12 @@ const Orders = () => {
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      console.log('token', token);
+      // console.log('token', token);
       
       if (!token) throw new Error("Authentication token not found");
   
       const url = `${import.meta.env.VITE_GET_USER_ORDER_URL}`;
-      console.log('url', url);
+      // console.log('url', url);
       
       const response = await fetch(url, {
         method: "GET",
@@ -35,7 +35,7 @@ const Orders = () => {
         );
       }
 
-      console.log('response', response);
+      // console.log('response', response);
       
 
       const json = await response.json();
@@ -142,7 +142,7 @@ const Orders = () => {
       <div className="hidden md:block">
         <figure className="h-sm mw-auto">
           <video
-            src="./src/assets/video/landing-video.mp4"
+            src="/video/landing-video.mp4"
             className="rounded shadow-lg h-full w-[800px] object-cover"
             autoPlay
             muted

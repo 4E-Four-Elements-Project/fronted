@@ -1,15 +1,15 @@
 export default async function getOrderHistory(userId: string) {
     try {
       const token = localStorage.getItem("authToken");
-      console.log("Auth Token:", token);
+      // console.log("Auth Token:", token);
   
       if (!token) {
         throw new Error("Authentication token not found");
       }
   
-      console.log("User ID:", userId);
+      // console.log("User ID:", userId);
       const url = `${import.meta.env.VITE_GET_USER_ORDER_URL}/${userId}`;
-      console.log("API URL:", url);
+      // console.log("API URL:", url);
   
       const response = await fetch(url, {
         method: "GET",
@@ -19,7 +19,7 @@ export default async function getOrderHistory(userId: string) {
         },
       });
   
-      console.log("API Response:", response);
+      // console.log("API Response:", response);
   
       if (!response.ok) {
         console.error(`Response Error: ${response.status} - ${response.statusText}`);
@@ -27,7 +27,7 @@ export default async function getOrderHistory(userId: string) {
       }
   
       const json = await response.json();
-      console.log("Parsed JSON:", json);
+      // console.log("Parsed JSON:", json);
   
       return json;
     } catch (error) {

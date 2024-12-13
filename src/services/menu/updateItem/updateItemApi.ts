@@ -30,7 +30,7 @@ export default async function updateItem({
     }
 
     const json = response.json();
-    console.log(json);
+    // console.log(json);
   } catch (error) {
     console.error(error);
   }

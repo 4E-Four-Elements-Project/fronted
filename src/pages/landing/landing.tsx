@@ -50,7 +50,7 @@ const HeroSection: React.FC = () => {
           <div className="hidden md:block">
             <figure className="h-sm mw-auto">
               <video
-                src="./src/assets/video/landing-video.mp4"
+                src="/video/landing-video.mp4"
                 className="rounded shadow-lg h-full w-[800px] object-cover"
                 autoPlay
                 muted
