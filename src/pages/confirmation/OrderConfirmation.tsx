@@ -35,7 +35,7 @@ const OrderConfirmation = () => {
 
           {cart.length > 0 ? (
             <>
-              <h1 className="flex items-center justi gap-3 font-Londrina text-2xl">Order Number:<p className="font-Roboto text-lg">{orderId}</p></h1>
+              <h1 className="flex flex-col sm:flex-row items-center justi gap-3 font-Londrina text-2xl">Order Number:<p className="font-Roboto text-lg">{orderId}</p></h1>
 
               <ul className="w-full">
                 {cart.map((item: CartItem, index: number) => (
@@ -66,7 +66,7 @@ const OrderConfirmation = () => {
                         },
                       })
                     }
-                    className="relative bg-white w-1/6 text-sm text-center border border-black rounded before:absolute before:content-[''] before:top-1/4 before:left-0 before:ml-4 before:w-20 before:h-5 before:bg-secondary before:rounded before:border before:border-black before:-z-10 before:transition-transform before:duration-300 hover:before:translate-x-[-8px] hover:before:translate-y-[-6px] before:bg-secondary-0"
+                    className="relative bg-white w-1/6 text-sm text-center border border-black rounded before:absolute before:content-[''] before:top-1/4 before:left-0 before:ml-4 before:w-14 before:sm:w-20 before:h-5 before:bg-secondary before:rounded before:border before:border-black before:-z-10 before:transition-transform before:duration-300 hover:before:translate-x-[-8px] hover:before:translate-y-[-6px] before:bg-secondary-0"
                   >
                     Edit
                   </button>
