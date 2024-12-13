@@ -47,7 +47,7 @@ const Orders = () => {
       
       const historyOrders = orders.filter(
         (order: GetOrderInformation) =>
-          order.orderStatus === "done" || order.orderStatus === "updated"
+          order.orderStatus === "done"
       );
 
    
