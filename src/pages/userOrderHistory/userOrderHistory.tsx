@@ -50,15 +50,11 @@ const Orders = () => {
           order.orderStatus === "kitchen"
       );  
       
-      
-      const historyOrders = orders.filter(
-        (order: GetOrderInformation) =>
-          order.orderStatus === "done"
-      );
 
       const historyOrders = orders.filter(
         (order: GetOrderInformation) => order.orderStatus === "done"
       );
+
 
       setCurrentOrder(currentOrders);
       setOrderHistory(historyOrders);
