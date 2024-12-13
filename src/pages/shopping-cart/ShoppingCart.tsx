@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../../components/layout/header/Header";
 import MenuButton from "../../components/layout/menu-button/menu-button";
-import deleteItem from "../../assets/img/delete.svg";
+import deleteItem from "/img/delete.svg";
 
 interface CartItem {
   menuId: string;
@@ -36,8 +36,8 @@ const ShoppingCart = () => {
       return;
     }
   
-    const token = localStorage.getItem("authToken");
-    console.log('token', token);
+    // const token = localStorage.getItem("authToken");
+    // console.log('token', token);
     
     // Kombinera data för att skapa en enda order
     const orderData = {

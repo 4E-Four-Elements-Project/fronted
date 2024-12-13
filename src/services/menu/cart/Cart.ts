@@ -11,7 +11,7 @@ export const getCartItems = async () => {
         }
 
         const data = await response.json();
-        console.log("API response:", data);
+        // console.log("API response:", data);
 
         // Returnera endast items från svaret
         return data.data.items;

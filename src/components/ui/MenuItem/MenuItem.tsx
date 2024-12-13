@@ -1,7 +1,7 @@
 import { MenuItems } from "../../../types/interface/interface";
 import { motion, Variants } from "motion/react";
-import addBtnFront from "../../../assets/img/addBtn.svg";
-import addBtnOutline from "../../../assets/img/addBtnOutline.svg";
+import addBtnFront from "/img/addBtn.svg";
+import addBtnOutline from "/img/addBtnOutline.svg";
 
 interface MenuItemProps extends MenuItems {
   onAddToCart: (menuItem: MenuItems) => void;

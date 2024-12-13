@@ -1,7 +1,7 @@
 import { useState } from "react";
-import editPen from "../../../../assets/img/editPen.svg";
-import delteItem from "../../../../assets/img/delete.svg";
-import submitEditIcon from "../../../../assets/img/check-color.svg";
+import editPen from "/img/editPen.svg";
+import delteItem from "/img/delete.svg";
+import submitEditIcon from "/img/check-color.svg";
 import { MenuItems } from "../../../../types/interface/interface";
 import * as React from "react";
 import deleteItem from "../../../../services/menu/deleteItem/deleteItem";

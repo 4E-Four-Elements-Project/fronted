@@ -19,7 +19,7 @@ export default async function deleteOrder({ orderId }: { orderId: string }) {
       throw new Error(`Error deleting ${orderId}. Status: ${response.status}`);
     }
 
-    console.log(`Order ${orderId} deleted successfully`);
+    // console.log(`Order ${orderId} deleted successfully`);
     return true; // Indicate success
   } catch (error) {
     console.error("Failed to delete order:", error);

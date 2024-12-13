@@ -75,7 +75,7 @@ const Login = () => {
       {/* Video */}
       <figure className="absolute right-0 h-sm mw-auto hidden lg:block">
         <video
-          src="./src/assets/video/landing-video.mp4"
+          src="/video/landing-video.mp4"
           className="rounded shadow-lg h-full xl:w-[600px] lg:w-[400px] object-cover"
           autoPlay
           loop
@@ -86,7 +86,7 @@ const Login = () => {
       </figure>
 
       <video
-        src="./src/assets/video/landing-video.mp4"
+        src="/video/landing-video.mp4"
         className="absolute top-0 left-0 w-full h-full object-cover -z-10 lg:hidden"
         autoPlay
         loop
