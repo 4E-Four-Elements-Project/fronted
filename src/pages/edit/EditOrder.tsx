@@ -127,7 +127,7 @@ const EditOrder = () => {
   return (
     <div className="flex flex-col justify-center items-center mb-24">
       <Header cartCount={cart.reduce((count, item) => count + item.quantity, 0)} />
-      <div className="w-1/2 h-full flex justify-center flex-col mt-5">
+      <div className="w-80 md:w-1/2 h-full flex justify-center flex-col mt-5">
         <div className="flex items-start w-full mb-7">
           <h1 className="font-Londrina text-4xl lg:text-6xl lg:pl-5 pb-2 border-b-2 border-black w-full">
             Edit Order
@@ -141,8 +141,8 @@ const EditOrder = () => {
               className="border border-black rounded-xl p-3 flex items-center flex-row gap-2 bg-[#f1f1f1] justify-between"
             >
               <div className="font-roboto flex flex-col gap-2">
-                <p>{item.menuId}</p>
-                <p>{item.price} kr</p>
+                <p className="font-Roboto font-bold">{item.menuId}</p>
+                <p className="font-medium">{item.price} kr</p>
               </div>
               <div className="flex gap-3 items-center justify-center">
                 <button
@@ -151,7 +151,7 @@ const EditOrder = () => {
                 >
                   -
                 </button>
-                <p>{item.quantity}</p>
+                <p className="font-medium">{item.quantity}</p>
                 <button
                   onClick={() => handleIncrease(item.menuId)}
                   className="px-3 py-1 bg-gray-400 rounded"
@@ -181,7 +181,7 @@ const EditOrder = () => {
         <MenuButton
           type="button"
           onClick={handleSaveChanges}
-          className="before:bg-secondary-0 mt-14 w-1/4"
+          className="before:bg-secondary-0 mt-14 w-1/4 before:absolute before:content-[''] before:top-1/4 before:left-0 before:ml-2 before:w-[calc(100%)] before:h-10 before:bg-secondary before:rounded before:border before:border-black before:-z-10 before:transition-transform before:duration-300 hover:before:translate-x-[-8px] hover:before:translate-y-[-7px]"
         >
           Confirm Changes
         </MenuButton>

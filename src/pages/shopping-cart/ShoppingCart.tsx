@@ -117,7 +117,7 @@ const ShoppingCart = () => {
       <Header
         cartCount={cart.reduce((count, item) => count + item.quantity, 0)}
       />
-      <div className="w-1/2 h-full flex justify-center flex-col mt-5">
+      <div className="w-80 sm:w-1/2 h-full flex justify-center flex-col mt-5">
         <div className="flex items-start w-full mb-7">
           <h1 className="font-Londrina text-4xl lg:text-6xl lg:pl-5 pb-2 border-b-2 border-black w-full">
             Cart
@@ -131,20 +131,20 @@ const ShoppingCart = () => {
               className="border border-black rounded-xl p-3 flex items-center flex-row gap-2 bg-[#f1f1f1] justify-between"
             >
               <div className="font-roboto flex flex-col gap-2">
-                <p className="text-xl font-semibold">{item.menuId}</p>
+                <p className="text-sm font-semibold md:text-xl">{item.menuId}</p>
                 <p>{item.price} kr</p>
               </div>
-              <div className="flex gap-3 items-center justify-center">
+              <div className="flex gap-1.5 md:gap-3 items-center justify-center">
                 <button
                   onClick={() => handleDecrease(item.menuId)}
-                  className="px-3 py-1 bg-gray-400 rounded"
+                  className="px-2 py-0.5 bg-gray-400 rounded"
                 >
                   -
                 </button>
                 <p className="font-semibold">{item.quantity}</p>
                 <button
                   onClick={() => handleIncrease(item.menuId)}
-                  className="px-3 py-1 bg-gray-400 rounded"
+                  className="mr-3 px-2 py-0.5 bg-gray-400 rounded"
                 >
                   +
                 </button>
@@ -180,9 +180,9 @@ const ShoppingCart = () => {
           />
         </div>
 
-        <div className="mt-[60px] flex items-center justify-between gap-10">
+        <div className="mt-[60px] flex flex-col items-center justify-between gap-2 md:gap-10 md:flex-row">
           <h1 className="font-Londrina text-3xl">Payment</h1>
-          <div className="flex flex-row items-center justify-center gap-5">
+          <div className="flex items-center font-Roboto justify-center mt-5 gap-5">
             <h5>PAY ONLINE</h5>
             <input
               type="radio"
@@ -196,9 +196,9 @@ const ShoppingCart = () => {
             <input
               type="radio"
               name="payment-method"
-              value="PAY AT RESTAURANT"
+              value="Pay on Pickup"
               onChange={(e) => setPaymentMethod(e.target.value)}
-              checked={paymentMethod === "PAY AT RESTAURANT"}
+              checked={paymentMethod === "Pay on Pickup"}
               className="border border-black rounded-lg"
             />
           </div>
